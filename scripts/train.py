@@ -6,7 +6,10 @@ The objective and the optimisation are the release's. Added around them:
 * Logging. ``logs/<run_id>/train_log.jsonl`` gets one JSON object per event:
   ``train`` every ``train.log_interval`` steps (all five loss terms averaged over the
   interval and over GPUs, learning rate, gradient norm before clipping, speed, elapsed
-  time), ``val`` every ``train.eval_interval`` steps, ``checkpoint`` for every save, and
+  time, and where the time went: ``data_wait_sec`` waiting for batches on the main
+  process, ``eval_save_sec`` in validation and checkpoints, and ``train_steps_per_sec``
+  without the latter; if ``data_wait_sec`` is a small part of the interval, the GPUs are
+  the limit), ``val`` every ``train.eval_interval`` steps, ``checkpoint`` for every save, and
   ``start`` / ``resume`` markers. ``run_info.json`` records the config, environment and
   data sizes. The progress bar shows all five terms too; the release showed three.
 * Validation. The release built a validation loader and never used it. Every
@@ -445,13 +448,16 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
     sums = {term: torch.zeros((), device=device) for term in LOSS_TERMS}
     grad_norm_sum = torch.zeros((), device=device)
     interval_steps, interval_start, run_start = 0, time.perf_counter(), time.perf_counter()
+    data_seconds = pause_seconds = 0.0
 
     while global_step < max_steps:
         sampler.set_position(
             global_step // steps_per_epoch,
             (global_step % steps_per_epoch) * batch_size,
         )
+        waiting = time.perf_counter()
         for batch in train_loader:
+            data_seconds += time.perf_counter() - waiting
             if global_step >= max_steps:
                 break
 
@@ -487,6 +493,9 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                         "lr": optimizer.param_groups[0]["lr"],
                         "steps_per_sec": round(interval_steps / elapsed, 3),
                         "samples_per_sec": round(interval_steps * batch_size / elapsed, 1),
+                        "train_steps_per_sec": round(interval_steps / max(elapsed - pause_seconds, 1e-9), 3),
+                        "data_wait_sec": round(data_seconds, 3),
+                        "eval_save_sec": round(pause_seconds, 3),
                         "elapsed_hours": round((time.perf_counter() - run_start) / 3600, 4),
                     }
                 )
@@ -494,7 +503,9 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                 sums = {term: torch.zeros((), device=device) for term in LOSS_TERMS}
                 grad_norm_sum = torch.zeros((), device=device)
                 interval_steps, interval_start = 0, time.perf_counter()
+                data_seconds = pause_seconds = 0.0
 
+            paused = time.perf_counter()
             if eval_interval > 0 and global_step % eval_interval == 0:
                 if main_process:
                     values, count = evaluate(model, val_loader, device, num_visible, lambdas, eval_batches, seed)
@@ -512,6 +523,8 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                 save(ckpt_path)
                 log({"type": "checkpoint", "step": global_step, "path": ckpt_path})
                 say(f"\nSaved checkpoint: {ckpt_path}")
+            pause_seconds += time.perf_counter() - paused
+            waiting = time.perf_counter()
 
     pbar.close()
 
