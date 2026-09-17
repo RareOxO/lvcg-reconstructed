@@ -75,3 +75,6 @@ train:
   eval_batches: 50
   resume_interval: 2000
   seed: 42
+  # With several GPUs (torchrun): batch_size stays the total batch and is split across
+  # GPUs; BatchNorm statistics are synchronised so they still cover the whole batch.
+  sync_batchnorm: true

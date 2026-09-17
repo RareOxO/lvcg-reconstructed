@@ -5,10 +5,10 @@ The objective and the optimisation are the release's. Added around them:
 
 * Logging. ``logs/<run_id>/train_log.jsonl`` gets one JSON object per event:
   ``train`` every ``train.log_interval`` steps (all five loss terms averaged over the
-  interval, learning rate, gradient norm before clipping, speed, elapsed time), ``val``
-  every ``train.eval_interval`` steps, ``checkpoint`` for every save, and ``start`` /
-  ``resume`` markers. ``run_info.json`` records the config, environment and data sizes.
-  The progress bar shows all five terms too; the release showed three.
+  interval and over GPUs, learning rate, gradient norm before clipping, speed, elapsed
+  time), ``val`` every ``train.eval_interval`` steps, ``checkpoint`` for every save, and
+  ``start`` / ``resume`` markers. ``run_info.json`` records the config, environment and
+  data sizes. The progress bar shows all five terms too; the release showed three.
 * Validation. The release built a validation loader and never used it. Every
   ``eval_interval`` steps the same first ``train.eval_batches`` validation batches are
   scored with the same visible-lead masks each time, so the numbers are comparable
@@ -21,6 +21,15 @@ The objective and the optimisation are the release's. Added around them:
   drawn: resuming is a continuation, not a restart.
 * Overwrite protection. A fresh run refuses to start in a checkpoint directory that
   already holds checkpoints; resume it or choose another run id.
+* Several GPUs. Launched with ``torchrun`` the script trains with DistributedDataParallel
+  on every process torchrun starts (``--nproc_per_node=gpu`` uses every visible GPU);
+  started with plain ``python`` it is the single-device script it always was.
+  ``train.batch_size`` stays the *total* batch -- the paper's 64 -- and is split evenly
+  across GPUs, so the optimisation is the same whatever the GPU count. BatchNorm is
+  synchronised across GPUs by default (``train.sync_batchnorm``), so its statistics are
+  still taken over the whole batch rather than each GPU's share of it. All GPUs read one
+  seeded shuffle, each taking its own slice, and every GPU's random state is saved, so
+  resuming stays a continuation with several GPUs too.
 """
 
 from __future__ import annotations
@@ -32,11 +41,13 @@ import platform
 import random
 import subprocess
 import time
-from typing import Dict, Iterator, Optional
+from typing import Dict, Iterator, List, Optional
 
 import numpy as np
 import torch
+import torch.distributed as dist
 import torch.nn as nn
+from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, Sampler
 from tqdm import tqdm
 
@@ -53,16 +64,20 @@ SPEED_SWITCHES = ("vectorized_stitcher", "fast_upsample")
 
 
 class EpochSampler(Sampler):
-    """A seeded permutation per epoch that can start part-way through.
+    """A seeded permutation per epoch that can start part-way through, sliced per GPU.
 
     ``set_position(epoch, skip)`` chooses the epoch and how many leading samples of its
-    permutation to skip; the DataLoader asks for a fresh iterator at the start of every
-    epoch, and after the first one ``skip`` returns to zero.
+    permutation (counted over all GPUs) to skip. Every GPU draws the same permutation;
+    what remains is cut to a multiple of the GPU count and GPU ``rank`` takes every
+    ``world``-th sample from position ``rank``, so the GPUs read disjoint records and
+    each has the same number of batches.
     """
 
-    def __init__(self, size: int, seed: int):
+    def __init__(self, size: int, seed: int, rank: int = 0, world: int = 1):
         self.size = size
         self.seed = seed
+        self.rank = rank
+        self.world = world
         self.epoch = 0
         self.skip = 0
 
@@ -73,17 +88,20 @@ class EpochSampler(Sampler):
         generator = torch.Generator().manual_seed(self.seed + self.epoch)
         order = torch.randperm(self.size, generator=generator)[self.skip :]
         self.skip = 0
-        return iter(order.tolist())
+        usable = len(order) // self.world * self.world
+        return iter(order[:usable][self.rank :: self.world].tolist())
 
     def __len__(self) -> int:
-        return self.size - self.skip
+        return (self.size - self.skip) // self.world
 
 
-def _seeded_train_loader(loader: DataLoader, seed: int) -> DataLoader:
-    sampler = EpochSampler(len(loader.dataset), seed)
+def _seeded_train_loader(
+    loader: DataLoader, seed: int, rank: int = 0, world: int = 1, batch_size: Optional[int] = None
+) -> DataLoader:
+    sampler = EpochSampler(len(loader.dataset), seed, rank, world)
     return DataLoader(
         loader.dataset,
-        batch_size=loader.batch_size,
+        batch_size=batch_size or loader.batch_size,
         sampler=sampler,
         drop_last=loader.drop_last,
         num_workers=loader.num_workers,
@@ -93,8 +111,24 @@ def _seeded_train_loader(loader: DataLoader, seed: int) -> DataLoader:
         # Its own generator: starting a new pass otherwise draws the workers' base seed
         # from the global generator, one extra draw that would shift every lead mask
         # and dropout pattern after a resume.
-        generator=torch.Generator().manual_seed(seed),
+        generator=torch.Generator().manual_seed(seed + rank),
     )
+
+
+class TrainStep(nn.Module):
+    """Routes ``forward`` to ``forward_train``.
+
+    DistributedDataParallel prepares its gradient synchronisation in ``forward``, so the
+    pretraining pass has to be reached through it rather than by calling
+    ``model.forward_train`` on the unwrapped model.
+    """
+
+    def __init__(self, model: nn.Module):
+        super().__init__()
+        self.model = model
+
+    def forward(self, ecg: torch.Tensor, visible_indices: torch.Tensor):
+        return self.model.forward_train(ecg, visible_indices)
 
 
 def _rng_state(device: torch.device) -> Dict[str, object]:
@@ -131,10 +165,16 @@ def _git_commit() -> Optional[str]:
 
 
 def compute_losses(model, ecg, num_visible, lambdas):
-    """The release's objective, unchanged. Returns (total, {term: detached value})."""
+    """The release's objective, unchanged. Returns (total, {term: detached value}).
+
+    ``model`` is an LVCG, or a DistributedDataParallel-wrapped ``TrainStep`` around one.
+    """
     B = ecg.shape[0]
     visible_indices, mask = random_lead_mask(B, num_visible=num_visible, device=ecg.device)
-    outputs = model.forward_train(ecg, visible_indices)
+    if hasattr(model, "forward_train"):
+        outputs = model.forward_train(ecg, visible_indices)
+    else:
+        outputs = model(ecg, visible_indices)
 
     loss_recon = masked_reconstruction_loss(outputs["recon"], ecg, mask)
     loss_temporal = temporal_loss(
@@ -197,23 +237,49 @@ def evaluate(model, loader, device, num_visible, lambdas, batches, seed):
     return {term: value / max(count, 1) for term, value in sums.items()}, count
 
 
-def train(cfg: Config, resume: Optional[str] = None) -> str:
-    requested = cfg.train.get("device", "auto")
+def _setup_process(requested: str):
+    """(device, rank, world, local_rank). Distributed when launched by torchrun."""
+    world = int(os.environ.get("WORLD_SIZE", "1"))
+    rank = int(os.environ.get("RANK", "0"))
+    local_rank = int(os.environ.get("LOCAL_RANK", "0"))
     if requested == "auto":
         requested = "cuda" if torch.cuda.is_available() else "cpu"
-    device = torch.device(requested)
-    print(f"Using device: {device}")
+    if world > 1:
+        if requested.startswith("cuda"):
+            torch.cuda.set_device(local_rank)
+            device = torch.device("cuda", local_rank)
+            backend = os.environ.get("LVCG_DIST_BACKEND", "nccl")
+        else:
+            device = torch.device("cpu")
+            backend = "gloo"
+        if not dist.is_initialized():
+            dist.init_process_group(backend=backend)
+    else:
+        device = torch.device(requested)
+    return device, rank, world, local_rank
+
+
+def train(cfg: Config, resume: Optional[str] = None) -> str:
+    device, rank, world, local_rank = _setup_process(cfg.train.get("device", "auto"))
+    main_process = rank == 0
+
+    def say(message: str) -> None:
+        if main_process:
+            print(message, flush=True)
+
+    say(f"Using device: {device}" + (f" x {world} processes" if world > 1 else ""))
 
     run_id = f"{cfg.run.get('m', 'm5')}{cfg.run.get('s', 's1')}{cfg.run.get('k', 'k1')}"
     ckpt_dir = ensure_run_dirs(cfg.run.get("checkpoint_root", "./checkpoints"), run_id)
     log_dir = ensure_run_dirs(cfg.run.get("log_root", "./logs"), run_id)
-    print(f"Run ID: {run_id}")
-    print(f"Checkpoint dir: {ckpt_dir}")
-    print(f"Log dir: {log_dir}")
+    say(f"Run ID: {run_id}")
+    say(f"Checkpoint dir: {ckpt_dir}")
+    say(f"Log dir: {log_dir}")
 
     last_path = os.path.join(ckpt_dir, "last.pt")
     resume_path = last_path if resume == "auto" else resume
     existing = sorted(n for n in os.listdir(ckpt_dir) if n.endswith(".pt"))
+    # Every process checks, so none is left waiting on a collective when this stops.
     if resume_path is None and existing:
         raise SystemExit(
             f"{ckpt_dir} already holds {existing}. Pass --resume to continue that run, "
@@ -222,21 +288,29 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
 
     train_cfg = cfg.train
     seed = int(train_cfg.get("seed", 42))
+    batch_size = int(train_cfg.get("batch_size", 64))
+    if batch_size % world:
+        raise SystemExit(f"train.batch_size {batch_size} is not divisible by {world} GPUs")
+    per_gpu_batch = batch_size // world
     if resume_path is None:
-        random.seed(seed)
-        np.random.seed(seed)
-        torch.manual_seed(seed)
+        random.seed(seed + rank)
+        np.random.seed(seed + rank)
+        torch.manual_seed(seed + rank)
 
     model = build_model(cfg).to(device)
     parameters = sum(p.numel() for p in model.parameters())
-    print(f"Model parameters: {parameters:,}")
+    say(f"Model parameters: {parameters:,}")
+    sync_batchnorm = bool(train_cfg.get("sync_batchnorm", True)) and world > 1
+    if sync_batchnorm:
+        model = nn.SyncBatchNorm.convert_sync_batchnorm(model)
 
     train_loader, val_loader = make_dataloaders(cfg.raw)
-    train_loader = _seeded_train_loader(train_loader, seed)
+    train_loader = _seeded_train_loader(train_loader, seed, rank, world, per_gpu_batch)
     sampler: EpochSampler = train_loader.sampler
-    print(
+    say(
         f"Train samples: {len(train_loader.dataset)}, "
         f"Val samples: {len(val_loader.dataset)}"
+        + (f", batch {batch_size} = {world} x {per_gpu_batch}" if world > 1 else "")
     )
 
     optimizer = torch.optim.AdamW(
@@ -260,7 +334,7 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
     resume_interval = int(train_cfg.get("resume_interval", 2000))
     grad_clip = float(train_cfg.get("grad_clip", 1.0))
 
-    steps_per_epoch = len(train_loader.dataset) // train_loader.batch_size
+    steps_per_epoch = len(train_loader.dataset) // batch_size
     if steps_per_epoch == 0:
         raise SystemExit("Fewer training records than one batch")
 
@@ -277,6 +351,7 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                     f"Refusing to resume: {section}.{key} was {saved.get(section, {}).get(key)!r}, "
                     f"now {cfg.raw.get(section, {}).get(key)!r}"
                 )
+
         # The speed switches compute the same numbers, so a run may turn them on or off
         # when it resumes; any other change to the model section is refused.
         def architecture(section):
@@ -287,12 +362,37 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
         model.load_state_dict(state["model_state_dict"])
         optimizer.load_state_dict(state["optimizer_state_dict"])
         global_step = int(state["global_step"])
-        _set_rng_state(state["rng"], device)
-        print(f"Resumed from {resume_path} at step {global_step}")
+        states: List[Dict[str, object]] = state.get("rng_per_process") or [state["rng"]]
+        if len(states) == world:
+            _set_rng_state(states[rank], device)
+        else:
+            # A different GPU count cannot replay the same draws; start fresh, but
+            # reproducibly, from the step reached.
+            say(f"Resuming on {world} process(es) from a run saved on {len(states)}: "
+                "the data slicing and random draws continue from new seeds")
+            random.seed(seed + rank + global_step)
+            np.random.seed(seed + rank + global_step)
+            torch.manual_seed(seed + rank + global_step)
+        say(f"Resumed from {resume_path} at step {global_step}")
+
+    step_model = (
+        DistributedDataParallel(
+            TrainStep(model),
+            device_ids=[local_rank] if device.type == "cuda" else None,
+            # forward_train computes the rhythm embedding, the embedding LayerNorms and
+            # the SSL projection heads, but none of them enters the pretraining loss, so
+            # they never receive a gradient -- in the release's single-GPU training too.
+            # DDP has to be told to expect parameters without gradients.
+            find_unused_parameters=True,
+        )
+        if world > 1
+        else model
+    )
 
     def log(event: Dict[str, object]) -> None:
-        with open(log_path, "a", encoding="utf-8") as handle:
-            handle.write(json.dumps(event) + "\n")
+        if main_process:
+            with open(log_path, "a", encoding="utf-8") as handle:
+                handle.write(json.dumps(event) + "\n")
 
     info = {
         "run_id": run_id,
@@ -300,6 +400,9 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
         "resumed_from_step": global_step if resume_path else None,
         "config": cfg.raw,
         "device": str(device),
+        "processes": world,
+        "batch_per_gpu": per_gpu_batch,
+        "sync_batchnorm": sync_batchnorm,
         "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
         "torch": torch.__version__,
         "python": platform.python_version(),
@@ -309,22 +412,36 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
         "val_records": len(val_loader.dataset),
         "steps_per_epoch": steps_per_epoch,
     }
-    info_name = "run_info.json" if resume_path is None else f"run_info_resume_{global_step}.json"
-    with open(os.path.join(log_dir, info_name), "w", encoding="utf-8") as handle:
-        json.dump(info, handle, indent=2, default=str)
+    if main_process:
+        info_name = "run_info.json" if resume_path is None else f"run_info_resume_{global_step}.json"
+        with open(os.path.join(log_dir, info_name), "w", encoding="utf-8") as handle:
+            json.dump(info, handle, indent=2, default=str)
     log({"type": "resume" if resume_path else "start", "step": global_step, "time": info["started"]})
 
-    def checkpoint_payload() -> Dict[str, object]:
-        return {
-            "model_state_dict": model.state_dict(),
-            "optimizer_state_dict": optimizer.state_dict(),
-            "global_step": global_step,
-            "rng": _rng_state(device),
-            "config": cfg.raw,
-        }
+    def save(path: str) -> None:
+        """Every process takes part, because each contributes its random state."""
+        mine = _rng_state(device)
+        if world > 1:
+            states: List[Optional[Dict[str, object]]] = [None] * world
+            dist.all_gather_object(states, mine)
+        else:
+            states = [mine]
+        if main_process:
+            _atomic_save(
+                {
+                    "model_state_dict": model.state_dict(),
+                    "optimizer_state_dict": optimizer.state_dict(),
+                    "global_step": global_step,
+                    "rng": states[0],
+                    "rng_per_process": states,
+                    "config": cfg.raw,
+                    "processes": world,
+                },
+                path,
+            )
 
     model.train()
-    pbar = tqdm(total=max_steps, initial=global_step, desc="Training")
+    pbar = tqdm(total=max_steps, initial=global_step, desc="Training", disable=not main_process)
     sums = {term: torch.zeros((), device=device) for term in LOSS_TERMS}
     grad_norm_sum = torch.zeros((), device=device)
     interval_steps, interval_start, run_start = 0, time.perf_counter(), time.perf_counter()
@@ -332,7 +449,7 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
     while global_step < max_steps:
         sampler.set_position(
             global_step // steps_per_epoch,
-            (global_step % steps_per_epoch) * train_loader.batch_size,
+            (global_step % steps_per_epoch) * batch_size,
         )
         for batch in train_loader:
             if global_step >= max_steps:
@@ -340,7 +457,7 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
 
             ecg = batch["ecg"].to(device, non_blocking=True)
             optimizer.zero_grad()
-            loss, terms = compute_losses(model, ecg, num_visible, lambdas)
+            loss, terms = compute_losses(step_model, ecg, num_visible, lambdas)
             loss.backward()
 
             if grad_clip > 0:
@@ -355,7 +472,11 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
 
             if global_step % log_interval == 0:
                 elapsed = time.perf_counter() - interval_start
-                means = {term: (sums[term] / interval_steps).item() for term in LOSS_TERMS}
+                stacked = torch.stack([sums[term] for term in LOSS_TERMS]) / interval_steps
+                if world > 1:
+                    dist.all_reduce(stacked, op=dist.ReduceOp.SUM)
+                    stacked /= world
+                means = dict(zip(LOSS_TERMS, stacked.tolist()))
                 log(
                     {
                         "type": "train",
@@ -365,6 +486,7 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                         "grad_norm": round((grad_norm_sum / interval_steps).item(), 6) if grad_clip > 0 else None,
                         "lr": optimizer.param_groups[0]["lr"],
                         "steps_per_sec": round(interval_steps / elapsed, 3),
+                        "samples_per_sec": round(interval_steps * batch_size / elapsed, 1),
                         "elapsed_hours": round((time.perf_counter() - run_start) / 3600, 4),
                     }
                 )
@@ -374,27 +496,33 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                 interval_steps, interval_start = 0, time.perf_counter()
 
             if eval_interval > 0 and global_step % eval_interval == 0:
-                values, count = evaluate(model, val_loader, device, num_visible, lambdas, eval_batches, seed)
-                log({"type": "val", "step": global_step, "records": count,
-                     **{term: round(value, 6) for term, value in values.items()}})
+                if main_process:
+                    values, count = evaluate(model, val_loader, device, num_visible, lambdas, eval_batches, seed)
+                    log({"type": "val", "step": global_step, "records": count,
+                         **{term: round(value, 6) for term, value in values.items()}})
+                if world > 1:
+                    dist.barrier()
 
             if resume_interval > 0 and global_step % resume_interval == 0:
-                _atomic_save(checkpoint_payload(), last_path)
+                save(last_path)
                 log({"type": "checkpoint", "step": global_step, "path": last_path})
 
             if global_step % save_interval == 0:
                 ckpt_path = os.path.join(ckpt_dir, f"step_{global_step}.pt")
-                _atomic_save(checkpoint_payload(), ckpt_path)
+                save(ckpt_path)
                 log({"type": "checkpoint", "step": global_step, "path": ckpt_path})
-                print(f"\nSaved checkpoint: {ckpt_path}")
+                say(f"\nSaved checkpoint: {ckpt_path}")
 
     pbar.close()
 
     final_path = os.path.join(ckpt_dir, "final.pt")
-    _atomic_save(checkpoint_payload(), final_path)
-    _atomic_save(checkpoint_payload(), last_path)
+    save(final_path)
+    save(last_path)
     log({"type": "checkpoint", "step": global_step, "path": final_path})
-    print(f"Saved checkpoint: {final_path}")
+    say(f"Saved checkpoint: {final_path}")
+    if world > 1:
+        dist.barrier()
+        dist.destroy_process_group()
     return ckpt_dir
 
 

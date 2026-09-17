@@ -92,6 +92,27 @@ python scripts/train.py --config configs/train/lvcg_v5_gru.yaml \
 
 `scripts/benchmark_batch.py` measures throughput on the GPU at hand.
 
+**Several GPUs.** Launch the same script with `torchrun`; `--nproc_per_node=gpu` uses every
+visible GPU:
+
+```bash
+torchrun --standalone --nproc_per_node=gpu scripts/train.py --config configs/train/lvcg_v5_gru.yaml \
+  --model.vectorized_stitcher true --model.fast_upsample true
+```
+
+`train.batch_size` stays the total batch (the paper's 64) and is split evenly across GPUs,
+and BatchNorm statistics are synchronised across them (`train.sync_batchnorm`, default
+true), so the optimisation matches single-GPU training. Logs and checkpoints are written
+once; checkpoints load into a single-GPU model unchanged; `--resume` continues exactly when
+the GPU count is the same, and from fresh seeds when it is not. `data.num_workers` is per
+GPU process, so keep processes x workers within the CPU cores.
+
+`scripts/benchmark_ddp.py --manifest <manifest>` times the grid of GPU counts (1, 2, 4, ...
+up to all visible), batch per GPU and BatchNorm synchronisation, and prints samples per
+second, the speed-up against one GPU at batch 64 and the scaling efficiency. Rows whose
+total batch is 64 keep the paper's optimisation; larger totals are faster per sample but
+change it.
+
 ```bash
 python scripts/train.py --config configs/train/lvcg_v5_gru.yaml \
   --data.meta_root /path/to/mimic_manifest.jsonl
