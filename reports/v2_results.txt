@@ -1,0 +1,31 @@
+qdf_v1.csv — 13 runs, metric test_macro_auroc
+            variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  ----------------------------------------------------------------------
+                 v0     4   85.27  0.03   -0.01       -   17.5   180,693
+   control xyz-pair     4   89.32  0.09   +4.04   +4.05    6.8   181,593
+  qdf q/th/om nomag     1   87.49     -   +2.22   +2.24    6.0   180,243
+    qdf q/th/om/mag     4   88.00  0.06   +2.72   +2.73    6.8   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+              variant    NORM      MI    STTC      CD     HYP
+                   v0  0.8982  0.8395  0.8869  0.8560  0.7815
+     control xyz-pair  0.9296  0.9093  0.9242  0.9036  0.7984
+    qdf q/th/om nomag  0.9153  0.8767  0.9038  0.8746  0.8043
+      qdf q/th/om/mag  0.9212  0.8875  0.9043  0.8832  0.8033
+
+qdt_v2.csv — 11 runs, metric test_macro_auroc
+                         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------------------------
+                        v0 gated     3   85.67  0.03   +0.00   +0.00   17.7   311,637
+          control xyz-pair gated     3   87.28  0.20   +1.61   +1.61    5.3   312,537
+   qdt q/th/om/mag concat concat     1   86.09     -   +0.42   +0.45    4.0   278,613
+           qdt q/th/om/mag gated     3   86.10  0.04   +0.43   +0.43    3.0   311,637
+  qdt q/th/om/mag gated init0.01     1   86.09     -   +0.41   +0.44    5.0   311,637
+
+  per-label test AUROC (seed of the first run of each variant):
+                           variant    NORM      MI    STTC      CD     HYP
+                          v0 gated  0.9008  0.8474  0.8915  0.8570  0.7854
+            control xyz-pair gated  0.9163  0.8821  0.9101  0.8720  0.7976
+     qdt q/th/om/mag concat concat  0.9084  0.8568  0.8947  0.8628  0.7818
+             qdt q/th/om/mag gated  0.9063  0.8485  0.8971  0.8660  0.7896
+    qdt q/th/om/mag gated init0.01  0.9064  0.8543  0.8911  0.8590  0.7934

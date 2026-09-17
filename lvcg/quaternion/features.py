@@ -30,11 +30,12 @@ FEATURE_CHANNELS = {
     "omega": 1,
     "magnitude": 1,
     "linear_velocity": 1,
+    "direction": 3,
     "position": 3,
     "next_position": 3,
     "delta": 3,
 }
-QUATERNION_FEATURES = ("q", "theta", "omega", "magnitude", "linear_velocity")
+QUATERNION_FEATURES = ("q", "theta", "omega", "magnitude", "linear_velocity", "direction")
 CONTROL_FEATURES = ("position", "next_position", "delta")
 
 _IDENTITY = (1.0, 0.0, 0.0, 0.0)
@@ -79,6 +80,11 @@ def transition_features(p, mask, features, dt, sign_continuity=True, with_mask=T
         parts.update(q=q, theta=theta, omega=theta / dt)
     if "magnitude" in features:
         parts["magnitude"] = _safe_norm(current, keepdim=True)
+    if "direction" in features:
+        # The cardiac vector's absolute orientation, which q_t throws away: q_t says how
+        # the vector turns between two samples, not where in the torso it points. V3 uses
+        # it to test whether that is what the quaternion features are missing.
+        parts["direction"] = current / _safe_norm(current, keepdim=True)
     if "linear_velocity" in features:
         parts["linear_velocity"] = _safe_norm(following - current, keepdim=True) / dt
     parts.update(position=current, next_position=following, delta=following - current)
@@ -97,6 +103,7 @@ class QuaternionDynamicFeatures(nn.Module):
         omega_t  theta_t / dt, rad/s                     1
         magnitude         ||P_t||                        1
         linear_velocity   ||P_{t+1} - P_t|| / dt         1
+        direction         P_t / ||P_t||                  3
 
     The real-valued control replaces these with ``position``, ``next_position`` and
     ``delta`` (3 channels each).

@@ -1,8 +1,8 @@
 """One table per Quaternion stage: every run grouped by variant, with the delta against V0.
 
 Reads the CSVs the stage scripts append to (``probing/results/qdf_v1.csv``,
-``qdt_v2.csv``, ...) and prints, for each variant, the mean and spread of test macro
-AUROC over seeds and its distance from that stage's own V0.
+``qdt_v2.csv``, ``mrq_v3.csv``, ...) and prints, for each variant, the mean and spread of
+test macro AUROC over seeds and its distance from that stage's own V0.
 
 Each stage is compared only against the V0 row from the same CSV, because the stages
 differ in how they replay the pretrained path: V1 takes the released embedding, V2
@@ -33,8 +33,11 @@ SHORT_FEATURES = {
 
 
 def _variant(row) -> str:
-    """The run's identity: model, feature set, fusion and tag, minus the seed."""
+    """The run's identity: model, features or components, fusion and tag, minus the seed."""
     parts = [row["model"]]
+    # V3 names its runs by the components the head reads; V1 and V2 by the feature set.
+    if row.get("components"):
+        parts = [row["components"].replace("+", " + ")]
     features = row.get("features", "")
     if row["model"] != "v0" and features:
         parts.append(SHORT_FEATURES.get(features, features.replace("+", "/")))
@@ -60,6 +63,7 @@ def summarize(path: str, metric: str) -> None:
     for row in rows:
         groups[_variant(row)].append(row)
     v0 = {int(r["seed"]): float(r[metric]) for r in rows if r["model"] == "v0"}
+    is_v0 = lambda name: name.startswith("v0") or name == "vcg"  # noqa: E731
     reference = mean(v0.values()) if v0 else None
 
     print(f"{os.path.basename(path)} — {len(rows)} runs, metric {metric}")
@@ -67,7 +71,7 @@ def summarize(path: str, metric: str) -> None:
     header = (f"  {'variant':>{width}} {'seeds':>5} {'AUROC':>7} {'+-':>5} {'vs V0':>7} "
               f"{'paired':>7} {'epoch':>6} {'params':>9}")
     print(header + "\n  " + "-" * (len(header) - 2))
-    for name in sorted(groups, key=lambda n: (not n.startswith("v0"), n)):
+    for name in sorted(groups, key=lambda n: (not is_v0(n), n)):
         group = groups[name]
         scores = [float(r[metric]) * 100 for r in group]
         spread = f"{pstdev(scores):.2f}" if len(scores) > 1 else "-"
@@ -75,18 +79,18 @@ def summarize(path: str, metric: str) -> None:
         # Paired: only over the seeds where a V0 run exists, which removes seed variance.
         paired = [float(r[metric]) * 100 - v0[int(r["seed"])] * 100
                   for r in group if int(r["seed"]) in v0]
-        paired_text = f"{mean(paired):+.2f}" if paired and name != "v0" else "-"
+        paired_text = f"{mean(paired):+.2f}" if paired and not is_v0(name) else "-"
         epochs = mean(float(r["best_epoch"]) for r in group)
         params = int(float(group[0]["trainable_params"]))
         print(f"  {name[:width]:>{width}} {len(group):>5} {mean(scores):>7.2f} {spread:>5} {delta:>7} "
               f"{paired_text:>7} {epochs:>6.1f} {params:>9,}")
 
-    best = max((g for n, g in groups.items() if not n.startswith("v0")), default=None,
+    best = max((g for n, g in groups.items() if not is_v0(n)), default=None,
                key=lambda g: mean(float(r[metric]) for r in g))
     if best:
         print("\n  per-label test AUROC (seed of the first run of each variant):")
         print(f"    {'variant':>{width}} " + " ".join(f"{label:>7}" for label in LABELS))
-        for name in sorted(groups, key=lambda n: (not n.startswith("v0"), n)):
+        for name in sorted(groups, key=lambda n: (not is_v0(n), n)):
             row = groups[name][0]
             values = [row.get(f"auroc_{label}") for label in LABELS]
             if all(values):
@@ -96,13 +100,15 @@ def summarize(path: str, metric: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--results", nargs="*", help="CSVs (default: qdf_v1 and qdt_v2 under probing/results)")
+    parser.add_argument("--results", nargs="*", help="CSVs (default: every stage under probing/results)")
     parser.add_argument("--metric", default="test_macro_auroc",
                         help="test_macro_auroc (default), val_macro_auroc, test_macro_f1, ...")
     args = parser.parse_args()
 
+    # One CSV per stage: qdf_v1, qdt_v2, mrq_v3, ... ordered by the stage number.
     paths = args.results or sorted(
-        p for p in glob.glob(os.path.join(REPO_ROOT, "probing", "results", "qd*_v*.csv"))
+        glob.glob(os.path.join(REPO_ROOT, "probing", "results", "*_v[0-9]*.csv")),
+        key=lambda path: os.path.basename(path).rsplit("_v", 1)[-1],
     )
     if not paths:
         raise SystemExit("No stage CSVs found; run scripts/train_qdf.py or train_qdt.py first")

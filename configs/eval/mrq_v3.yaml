@@ -1,0 +1,31 @@
+# V3, MRQ-LVCG (plan section 4, Tier 1: frozen backbone, parallel branches).
+# P_t = r_t u_t: a magnitude branch over r_t and a rotation branch over q_t / theta / omega,
+# read by the head beside the frozen 640-d embedding. Which branches are on is a command
+# line choice (--components), which is how the ablation matrix of plan 6.2 is run.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+quaternion:
+  fs: 100
+  embedding_dim: 128           # width of each branch's embedding
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+  min_magnitude_fraction: 0.02
+  sign_continuity: true
+  masked_pooling: true
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4

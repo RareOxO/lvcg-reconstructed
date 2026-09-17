@@ -11,6 +11,7 @@ from .features import (
     transition_features,
 )
 from .qdf import DynamicEncoder, QDFProbe
+from .mrq import COMPONENTS, MRQProbe
 from .qdt import QDTProbe, TokenFusion
 
 __all__ = [
@@ -19,6 +20,8 @@ __all__ = [
     "QuaternionDynamicFeatures",
     "transition_features",
     "DynamicEncoder",
+    "COMPONENTS",
+    "MRQProbe",
     "QDFProbe",
     "QDTProbe",
     "TokenFusion",
