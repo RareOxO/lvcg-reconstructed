@@ -118,3 +118,17 @@ def test_the_v1_training_loop_drives_this_model_unchanged():
     module.train(model, data, torch.device("cpu"), {"batch_size": 32, "max_epochs": 8, "patience": 8}, seed=0)
     scores = module.evaluate(model, data["val"], torch.device("cpu"), 64)
     assert scores["per_label_auroc"][0] > 0.85, scores["per_label_auroc"]
+
+
+def test_components_survive_a_shell_that_does_not_split_words(tmp_path, monkeypatch):
+    """zsh passes "vcg rotation" as a single argument; the script must still split it."""
+    spec = importlib.util.spec_from_file_location(
+        "train_mrq", os.path.join(REPO_ROOT, "scripts", "train_mrq.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    parser_components = lambda argv: tuple(  # noqa: E731
+        part for argument in argv for part in __import__("re").split(r"[\s,+]+", argument.strip()) if part
+    )
+    assert parser_components(["vcg rotation direction"]) == ("vcg", "rotation", "direction")
+    assert parser_components(["vcg", "control"]) == ("vcg", "control")
+    assert parser_components(["vcg+magnitude,rotation"]) == ("vcg", "magnitude", "rotation")

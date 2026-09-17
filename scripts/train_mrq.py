@@ -27,6 +27,7 @@ import csv
 import importlib.util
 import json
 import os
+import re
 import sys
 import time
 
@@ -55,7 +56,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=os.path.join(REPO_ROOT, "configs", "eval", "mrq_v3.yaml"))
     parser.add_argument("--components", nargs="+", default=["vcg", "magnitude", "rotation"],
-                        help=f"vcg plus any of {list(COMPONENTS)}")
+                        help=f"vcg plus any of {list(COMPONENTS)}; separate them with spaces, "
+                             "commas or plus signs")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--ratio", type=float, default=1.0)
     parser.add_argument("--checkpoint")
@@ -72,7 +74,12 @@ def main() -> None:
     device = torch.device(args.device)
     train_qdf.set_seed(args.seed)
 
-    components = tuple(args.components)
+    # zsh does not split an unquoted variable, so "vcg rotation" can arrive as one
+    # argument; accept spaces, commas and plus signs alike.
+    components = tuple(
+        part for argument in args.components
+        for part in re.split(r"[\s,+]+", argument.strip()) if part
+    )
     print(f"Components {' + '.join(components)} | seed {args.seed} | ratio {args.ratio:.0%}")
 
     provider_cfg = {
