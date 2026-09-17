@@ -1,0 +1,32 @@
+# V1, QDF-LVCG (plan section 4, Tier 1: frozen backbone).
+# Only the quaternion branch and the linear head are trained; the pretrained LVCG is
+# the locked V0 reference and is never updated.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+quaternion:
+  fs: 100                      # the cached VCG is at 100 Hz, so dt = 0.01 s
+  embedding_dim: 128           # e_Q width (plan: suggested 128)
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+  min_magnitude_fraction: 0.02 # transitions below this share of the record's 99th
+                               # percentile magnitude carry no reliable direction
+  sign_continuity: true
+  masked_pooling: true         # pool over reliable transitions only
+  scale: 1.0                   # 0 reproduces V0 exactly (V0-equivalence check)
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4
