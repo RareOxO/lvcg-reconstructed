@@ -136,6 +136,15 @@ class QDTProbe(nn.Module):
             module.eval()
             for parameter in module.parameters():
                 parameter.requires_grad_(False)
+        # cuDNN refuses to back-propagate through an RNN that is in evaluation mode, and
+        # the gradient of the fusion runs through this GRU. The GRU is therefore kept in
+        # training mode (see ``train``) with its dropout switched off, which makes the two
+        # modes numerically identical: an nn.GRU has no other mode-dependent behaviour.
+        for module in self.state_generator.modules():
+            if isinstance(module, nn.RNNBase):
+                module.dropout = 0.0
+            elif isinstance(module, nn.Dropout):
+                module.p = 0.0
 
         self.dynamics = BeatQuaternionFeatures(features, fs, min_magnitude_fraction, sign_continuity)
         self.encoder = DynamicEncoder(self.dynamics.channels, quaternion_dim, hidden, kernel, dropout)
@@ -147,8 +156,10 @@ class QDTProbe(nn.Module):
 
     def train(self, mode=True):
         super().train(mode)
-        # The pretrained pieces stay in evaluation mode whatever the probe does.
-        self.state_generator.eval()
+        # The pretrained pieces are frozen, and with dropout off their mode changes
+        # nothing numerically -- but cuDNN needs the GRU in training mode to give a
+        # backward pass, so it follows the probe's mode while the norms stay in eval.
+        self.state_generator.train(mode)
         self.norm_struct.eval()
         self.norm_dynamic.eval()
         return self

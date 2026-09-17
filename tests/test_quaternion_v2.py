@@ -158,7 +158,25 @@ def test_forward_is_finite_with_the_ptbxl_shape_and_trains_the_right_parameters(
     assert model.state_generator.gru.weight_ih_l0.grad is None
 
 
-def test_pretrained_pieces_stay_in_evaluation_mode():
+def test_frozen_gru_follows_the_probe_mode_with_dropout_disabled():
+    """cuDNN needs the GRU in training mode to back-propagate; dropout off keeps it exact."""
+    model = _probe(scale=1.0)
+    assert model.state_generator.gru.dropout == 0.0
+    batch = _batch()
+
+    model.eval()
+    evaluation = model(*batch)
+    model.train()
+    assert model.state_generator.training and not model.norm_struct.training
+    torch.manual_seed(0)
+    with torch.no_grad():
+        model.encoder.eval()  # isolate the frozen path from the branch's own dropout
+        training = model(*batch)
+    assert torch.allclose(evaluation, training, atol=1e-6), "the frozen path must not change mode to mode"
+
+
+def test_backward_runs_through_the_frozen_gru():
     model = _probe(scale=1.0).train()
-    assert not model.state_generator.training and not model.norm_struct.training
-    assert model.encoder.training
+    loss = model(*_batch()).sum()
+    loss.backward()  # on CUDA this is what cuDNN rejects when the GRU sits in eval mode
+    assert model.fusion.value.weight.grad.abs().max() > 0
