@@ -46,6 +46,24 @@ python scripts/train.py --config configs/train/lvcg_v5_gru.yaml
 
 Checkpoints are written to `checkpoints/<run_id>/` (default run id `m5s1k1`). Use **`final.pt`** for downstream evaluation.
 
+**Logs and resuming.** Each run writes `logs/<run_id>/train_log.jsonl`: every
+`train.log_interval` steps the five loss terms (total, recon, temporal, beat, base), learning
+rate, gradient norm and speed; every `train.eval_interval` steps the same terms on the first
+`train.eval_batches` validation batches, with fixed masks; and a line for every checkpoint.
+`run_info.json` holds the config, environment and data sizes. Every
+`train.resume_interval` steps `checkpoints/<run_id>/last.pt` is refreshed with the model,
+optimiser, step and random states. To continue an interrupted run, repeat the same command
+with `--resume`:
+
+```bash
+python scripts/train.py --config configs/train/lvcg_v5_gru.yaml --model.vectorized_stitcher true --resume
+```
+
+The training order is a seeded shuffle per epoch (`train.seed`), so a resumed run picks up
+at the exact batch it stopped at; the tests check that 3 steps plus a resume to 6 give the
+same weights as 6 steps straight. A fresh run refuses to start where checkpoints already
+exist, so a run id is never overwritten by accident.
+
 **Faster beat stitching (optional).** The decoder's `BeatStitcher` loops over every beat in
 Python and dominates step time. `lvcg/models/blocks/stitcher_vectorized.py` computes the
 same output in a few tensor operations; it matches the loop to 1e-10 in double precision

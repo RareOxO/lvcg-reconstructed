@@ -67,3 +67,8 @@ train:
   log_interval: 100
   save_interval: 50000
   eval_interval: 1000
+  # Added with logging and resuming (scripts/train.py): validation batches per
+  # evaluation, how often last.pt is refreshed, and the seed of the training order.
+  eval_batches: 50
+  resume_interval: 2000
+  seed: 42
