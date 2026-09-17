@@ -47,7 +47,7 @@ if REPO_ROOT not in sys.path:
 
 from lvcg.quaternion.qdf import QDFProbe  # noqa: E402
 from probing.encoders.lvcg_encoder import LVCGEncoder  # noqa: E402
-from probing.run_probing import load_dataset  # noqa: E402
+from probing.datasets import create_provider  # noqa: E402
 
 FEATURE_SETS = {
     "qdf": ("q", "theta", "omega", "magnitude"),
@@ -206,10 +206,14 @@ def main() -> None:
         "splits_root": cfg["data"].get("splits_root", "probing/data_splits"),
         "norm_method": cfg["data"].get("norm_method", "zscore"),
     }
-    train_loader, val_loader, test_loader, num_classes, label_names = load_dataset(
-        "ptbxl_super_class", args.ratio, int(probe_cfg.get("batch_size", 256)),
-        int(probe_cfg.get("num_workers", 4)), provider_cfg,
+    bundle = create_provider("ptbxl_super_class", provider_cfg).build(
+        label_ratio=args.ratio,
+        batch_size=int(probe_cfg.get("batch_size", 256)),
+        num_workers=int(probe_cfg.get("num_workers", 4)),
     )
+    train_loader, val_loader, test_loader = bundle.train_loader, bundle.val_loader, bundle.test_loader
+    num_classes = bundle.num_classes
+    label_names = list(bundle.label_names) if bundle.label_names else list(LABELS)
     print(f"Train {len(train_loader.dataset)} | Val {len(val_loader.dataset)} | "
           f"Test {len(test_loader.dataset)} | classes {num_classes} {label_names}")
 
@@ -259,7 +263,7 @@ def main() -> None:
         "checkpoint": checkpoint, "seconds": round(seconds, 1),
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
-    for name, auroc, f1 in zip(label_names or LABELS, test["per_label_auroc"], test["per_label_f1"]):
+    for name, auroc, f1 in zip(label_names, test["per_label_auroc"], test["per_label_f1"]):
         row[f"auroc_{name}"] = auroc
         row[f"f1_{name}"] = f1
 
