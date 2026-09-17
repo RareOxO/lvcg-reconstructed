@@ -70,6 +70,13 @@ def add_cli_overrides(parser: argparse.ArgumentParser) -> argparse.ArgumentParse
     parser.add_argument("--train.batch_size", type=int, default=None)
     parser.add_argument("--train.max_steps", type=int, default=None)
     parser.add_argument("--data.meta_root", type=str, default=None)
+    parser.add_argument(
+        "--model.vectorized_stitcher",
+        type=str,
+        choices=("true", "false"),
+        default=None,
+        help="Use the vectorised beat stitcher (numerically equivalent, faster).",
+    )
     return parser
 
 
@@ -91,5 +98,6 @@ def apply_overrides(cfg: Config, args: argparse.Namespace) -> Config:
     set_if_not_none(("train", "batch_size"), getattr(args, "train.batch_size"))
     set_if_not_none(("train", "max_steps"), getattr(args, "train.max_steps"))
     set_if_not_none(("data", "meta_root"), getattr(args, "data.meta_root"))
+    set_if_not_none(("model", "vectorized_stitcher"), getattr(args, "model.vectorized_stitcher", None))
     return Config(raw=raw)
 

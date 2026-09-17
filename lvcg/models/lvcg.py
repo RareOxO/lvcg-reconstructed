@@ -73,6 +73,7 @@ from .blocks.beat_modules import (
     BeatStitcher,
     GlobalRREmbedding,
 )
+from .blocks.stitcher_vectorized import VectorizedBeatStitcher
 from .blocks.ttt_state_gen import LowRankStateGenerator
 from .vcg import VCGPseudoInverse, GeometricLeadProjection
 from .blocks.decoder import ECGRefinementDecoder
@@ -314,6 +315,10 @@ class LVCG(nn.Module):
         # Other
         fs: int = 100,
         rr_lead_idx: int = 1,
+        # Stitch decoded beats with the numerically equivalent vectorised stitcher
+        # instead of the per-beat Python loop. Off by default; no parameters involved,
+        # so checkpoints load either way.
+        vectorized_stitcher: bool = False,
     ):
         super().__init__()
         
@@ -396,7 +401,8 @@ class LVCG(nn.Module):
         )
         
         # ========== Beat Stitcher ==========
-        self.stitcher = BeatStitcher(
+        stitcher_cls = VectorizedBeatStitcher if vectorized_stitcher else BeatStitcher
+        self.stitcher = stitcher_cls(
             beat_len=beat_len,
             target_len=time_len,
         )
@@ -752,7 +758,15 @@ class LVCG(nn.Module):
             ecg_decoder_layers=int(model_cfg.get("ecg_decoder_layers", 2)),
             fs=int(cfg.data.get("fs", 100)),
             rr_lead_idx=int(model_cfg.get("rr_lead_idx", 1)),
+            vectorized_stitcher=_as_bool(model_cfg.get("vectorized_stitcher", False)),
         )
+
+
+def _as_bool(value) -> bool:
+    """YAML gives a bool; a CLI or JSON override may give a string."""
+    if isinstance(value, str):
+        return value.strip().lower() in ("1", "true", "yes", "on")
+    return bool(value)
 
 
 # =============================================================================

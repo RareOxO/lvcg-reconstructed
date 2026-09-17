@@ -46,6 +46,19 @@ python scripts/train.py --config configs/train/lvcg_v5_gru.yaml
 
 Checkpoints are written to `checkpoints/<run_id>/` (default run id `m5s1k1`). Use **`final.pt`** for downstream evaluation.
 
+**Faster beat stitching (optional).** The decoder's `BeatStitcher` loops over every beat in
+Python and dominates step time. `lvcg/models/blocks/stitcher_vectorized.py` computes the
+same output in a few tensor operations; it matches the loop to 1e-10 in double precision
+(outputs and gradients, including the full pretraining loss) and has no parameters, so
+checkpoints load either way. It is off by default:
+
+```bash
+python scripts/train.py --config configs/train/lvcg_v5_gru.yaml --model.vectorized_stitcher true
+```
+
+or set `model.vectorized_stitcher: true` in the YAML. On an RTX 4060 Laptop GPU a batch-64
+pretraining step drops from 0.60 s to 0.21 s.
+
 ```bash
 python scripts/train.py --config configs/train/lvcg_v5_gru.yaml \
   --data.meta_root /path/to/mimic_manifest.jsonl

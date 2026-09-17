@@ -45,6 +45,9 @@ model:
   ecg_decoder_hidden: 128
   ecg_decoder_layers: 2
   rr_lead_idx: 1
+  # true: vectorised beat stitcher, numerically equivalent to the per-beat loop and much
+  # faster; false keeps the original loop.
+  vectorized_stitcher: false
 
 train:
   batch_size: 64
