@@ -36,6 +36,14 @@ PhysioNet datasets require [credentialed access](https://physionet.org/settings/
 
 **After download:** see [docs/DATA_PREPARATION.md](docs/DATA_PREPARATION.md) (manifest for MIMIC, folder layout for probing, and config paths).
 
+**Preprocessing MIMIC once (recommended for multi-GPU).** Reading WFDB, resampling and filtering cost several ms per record on the CPU, which limits training throughput however many GPUs are used. Do it once:
+
+```bash
+python scripts/preprocess_to_npy.py --manifest ~/data/mimic_manifest.jsonl   # default --out /home/featurize/mimic_npy
+```
+
+It writes `signals.npy` (float32 `[N, 12, 1000]`, manifest order, about 36 GB for the full 800,035 records), `signals.failed.json` (unreadable rows) and `meta.json`, using `data.fs`, `data.time_len`, `data.bandpass` and `model.lead_order` from `--config`, and re-checks a random sample against the WFDB files. Then train with `data.dataset_type: npy` and `data.meta_root: /home/featurize/mimic_npy/signals.npy`. The per-lead z-score is applied on read and unreadable rows are replaced by the next readable one, so the model sees exactly the same records, and the same train/validation split, as with `mimic_raw`.
+
 ## Training
 
 LVCG pretraining on MIMIC-IV (self-supervised):
