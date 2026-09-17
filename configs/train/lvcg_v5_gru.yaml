@@ -48,6 +48,9 @@ model:
   # true: vectorised beat stitcher, numerically equivalent to the per-beat loop and much
   # faster; false keeps the original loop.
   vectorized_stitcher: false
+  # true: closed-form 2x upsampling in the beat decoder, numerically equivalent to
+  # F.interpolate and about twice as fast per step; false keeps F.interpolate.
+  fast_upsample: false
 
 train:
   batch_size: 64

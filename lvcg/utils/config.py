@@ -77,6 +77,13 @@ def add_cli_overrides(parser: argparse.ArgumentParser) -> argparse.ArgumentParse
         default=None,
         help="Use the vectorised beat stitcher (numerically equivalent, faster).",
     )
+    parser.add_argument(
+        "--model.fast_upsample",
+        type=str,
+        choices=("true", "false"),
+        default=None,
+        help="Use the closed-form 2x upsampling in the beat decoder (numerically equivalent, faster).",
+    )
     return parser
 
 
@@ -99,5 +106,6 @@ def apply_overrides(cfg: Config, args: argparse.Namespace) -> Config:
     set_if_not_none(("train", "max_steps"), getattr(args, "train.max_steps"))
     set_if_not_none(("data", "meta_root"), getattr(args, "data.meta_root"))
     set_if_not_none(("model", "vectorized_stitcher"), getattr(args, "model.vectorized_stitcher", None))
+    set_if_not_none(("model", "fast_upsample"), getattr(args, "model.fast_upsample", None))
     return Config(raw=raw)
 

@@ -47,6 +47,7 @@ def main() -> None:
     parser.add_argument("--batches", type=int, nargs="+", default=[32, 64, 128, 256, 512])
     parser.add_argument("--steps", type=int, default=10)
     parser.add_argument("--vectorized-stitcher", choices=("true", "false"), default="true")
+    parser.add_argument("--fast-upsample", choices=("true", "false"), default="false")
     args = parser.parse_args()
 
     device = torch.device("cuda")
@@ -61,7 +62,8 @@ def main() -> None:
         torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats(device)
         model = LVCG(time_len=1000, lead_order="mimic", fs=100,
-                     vectorized_stitcher=args.vectorized_stitcher == "true").to(device).train()
+                     vectorized_stitcher=args.vectorized_stitcher == "true",
+                     fast_upsample=args.fast_upsample == "true").to(device).train()
         optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4, weight_decay=0.01)
         ecg = pool[:batch]
         times = []

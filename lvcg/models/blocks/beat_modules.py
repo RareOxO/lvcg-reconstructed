@@ -18,6 +18,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from .fast_upsample import upsample_linear_x2
+
 
 # =============================================================================
 # BeatEncoder (ResNet1D)
@@ -300,10 +302,13 @@ class DecoderResBlock(nn.Module):
         kernel_size: int = 5,
         upsample: bool = True,
         dropout: float = 0.1,
+        fast_upsample: bool = False,
     ):
         super().__init__()
         padding = kernel_size // 2
         self.upsample = upsample
+        # True: the equivalent closed-form 2x upsampling (blocks/fast_upsample.py).
+        self.fast_upsample = fast_upsample
         
         self.conv1 = nn.Conv1d(in_channels, out_channels, kernel_size, padding=padding)
         self.bn1 = nn.BatchNorm1d(out_channels)
@@ -319,7 +324,10 @@ class DecoderResBlock(nn.Module):
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         if self.upsample:
-            x = F.interpolate(x, scale_factor=2, mode='linear', align_corners=False)
+            if self.fast_upsample:
+                x = upsample_linear_x2(x)
+            else:
+                x = F.interpolate(x, scale_factor=2, mode='linear', align_corners=False)
         
         identity = self.shortcut(x)
         
@@ -353,6 +361,7 @@ class BeatDecoder(nn.Module):
         hidden_channels: List[int] = [256, 128, 128, 64, 64],
         kernel_size: int = 5,
         dropout: float = 0.1,
+        fast_upsample: bool = False,
     ):
         super().__init__()
         self.state_dim = state_dim
@@ -367,7 +376,12 @@ class BeatDecoder(nn.Module):
         blocks = []
         in_ch = initial_channels
         for out_ch in hidden_channels:
-            blocks.append(DecoderResBlock(in_ch, out_ch, kernel_size, upsample=True, dropout=dropout))
+            blocks.append(
+                DecoderResBlock(
+                    in_ch, out_ch, kernel_size, upsample=True, dropout=dropout,
+                    fast_upsample=fast_upsample,
+                )
+            )
             in_ch = out_ch
         self.blocks = nn.Sequential(*blocks)
         

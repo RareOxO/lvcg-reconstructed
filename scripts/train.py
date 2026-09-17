@@ -48,6 +48,8 @@ from lvcg.utils.config import Config, add_cli_overrides, apply_overrides, load_c
 from lvcg.utils.run_id import ensure_run_dirs
 
 LOSS_TERMS = ("loss", "recon", "temporal", "beat", "base")
+# Model options that change only how fast the same numbers are computed.
+SPEED_SWITCHES = ("vectorized_stitcher", "fast_upsample")
 
 
 class EpochSampler(Sampler):
@@ -275,7 +277,12 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                     f"Refusing to resume: {section}.{key} was {saved.get(section, {}).get(key)!r}, "
                     f"now {cfg.raw.get(section, {}).get(key)!r}"
                 )
-        if saved.get("model") != cfg.raw.get("model"):
+        # The speed switches compute the same numbers, so a run may turn them on or off
+        # when it resumes; any other change to the model section is refused.
+        def architecture(section):
+            return {k: v for k, v in (section or {}).items() if k not in SPEED_SWITCHES}
+
+        if architecture(saved.get("model")) != architecture(cfg.raw.get("model")):
             raise SystemExit("Refusing to resume: the model section of the config changed")
         model.load_state_dict(state["model_state_dict"])
         optimizer.load_state_dict(state["optimizer_state_dict"])

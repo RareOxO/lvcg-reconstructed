@@ -77,6 +77,21 @@ python scripts/train.py --config configs/train/lvcg_v5_gru.yaml --model.vectoriz
 or set `model.vectorized_stitcher: true` in the YAML. On an RTX 4060 Laptop GPU a batch-64
 pretraining step drops from 0.60 s to 0.21 s.
 
+**Faster decoder upsampling (optional).** The beat decoder doubles its length five times
+with `F.interpolate(mode="linear")`, whose CUDA backward took 52% of the GPU time of a
+step. `model.fast_upsample: true` (or `--model.fast_upsample true`) uses the closed form of
+a 2x linear interpolation instead (`lvcg/models/blocks/fast_upsample.py`): identical to
+1e-12 in double precision, values and gradients, and a further 0.31 s to 0.16 s per step on
+the same laptop GPU. It has no parameters either, and both speed switches may be changed
+when resuming a run.
+
+```bash
+python scripts/train.py --config configs/train/lvcg_v5_gru.yaml \
+  --model.vectorized_stitcher true --model.fast_upsample true
+```
+
+`scripts/benchmark_batch.py` measures throughput on the GPU at hand.
+
 ```bash
 python scripts/train.py --config configs/train/lvcg_v5_gru.yaml \
   --data.meta_root /path/to/mimic_manifest.jsonl

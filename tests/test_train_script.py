@@ -102,3 +102,18 @@ def test_resume_refuses_a_changed_config(tmp_path, manifest):
         train_script.train(_config(tmp_path, manifest, "changed", batch_size=4), resume="auto")
     with pytest.raises(SystemExit, match="Nothing to resume"):
         train_script.train(_config(tmp_path, manifest, "missing"), resume="auto")
+
+
+def test_resume_may_turn_the_speed_switches_on(tmp_path, manifest):
+    """Same numbers, so switching them on resume is allowed; the architecture is still checked."""
+    train_script.train(_config(tmp_path, manifest, "switch", max_steps=3))
+    cfg = _config(tmp_path, manifest, "switch", max_steps=6)
+    cfg.raw["model"]["fast_upsample"] = True
+    cfg.raw["model"]["vectorized_stitcher"] = False
+    train_script.train(cfg, resume="auto")
+    final = torch.load(tmp_path / "checkpoints" / "switchs1k1" / "final.pt", weights_only=False)
+    assert final["global_step"] == 6
+    cfg.raw["model"]["state_dim"] = 128
+    cfg.raw["train"]["max_steps"] = 9
+    with pytest.raises(SystemExit, match="model section"):
+        train_script.train(cfg, resume="auto")

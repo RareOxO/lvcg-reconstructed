@@ -319,6 +319,9 @@ class LVCG(nn.Module):
         # instead of the per-beat Python loop. Off by default; no parameters involved,
         # so checkpoints load either way.
         vectorized_stitcher: bool = False,
+        # Upsample in the beat decoder with the equivalent closed form instead of
+        # F.interpolate (blocks/fast_upsample.py). Off by default; no parameters involved.
+        fast_upsample: bool = False,
     ):
         super().__init__()
         
@@ -398,6 +401,7 @@ class LVCG(nn.Module):
             beat_len=beat_len,
             initial_channels=decoder_initial_channels,
             hidden_channels=decoder_hidden_channels,
+            fast_upsample=fast_upsample,
         )
         
         # ========== Beat Stitcher ==========
@@ -759,6 +763,7 @@ class LVCG(nn.Module):
             fs=int(cfg.data.get("fs", 100)),
             rr_lead_idx=int(model_cfg.get("rr_lead_idx", 1)),
             vectorized_stitcher=_as_bool(model_cfg.get("vectorized_stitcher", False)),
+            fast_upsample=_as_bool(model_cfg.get("fast_upsample", False)),
         )
 
 
