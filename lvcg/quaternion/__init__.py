@@ -4,13 +4,22 @@ Nothing here changes the pretrained model: each version adds a branch whose
 contribution can be switched off, and with it off the model must reproduce V0.
 """
 
-from .features import FEATURE_CHANNELS, QuaternionDynamicFeatures, transition_features
+from .features import (
+    FEATURE_CHANNELS,
+    BeatQuaternionFeatures,
+    QuaternionDynamicFeatures,
+    transition_features,
+)
 from .qdf import DynamicEncoder, QDFProbe
+from .qdt import QDTProbe, TokenFusion
 
 __all__ = [
     "FEATURE_CHANNELS",
+    "BeatQuaternionFeatures",
     "QuaternionDynamicFeatures",
     "transition_features",
     "DynamicEncoder",
     "QDFProbe",
+    "QDTProbe",
+    "TokenFusion",
 ]

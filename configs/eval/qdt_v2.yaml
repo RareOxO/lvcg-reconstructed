@@ -1,0 +1,36 @@
+# V2, QDT-LVCG (plan section 4, Tier 1: frozen backbone, pretrained-preserving fusion).
+# The quaternion trajectory inside each beat becomes a token that is fused into the
+# pretrained beat tokens; the fusion starts as the identity, so V2(t=0) = V0.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+quaternion:
+  fs: 100
+  quaternion_dim: 128          # z_n^Q width
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+  fusion: gated                # gated: z + sigmoid(W_g[..]) * W_q z_Q, W_q zero-init
+                               # concat: W [z ; z_Q] + b, W = [I, 0] at init
+  fusion_init_std: 0.0         # 0 keeps V2(t=0) = V0 exactly, but the branch gets no
+                               # gradient until the fusion's zero block moves; a small
+                               # value (e.g. 0.01) feeds the branch from the first step
+  min_magnitude_fraction: 0.02
+  sign_continuity: true
+  masked_pooling: true
+  scale: 1.0                   # 0 bypasses the fusion entirely (V0 path)
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4

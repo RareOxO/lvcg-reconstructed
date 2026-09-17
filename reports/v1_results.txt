@@ -1,0 +1,302 @@
+(base) ➜ lvcg-reconstructed for s in 42 43 44; do for m in v0 qdf control; do
+  python scripts/train_qdf.py --config configs/eval/qdf_v1.yaml --model $m --seed $s
+done; done
+Model v0 | features ('q', 'theta', 'omega', 'magnitude') | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,693 (quaternion branch 177,488, V0 head 3,205)
+    epoch  0 loss 0.4522 val macro AUROC 0.8348  <- best
+    epoch  1 loss 0.3736 val macro AUROC 0.8500  <- best
+    epoch  2 loss 0.3597 val macro AUROC 0.8548  <- best
+    epoch  3 loss 0.3532 val macro AUROC 0.8571  <- best
+    epoch  4 loss 0.3495 val macro AUROC 0.8588  <- best
+    epoch  5 loss 0.3468 val macro AUROC 0.8593  <- best
+    epoch  6 loss 0.3455 val macro AUROC 0.8606  <- best
+    epoch  7 loss 0.3439 val macro AUROC 0.8607  <- best
+    epoch  8 loss 0.3426 val macro AUROC 0.8611  <- best
+    epoch  9 loss 0.3411 val macro AUROC 0.8609
+    epoch 10 loss 0.3402 val macro AUROC 0.8619  <- best
+    epoch 11 loss 0.3398 val macro AUROC 0.8616
+    epoch 12 loss 0.3387 val macro AUROC 0.8612
+    epoch 13 loss 0.3381 val macro AUROC 0.8621  <- best
+    epoch 14 loss 0.3374 val macro AUROC 0.8619
+    epoch 15 loss 0.3370 val macro AUROC 0.8623  <- best
+    epoch 16 loss 0.3364 val macro AUROC 0.8624  <- best
+    epoch 17 loss 0.3360 val macro AUROC 0.8626  <- best
+    epoch 18 loss 0.3352 val macro AUROC 0.8629  <- best
+    epoch 19 loss 0.3348 val macro AUROC 0.8630  <- best
+    epoch 20 loss 0.3344 val macro AUROC 0.8627
+    epoch 21 loss 0.3341 val macro AUROC 0.8625
+    epoch 22 loss 0.3335 val macro AUROC 0.8613
+    epoch 23 loss 0.3332 val macro AUROC 0.8622
+    epoch 24 loss 0.3332 val macro AUROC 0.8621
+    no improvement for 5 epochs, stopping
+
+  best epoch 19 | val macro AUROC 0.8630
+  TEST macro AUROC 0.8525 | micro 0.8779 | macro F1 0.5673 | micro F1 0.6528
+  per label: HYP 0.7819, NORM 0.8982, MI 0.8397, CD 0.8556, STTC 0.8869
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_v0_s42.json
+Model qdf | features ('q', 'theta', 'omega', 'magnitude') | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,693 (quaternion branch 177,488, V0 head 3,205)
+    epoch  0 loss 0.4090 val macro AUROC 0.8576  <- best
+    epoch  1 loss 0.3304 val macro AUROC 0.8733  <- best
+    epoch  2 loss 0.3140 val macro AUROC 0.8788  <- best
+    epoch  3 loss 0.3035 val macro AUROC 0.8774
+    epoch  4 loss 0.2950 val macro AUROC 0.8829  <- best
+    epoch  5 loss 0.2864 val macro AUROC 0.8819
+    epoch  6 loss 0.2815 val macro AUROC 0.8800
+    epoch  7 loss 0.2728 val macro AUROC 0.8811
+    epoch  8 loss 0.2659 val macro AUROC 0.8835  <- best
+    epoch  9 loss 0.2584 val macro AUROC 0.8776
+    epoch 10 loss 0.2512 val macro AUROC 0.8834
+    epoch 11 loss 0.2440 val macro AUROC 0.8788
+    epoch 12 loss 0.2327 val macro AUROC 0.8672
+    epoch 13 loss 0.2242 val macro AUROC 0.8698
+    no improvement for 5 epochs, stopping
+
+  best epoch 8 | val macro AUROC 0.8835
+  TEST macro AUROC 0.8799 | micro 0.9025 | macro F1 0.6598 | micro F1 0.7219
+  per label: HYP 0.8033, NORM 0.9212, MI 0.8875, CD 0.8832, STTC 0.9042
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_qdf_s42.json
+Model control | features ('position', 'next_position', 'delta') | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 181,593 (quaternion branch 178,388, V0 head 3,205)
+    epoch  0 loss 0.3688 val macro AUROC 0.8780  <- best
+    epoch  1 loss 0.3078 val macro AUROC 0.8867  <- best
+    epoch  2 loss 0.2934 val macro AUROC 0.8900  <- best
+    epoch  3 loss 0.2853 val macro AUROC 0.8912  <- best
+    epoch  4 loss 0.2800 val macro AUROC 0.8971  <- best
+    epoch  5 loss 0.2700 val macro AUROC 0.8956
+    epoch  6 loss 0.2678 val macro AUROC 0.8985  <- best
+    epoch  7 loss 0.2612 val macro AUROC 0.8907
+    epoch  8 loss 0.2562 val macro AUROC 0.8927
+    epoch  9 loss 0.2533 val macro AUROC 0.8967
+    epoch 10 loss 0.2485 val macro AUROC 0.8954
+    epoch 11 loss 0.2459 val macro AUROC 0.8936
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.8985
+  TEST macro AUROC 0.8930 | micro 0.9131 | macro F1 0.6800 | micro F1 0.7394
+  per label: HYP 0.7984, NORM 0.9296, MI 0.9094, CD 0.9036, STTC 0.9243
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_control_s42.json
+Model v0 | features ('q', 'theta', 'omega', 'magnitude') | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,693 (quaternion branch 177,488, V0 head 3,205)
+    epoch  0 loss 0.4409 val macro AUROC 0.8375  <- best
+    epoch  1 loss 0.3707 val macro AUROC 0.8510  <- best
+    epoch  2 loss 0.3582 val macro AUROC 0.8556  <- best
+    epoch  3 loss 0.3522 val macro AUROC 0.8572  <- best
+    epoch  4 loss 0.3484 val macro AUROC 0.8588  <- best
+    epoch  5 loss 0.3466 val macro AUROC 0.8598  <- best
+    epoch  6 loss 0.3446 val macro AUROC 0.8602  <- best
+    epoch  7 loss 0.3429 val macro AUROC 0.8608  <- best
+    epoch  8 loss 0.3421 val macro AUROC 0.8609  <- best
+    epoch  9 loss 0.3414 val macro AUROC 0.8613  <- best
+    epoch 10 loss 0.3399 val macro AUROC 0.8614  <- best
+    epoch 11 loss 0.3390 val macro AUROC 0.8618  <- best
+    epoch 12 loss 0.3383 val macro AUROC 0.8620  <- best
+    epoch 13 loss 0.3375 val macro AUROC 0.8616
+    epoch 14 loss 0.3371 val macro AUROC 0.8629  <- best
+    epoch 15 loss 0.3363 val macro AUROC 0.8619
+    epoch 16 loss 0.3358 val macro AUROC 0.8614
+    epoch 17 loss 0.3360 val macro AUROC 0.8624
+    epoch 18 loss 0.3353 val macro AUROC 0.8626
+    epoch 19 loss 0.3346 val macro AUROC 0.8617
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8629
+  TEST macro AUROC 0.8525 | micro 0.8778 | macro F1 0.5637 | micro F1 0.6554
+  per label: HYP 0.7845, NORM 0.8983, MI 0.8367, CD 0.8552, STTC 0.8880
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_v0_s43.json
+Model qdf | features ('q', 'theta', 'omega', 'magnitude') | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,693 (quaternion branch 177,488, V0 head 3,205)
+    epoch  0 loss 0.3981 val macro AUROC 0.8624  <- best
+    epoch  1 loss 0.3271 val macro AUROC 0.8755  <- best
+    epoch  2 loss 0.3107 val macro AUROC 0.8794  <- best
+    epoch  3 loss 0.3021 val macro AUROC 0.8821  <- best
+    epoch  4 loss 0.2952 val macro AUROC 0.8798
+    epoch  5 loss 0.2872 val macro AUROC 0.8818
+    epoch  6 loss 0.2799 val macro AUROC 0.8844  <- best
+    epoch  7 loss 0.2733 val macro AUROC 0.8835
+    epoch  8 loss 0.2652 val macro AUROC 0.8771
+    epoch  9 loss 0.2573 val macro AUROC 0.8793
+    epoch 10 loss 0.2465 val macro AUROC 0.8704
+    epoch 11 loss 0.2386 val macro AUROC 0.8693
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.8844
+  TEST macro AUROC 0.8791 | micro 0.8929 | macro F1 0.6395 | micro F1 0.6994
+  per label: HYP 0.8027, NORM 0.9154, MI 0.8823, CD 0.8909, STTC 0.9044
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_qdf_s43.json
+Model control | features ('position', 'next_position', 'delta') | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 181,593 (quaternion branch 178,388, V0 head 3,205)
+    epoch  0 loss 0.3563 val macro AUROC 0.8789  <- best
+    epoch  1 loss 0.3043 val macro AUROC 0.8892  <- best
+    epoch  2 loss 0.2921 val macro AUROC 0.8914  <- best
+    epoch  3 loss 0.2844 val macro AUROC 0.8940  <- best
+    epoch  4 loss 0.2767 val macro AUROC 0.8962  <- best
+    epoch  5 loss 0.2727 val macro AUROC 0.8967  <- best
+    epoch  6 loss 0.2654 val macro AUROC 0.8931
+    epoch  7 loss 0.2622 val macro AUROC 0.8947
+    epoch  8 loss 0.2581 val macro AUROC 0.8967
+    epoch  9 loss 0.2524 val macro AUROC 0.8957
+    epoch 10 loss 0.2488 val macro AUROC 0.8933
+    no improvement for 5 epochs, stopping
+
+  best epoch 5 | val macro AUROC 0.8967
+  TEST macro AUROC 0.8922 | micro 0.9127 | macro F1 0.6455 | micro F1 0.7380
+  per label: HYP 0.8075, NORM 0.9300, MI 0.8986, CD 0.8981, STTC 0.9265
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_control_s43.json
+Model v0 | features ('q', 'theta', 'omega', 'magnitude') | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,693 (quaternion branch 177,488, V0 head 3,205)
+    epoch  0 loss 0.4542 val macro AUROC 0.8323  <- best
+    epoch  1 loss 0.3740 val macro AUROC 0.8482  <- best
+    epoch  2 loss 0.3601 val macro AUROC 0.8537  <- best
+    epoch  3 loss 0.3536 val macro AUROC 0.8558  <- best
+    epoch  4 loss 0.3503 val macro AUROC 0.8575  <- best
+    epoch  5 loss 0.3476 val macro AUROC 0.8595  <- best
+    epoch  6 loss 0.3459 val macro AUROC 0.8600  <- best
+    epoch  7 loss 0.3438 val macro AUROC 0.8596
+    epoch  8 loss 0.3424 val macro AUROC 0.8610  <- best
+    epoch  9 loss 0.3416 val macro AUROC 0.8611  <- best
+    epoch 10 loss 0.3406 val macro AUROC 0.8619  <- best
+    epoch 11 loss 0.3394 val macro AUROC 0.8615
+    epoch 12 loss 0.3388 val macro AUROC 0.8617
+    epoch 13 loss 0.3382 val macro AUROC 0.8622  <- best
+    epoch 14 loss 0.3373 val macro AUROC 0.8618
+    epoch 15 loss 0.3371 val macro AUROC 0.8621
+    epoch 16 loss 0.3364 val macro AUROC 0.8624  <- best
+    epoch 17 loss 0.3359 val macro AUROC 0.8621
+    epoch 18 loss 0.3352 val macro AUROC 0.8632  <- best
+    epoch 19 loss 0.3351 val macro AUROC 0.8622
+    epoch 20 loss 0.3347 val macro AUROC 0.8629
+    epoch 21 loss 0.3339 val macro AUROC 0.8625
+    epoch 22 loss 0.3336 val macro AUROC 0.8623
+    epoch 23 loss 0.3336 val macro AUROC 0.8622
+    no improvement for 5 epochs, stopping
+
+  best epoch 18 | val macro AUROC 0.8632
+  TEST macro AUROC 0.8533 | micro 0.8765 | macro F1 0.5471 | micro F1 0.6439
+  per label: HYP 0.7842, NORM 0.8988, MI 0.8397, CD 0.8561, STTC 0.8877
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_v0_s44.json
+Model qdf | features ('q', 'theta', 'omega', 'magnitude') | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,693 (quaternion branch 177,488, V0 head 3,205)
+    epoch  0 loss 0.4095 val macro AUROC 0.8582  <- best
+    epoch  1 loss 0.3291 val macro AUROC 0.8721  <- best
+    epoch  2 loss 0.3138 val macro AUROC 0.8799  <- best
+    epoch  3 loss 0.3037 val macro AUROC 0.8796
+    epoch  4 loss 0.2967 val macro AUROC 0.8780
+    epoch  5 loss 0.2871 val macro AUROC 0.8862  <- best
+    epoch  6 loss 0.2808 val macro AUROC 0.8770
+    epoch  7 loss 0.2747 val macro AUROC 0.8754
+    epoch  8 loss 0.2659 val macro AUROC 0.8821
+    epoch  9 loss 0.2585 val macro AUROC 0.8758
+    epoch 10 loss 0.2479 val macro AUROC 0.8779
+    no improvement for 5 epochs, stopping
+
+  best epoch 5 | val macro AUROC 0.8862
+  TEST macro AUROC 0.8809 | micro 0.9006 | macro F1 0.6447 | micro F1 0.7142
+  per label: HYP 0.8040, NORM 0.9197, MI 0.8907, CD 0.8843, STTC 0.9059
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_qdf_s44.json
+Model control | features ('position', 'next_position', 'delta') | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 181,593 (quaternion branch 178,388, V0 head 3,205)
+    epoch  0 loss 0.3644 val macro AUROC 0.8810  <- best
+    epoch  1 loss 0.3042 val macro AUROC 0.8891  <- best
+    epoch  2 loss 0.2933 val macro AUROC 0.8951  <- best
+    epoch  3 loss 0.2835 val macro AUROC 0.8895
+    epoch  4 loss 0.2773 val macro AUROC 0.8939
+    epoch  5 loss 0.2719 val macro AUROC 0.8975  <- best
+    epoch  6 loss 0.2673 val macro AUROC 0.8947
+    epoch  7 loss 0.2632 val macro AUROC 0.8942
+    epoch  8 loss 0.2576 val macro AUROC 0.8944
+    epoch  9 loss 0.2547 val macro AUROC 0.8893
+    epoch 10 loss 0.2483 val macro AUROC 0.8983  <- best
+    epoch 11 loss 0.2446 val macro AUROC 0.8933
+    epoch 12 loss 0.2394 val macro AUROC 0.8937
+    epoch 13 loss 0.2362 val macro AUROC 0.8956
+    epoch 14 loss 0.2316 val macro AUROC 0.8925
+    epoch 15 loss 0.2263 val macro AUROC 0.8939
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8983
+  TEST macro AUROC 0.8946 | micro 0.9040 | macro F1 0.6002 | micro F1 0.7181
+  per label: HYP 0.8013, NORM 0.9339, MI 0.9124, CD 0.8982, STTC 0.9273
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_control_s44.json
+(base) ➜ lvcg-reconstructed python scripts/train_qdf.py --config configs/eval/qdf_v1.yaml --model qdf --seed 42 \
+  --features q theta omega --tag _nomag
+Model qdf | features ('q', 'theta', 'omega') | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+Frozen backbone from checkpoints/m5fasts1k1/final.pt: 8,285,060 parameters, none trainable
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,243 (quaternion branch 177,038, V0 head 3,205)
+    epoch  0 loss 0.4209 val macro AUROC 0.8508  <- best
+    epoch  1 loss 0.3449 val macro AUROC 0.8681  <- best
+    epoch  2 loss 0.3283 val macro AUROC 0.8702  <- best
+    epoch  3 loss 0.3170 val macro AUROC 0.8730  <- best
+    epoch  4 loss 0.3092 val macro AUROC 0.8741  <- best
+    epoch  5 loss 0.3015 val macro AUROC 0.8747  <- best
+    epoch  6 loss 0.2975 val macro AUROC 0.8794  <- best
+    epoch  7 loss 0.2889 val macro AUROC 0.8773
+    epoch  8 loss 0.2816 val macro AUROC 0.8736
+    epoch  9 loss 0.2749 val macro AUROC 0.8749
+    epoch 10 loss 0.2645 val macro AUROC 0.8748
+    epoch 11 loss 0.2566 val macro AUROC 0.8748
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.8794
+  TEST macro AUROC 0.8749 | micro 0.8939 | macro F1 0.5990 | micro F1 0.6941
+  per label: HYP 0.8043, NORM 0.9153, MI 0.8767, CD 0.8746, STTC 0.9038
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qdf_v1.csv; curve in qdf_v1_curve_qdf_nomag_s42.json
