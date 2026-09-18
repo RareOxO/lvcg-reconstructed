@@ -219,3 +219,40 @@ def test_only_the_branch_and_the_head_train():
 
 def test_default_windows_are_the_documented_ones():
     assert DEFAULT_WINDOWS == {"qrs": (0.0, 0.12), "t": (0.15, 0.55)}
+
+
+def test_the_training_loop_drives_the_probe(tmp_path):
+    """The script's own loop, exercised end to end on cached-shaped tensors."""
+    import importlib.util
+    import os
+
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    spec = importlib.util.spec_from_file_location(
+        "train_qrst", os.path.join(root, "scripts", "train_qrst.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    generator = torch.Generator().manual_seed(0)
+
+    def make(n):
+        labels = (torch.rand(n, 5, generator=generator) > 0.5).float()
+        # Label 0 lives in the QRS-T angle: aligned loops for one class, opposed for the other.
+        beats = torch.zeros(n, BEATS, 3, PATCH)
+        masks = segment_masks(PATCH)
+        shape = torch.sin(torch.linspace(0, math.pi, PATCH))
+        beats[..., 0, masks["qrs"]] = shape[masks["qrs"]]
+        sign = (1 - 2 * labels[:, 0]).view(n, 1, 1)
+        beats[..., 0, masks["t"]] = shape[masks["t"]].view(1, 1, -1) * sign
+        beats = beats + 0.02 * torch.randn(beats.shape, generator=generator)
+        mask = torch.ones(n, BEATS)
+        # The cache layout train_qrst reads: beats, rr, mask, reference, tokens, steps, rhythm, labels.
+        return (beats, torch.full((n, BEATS), 85.0), mask, torch.ones(n),
+                torch.zeros(n, BEATS, TOKEN_DIM), torch.full((n,), BEATS - 1, dtype=torch.long),
+                torch.zeros(n, 128), labels)
+
+    data = {"train": make(256), "val": make(64), "test": make(64)}
+    model = QRSTProbe(**_frozen_parts(), level="axis", embedding_dim=32, hidden=16)
+    module.train(model, data, torch.device("cpu"),
+                 {"batch_size": 32, "max_epochs": 8, "patience": 8}, seed=0)
+    scores = module.evaluate(model, data["test"], torch.device("cpu"), 64)
+    assert scores["per_label_auroc"][0] > 0.85, scores["per_label_auroc"]

@@ -91,6 +91,47 @@ def collect(model, tensors, device, batch_size, windows):
     return torch.cat(bases), torch.cat(relations), torch.cat(angles)
 
 
+def train(model, data, device, probe_cfg, seed):
+    """Route B's own loop: its probe takes different arguments from route A's."""
+    batch_size = int(probe_cfg.get("batch_size", 256))
+    optimizer = torch.optim.AdamW(
+        [p for p in model.parameters() if p.requires_grad],
+        lr=float(probe_cfg.get("lr", 1e-3)), weight_decay=float(probe_cfg.get("weight_decay", 1e-4)))
+    criterion = torch.nn.BCEWithLogitsLoss()
+    labels = data["train"][-1]
+    generator = torch.Generator().manual_seed(seed)
+    best = {"val_macro_auroc": -1.0, "epoch": -1, "state": None}
+    curve, patience = [], int(probe_cfg.get("patience", 5))
+
+    for epoch in range(int(probe_cfg.get("max_epochs", 50))):
+        model.train()
+        order = torch.randperm(len(labels), generator=generator)
+        total = 0.0
+        for start in range(0, len(order), batch_size):
+            index = order[start:start + batch_size]
+            if len(index) < 2:
+                continue
+            optimizer.zero_grad()
+            loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+            loss.backward()
+            optimizer.step()
+            total += float(loss.detach()) * len(index)
+        validation = evaluate(model, data["val"], device, batch_size)
+        curve.append({"epoch": epoch, "train_loss": total / len(labels),
+                      "val_macro_auroc": validation["macro_auroc"]})
+        print(f"    epoch {epoch:>2} loss {curve[-1]['train_loss']:.4f} "
+              f"val macro AUROC {validation['macro_auroc']:.4f}"
+              + ("  <- best" if validation["macro_auroc"] > best["val_macro_auroc"] else ""))
+        if validation["macro_auroc"] > best["val_macro_auroc"]:
+            best = {"val_macro_auroc": validation["macro_auroc"], "epoch": epoch,
+                    "state": {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}}
+        elif epoch - best["epoch"] >= patience:
+            print(f"    no improvement for {patience} epochs, stopping")
+            break
+    model.load_state_dict(best["state"])
+    return best, curve
+
+
 def linear_decoding(train_features, train_target, test_features, test_target, ridge=1.0):
     """R^2 of a ridge fit -- how linearly readable the target is from the features."""
     x = torch.cat((train_features, torch.ones(len(train_features), 1)), dim=1).double()
@@ -172,9 +213,7 @@ def main() -> None:
 
     started = time.perf_counter()
     batch_size = int(probe_cfg.get("batch_size", 256))
-    # Route B's model takes the same arguments as route A's, so the loop is shared.
-    train_loop = _load("train_loop")
-    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+    best, curve = train(model, data, device, probe_cfg, args.seed)
     test = evaluate(model, data["test"], device, batch_size)
 
     # The mechanistic test: how linearly readable is the spatial QRS-T angle?
