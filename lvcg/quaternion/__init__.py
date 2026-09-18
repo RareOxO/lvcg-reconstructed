@@ -4,6 +4,7 @@ Nothing here changes the pretrained model: each version adds a branch whose
 contribution can be switched off, and with it off the model must reproduce V0.
 """
 
+from .canon import CanonProbe, PoseNet, random_rotations, rotate_beats
 from .features import (
     FEATURE_CHANNELS,
     BeatQuaternionFeatures,
@@ -16,6 +17,10 @@ from .phase import PHASES, PhaseProbe, phase_masks
 from .qdt import QDTProbe, TokenFusion
 
 __all__ = [
+    "CanonProbe",
+    "PoseNet",
+    "random_rotations",
+    "rotate_beats",
     "FEATURE_CHANNELS",
     "BeatQuaternionFeatures",
     "QuaternionDynamicFeatures",
