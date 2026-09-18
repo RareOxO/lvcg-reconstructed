@@ -1,0 +1,346 @@
+(base) ➜ lvcg-reconstructed for s in 42 43 44; do for m in mean shared label; do
+  python scripts/train_lqa.py --config configs/eval/lqa_v8.yaml --mode $m --seed $s
+done; done
+python scripts/train_lqa.py --config configs/eval/lqa_v8.yaml --mode label --variant mq --tag _mq --seed 42
+
+python scripts/summarize_quaternion.py --results probing/results/lqa_v8.csv
+Mode mean | variant mo | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 179,343 (branch 175,498, queries 0)
+    epoch  0 loss 0.3739 val macro AUROC 0.8727  <- best
+    epoch  1 loss 0.3127 val macro AUROC 0.8804  <- best
+    epoch  2 loss 0.2989 val macro AUROC 0.8868  <- best
+    epoch  3 loss 0.2910 val macro AUROC 0.8911  <- best
+    epoch  4 loss 0.2844 val macro AUROC 0.8954  <- best
+    epoch  5 loss 0.2774 val macro AUROC 0.8962  <- best
+    epoch  6 loss 0.2737 val macro AUROC 0.9004  <- best
+    epoch  7 loss 0.2676 val macro AUROC 0.8969
+    epoch  8 loss 0.2648 val macro AUROC 0.8982
+    epoch  9 loss 0.2616 val macro AUROC 0.8989
+    epoch 10 loss 0.2569 val macro AUROC 0.8976
+    epoch 11 loss 0.2545 val macro AUROC 0.8992
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.9004
+  TEST macro AUROC 0.8951 | micro 0.9116 | macro F1 0.6679
+  per label: HYP 0.8119, NORM 0.9304, MI 0.9041, CD 0.9028, STTC 0.9261
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_mean-mo_s42.json
+Mode shared | variant mo | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 179,727 (branch 175,498, queries 128)
+    epoch  0 loss 0.3929 val macro AUROC 0.8773  <- best
+    epoch  1 loss 0.3150 val macro AUROC 0.8861  <- best
+    epoch  2 loss 0.2992 val macro AUROC 0.8901  <- best
+    epoch  3 loss 0.2914 val macro AUROC 0.8921  <- best
+    epoch  4 loss 0.2839 val macro AUROC 0.8960  <- best
+    epoch  5 loss 0.2763 val macro AUROC 0.8961  <- best
+    epoch  6 loss 0.2725 val macro AUROC 0.9005  <- best
+    epoch  7 loss 0.2664 val macro AUROC 0.8965
+    epoch  8 loss 0.2625 val macro AUROC 0.8980
+    epoch  9 loss 0.2600 val macro AUROC 0.8998
+    epoch 10 loss 0.2547 val macro AUROC 0.9008  <- best
+    epoch 11 loss 0.2490 val macro AUROC 0.8986
+    epoch 12 loss 0.2448 val macro AUROC 0.8995
+    epoch 13 loss 0.2379 val macro AUROC 0.8962
+    epoch 14 loss 0.2303 val macro AUROC 0.8954
+    epoch 15 loss 0.2254 val macro AUROC 0.8939
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.9008
+  TEST macro AUROC 0.8961 | micro 0.9082 | macro F1 0.6692
+  per label: HYP 0.8124, NORM 0.9285, MI 0.9082, CD 0.9038, STTC 0.9278
+  attention mass inside QRS / T:
+      HYP: QRS 26.9%, T 49.1%
+     NORM: QRS 26.9%, T 49.1%
+       MI: QRS 26.9%, T 49.1%
+       CD: QRS 26.9%, T 49.1%
+     STTC: QRS 26.9%, T 49.1%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_shared-mo_s42.json
+Mode label | variant mo | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,239 (branch 175,498, queries 640)
+    epoch  0 loss 0.3734 val macro AUROC 0.8743  <- best
+    epoch  1 loss 0.3136 val macro AUROC 0.8836  <- best
+    epoch  2 loss 0.2976 val macro AUROC 0.8889  <- best
+    epoch  3 loss 0.2899 val macro AUROC 0.8912  <- best
+    epoch  4 loss 0.2823 val macro AUROC 0.8969  <- best
+    epoch  5 loss 0.2747 val macro AUROC 0.8977  <- best
+    epoch  6 loss 0.2720 val macro AUROC 0.9023  <- best
+    epoch  7 loss 0.2636 val macro AUROC 0.8990
+    epoch  8 loss 0.2609 val macro AUROC 0.9010
+    epoch  9 loss 0.2573 val macro AUROC 0.8988
+    epoch 10 loss 0.2520 val macro AUROC 0.9002
+    epoch 11 loss 0.2499 val macro AUROC 0.9006
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.9023
+  TEST macro AUROC 0.8952 | micro 0.9111 | macro F1 0.6635
+  per label: HYP 0.8117, NORM 0.9293, MI 0.9044, CD 0.9044, STTC 0.9261
+  attention mass inside QRS / T:
+      HYP: QRS 25.1%, T 45.0%
+     NORM: QRS 21.9%, T 47.9%
+       MI: QRS 24.6%, T 44.2%
+       CD: QRS 30.3%, T 40.5%
+     STTC: QRS 19.5%, T 49.3%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_label-mo_s42.json
+Mode mean | variant mo | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 179,343 (branch 175,498, queries 0)
+    epoch  0 loss 0.3699 val macro AUROC 0.8764  <- best
+    epoch  1 loss 0.3095 val macro AUROC 0.8899  <- best
+    epoch  2 loss 0.2957 val macro AUROC 0.8888
+    epoch  3 loss 0.2882 val macro AUROC 0.8959  <- best
+    epoch  4 loss 0.2806 val macro AUROC 0.8963  <- best
+    epoch  5 loss 0.2771 val macro AUROC 0.8950
+    epoch  6 loss 0.2715 val macro AUROC 0.8974  <- best
+    epoch  7 loss 0.2687 val macro AUROC 0.8980  <- best
+    epoch  8 loss 0.2641 val macro AUROC 0.8949
+    epoch  9 loss 0.2603 val macro AUROC 0.8988  <- best
+    epoch 10 loss 0.2563 val macro AUROC 0.8955
+    epoch 11 loss 0.2541 val macro AUROC 0.8990  <- best
+    epoch 12 loss 0.2479 val macro AUROC 0.8961
+    epoch 13 loss 0.2452 val macro AUROC 0.8989
+    epoch 14 loss 0.2398 val macro AUROC 0.8942
+    epoch 15 loss 0.2345 val macro AUROC 0.8952
+    epoch 16 loss 0.2313 val macro AUROC 0.8941
+    no improvement for 5 epochs, stopping
+
+  best epoch 11 | val macro AUROC 0.8990
+  TEST macro AUROC 0.8957 | micro 0.9128 | macro F1 0.6696
+  per label: HYP 0.8119, NORM 0.9301, MI 0.9101, CD 0.9004, STTC 0.9261
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_mean-mo_s43.json
+Mode shared | variant mo | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 179,727 (branch 175,498, queries 128)
+    epoch  0 loss 0.3696 val macro AUROC 0.8774  <- best
+    epoch  1 loss 0.3108 val macro AUROC 0.8897  <- best
+    epoch  2 loss 0.2971 val macro AUROC 0.8868
+    epoch  3 loss 0.2885 val macro AUROC 0.8965  <- best
+    epoch  4 loss 0.2811 val macro AUROC 0.8965  <- best
+    epoch  5 loss 0.2773 val macro AUROC 0.8960
+    epoch  6 loss 0.2705 val macro AUROC 0.8990  <- best
+    epoch  7 loss 0.2668 val macro AUROC 0.8995  <- best
+    epoch  8 loss 0.2638 val macro AUROC 0.8962
+    epoch  9 loss 0.2583 val macro AUROC 0.9001  <- best
+    epoch 10 loss 0.2537 val macro AUROC 0.8977
+    epoch 11 loss 0.2499 val macro AUROC 0.8987
+    epoch 12 loss 0.2434 val macro AUROC 0.8974
+    epoch 13 loss 0.2370 val macro AUROC 0.9008  <- best
+    epoch 14 loss 0.2320 val macro AUROC 0.8949
+    epoch 15 loss 0.2279 val macro AUROC 0.8946
+    epoch 16 loss 0.2206 val macro AUROC 0.8942
+    epoch 17 loss 0.2108 val macro AUROC 0.8930
+    epoch 18 loss 0.2049 val macro AUROC 0.8920
+    no improvement for 5 epochs, stopping
+
+  best epoch 13 | val macro AUROC 0.9008
+  TEST macro AUROC 0.8972 | micro 0.9144 | macro F1 0.6710
+  per label: HYP 0.8114, NORM 0.9318, MI 0.9098, CD 0.9055, STTC 0.9274
+  attention mass inside QRS / T:
+      HYP: QRS 25.6%, T 50.6%
+     NORM: QRS 25.6%, T 50.6%
+       MI: QRS 25.6%, T 50.6%
+       CD: QRS 25.6%, T 50.6%
+     STTC: QRS 25.6%, T 50.6%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_shared-mo_s43.json
+Mode label | variant mo | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,239 (branch 175,498, queries 640)
+    epoch  0 loss 0.3798 val macro AUROC 0.8756  <- best
+    epoch  1 loss 0.3120 val macro AUROC 0.8897  <- best
+    epoch  2 loss 0.2974 val macro AUROC 0.8878
+    epoch  3 loss 0.2892 val macro AUROC 0.8973  <- best
+    epoch  4 loss 0.2812 val macro AUROC 0.8964
+    epoch  5 loss 0.2784 val macro AUROC 0.8985  <- best
+    epoch  6 loss 0.2717 val macro AUROC 0.8995  <- best
+    epoch  7 loss 0.2677 val macro AUROC 0.9006  <- best
+    epoch  8 loss 0.2627 val macro AUROC 0.8981
+    epoch  9 loss 0.2598 val macro AUROC 0.9010  <- best
+    epoch 10 loss 0.2553 val macro AUROC 0.8979
+    epoch 11 loss 0.2518 val macro AUROC 0.8989
+    epoch 12 loss 0.2461 val macro AUROC 0.9002
+    epoch 13 loss 0.2404 val macro AUROC 0.9004
+    epoch 14 loss 0.2364 val macro AUROC 0.8970
+    no improvement for 5 epochs, stopping
+
+  best epoch 9 | val macro AUROC 0.9010
+  TEST macro AUROC 0.8958 | micro 0.9122 | macro F1 0.6511
+  per label: HYP 0.8100, NORM 0.9335, MI 0.9067, CD 0.9020, STTC 0.9268
+  attention mass inside QRS / T:
+      HYP: QRS 22.8%, T 47.6%
+     NORM: QRS 20.1%, T 50.1%
+       MI: QRS 26.6%, T 44.1%
+       CD: QRS 30.3%, T 41.9%
+     STTC: QRS 18.4%, T 51.9%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_label-mo_s43.json
+Mode mean | variant mo | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 179,343 (branch 175,498, queries 0)
+    epoch  0 loss 0.3766 val macro AUROC 0.8745  <- best
+    epoch  1 loss 0.3127 val macro AUROC 0.8894  <- best
+    epoch  2 loss 0.2981 val macro AUROC 0.8930  <- best
+    epoch  3 loss 0.2887 val macro AUROC 0.8912
+    epoch  4 loss 0.2825 val macro AUROC 0.8966  <- best
+    epoch  5 loss 0.2761 val macro AUROC 0.8968  <- best
+    epoch  6 loss 0.2706 val macro AUROC 0.8962
+    epoch  7 loss 0.2674 val macro AUROC 0.8969  <- best
+    epoch  8 loss 0.2640 val macro AUROC 0.8939
+    epoch  9 loss 0.2594 val macro AUROC 0.8964
+    epoch 10 loss 0.2546 val macro AUROC 0.8983  <- best
+    epoch 11 loss 0.2503 val macro AUROC 0.8958
+    epoch 12 loss 0.2473 val macro AUROC 0.8970
+    epoch 13 loss 0.2420 val macro AUROC 0.8941
+    epoch 14 loss 0.2369 val macro AUROC 0.8958
+    epoch 15 loss 0.2338 val macro AUROC 0.8967
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8983
+  TEST macro AUROC 0.8957 | micro 0.9037 | macro F1 0.6186
+  per label: HYP 0.8114, NORM 0.9318, MI 0.9112, CD 0.8984, STTC 0.9255
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_mean-mo_s44.json
+Mode shared | variant mo | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 179,727 (branch 175,498, queries 128)
+    epoch  0 loss 0.3900 val macro AUROC 0.8703  <- best
+    epoch  1 loss 0.3159 val macro AUROC 0.8850  <- best
+    epoch  2 loss 0.2997 val macro AUROC 0.8911  <- best
+    epoch  3 loss 0.2893 val macro AUROC 0.8909
+    epoch  4 loss 0.2825 val macro AUROC 0.8955  <- best
+    epoch  5 loss 0.2756 val macro AUROC 0.8948
+    epoch  6 loss 0.2707 val macro AUROC 0.8928
+    epoch  7 loss 0.2667 val macro AUROC 0.8970  <- best
+    epoch  8 loss 0.2621 val macro AUROC 0.8956
+    epoch  9 loss 0.2583 val macro AUROC 0.8990  <- best
+    epoch 10 loss 0.2515 val macro AUROC 0.8992  <- best
+    epoch 11 loss 0.2463 val macro AUROC 0.8993  <- best
+    epoch 12 loss 0.2425 val macro AUROC 0.8984
+    epoch 13 loss 0.2376 val macro AUROC 0.8945
+    epoch 14 loss 0.2336 val macro AUROC 0.8975
+    epoch 15 loss 0.2266 val macro AUROC 0.8996  <- best
+    epoch 16 loss 0.2155 val macro AUROC 0.8982
+    epoch 17 loss 0.2101 val macro AUROC 0.8940
+    epoch 18 loss 0.2012 val macro AUROC 0.8939
+    epoch 19 loss 0.1903 val macro AUROC 0.8934
+    epoch 20 loss 0.1825 val macro AUROC 0.8876
+    no improvement for 5 epochs, stopping
+
+  best epoch 15 | val macro AUROC 0.8996
+  TEST macro AUROC 0.8987 | micro 0.9134 | macro F1 0.6725
+  per label: HYP 0.8153, NORM 0.9323, MI 0.9143, CD 0.9082, STTC 0.9235
+  attention mass inside QRS / T:
+      HYP: QRS 25.0%, T 47.2%
+     NORM: QRS 25.0%, T 47.2%
+       MI: QRS 25.0%, T 47.2%
+       CD: QRS 25.0%, T 47.2%
+     STTC: QRS 25.0%, T 47.2%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_shared-mo_s44.json
+Mode label | variant mo | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 180,239 (branch 175,498, queries 640)
+    epoch  0 loss 0.3893 val macro AUROC 0.8737  <- best
+    epoch  1 loss 0.3140 val macro AUROC 0.8888  <- best
+    epoch  2 loss 0.2976 val macro AUROC 0.8933  <- best
+    epoch  3 loss 0.2877 val macro AUROC 0.8917
+    epoch  4 loss 0.2815 val macro AUROC 0.8970  <- best
+    epoch  5 loss 0.2756 val macro AUROC 0.8972  <- best
+    epoch  6 loss 0.2694 val macro AUROC 0.8990  <- best
+    epoch  7 loss 0.2672 val macro AUROC 0.8984
+    epoch  8 loss 0.2633 val macro AUROC 0.8973
+    epoch  9 loss 0.2584 val macro AUROC 0.9011  <- best
+    epoch 10 loss 0.2532 val macro AUROC 0.9021  <- best
+    epoch 11 loss 0.2483 val macro AUROC 0.8999
+    epoch 12 loss 0.2450 val macro AUROC 0.8989
+    epoch 13 loss 0.2395 val macro AUROC 0.8979
+    epoch 14 loss 0.2353 val macro AUROC 0.8983
+    epoch 15 loss 0.2302 val macro AUROC 0.8991
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.9021
+  TEST macro AUROC 0.9000 | micro 0.9158 | macro F1 0.6577
+  per label: HYP 0.8193, NORM 0.9344, MI 0.9119, CD 0.9047, STTC 0.9296
+  attention mass inside QRS / T:
+      HYP: QRS 24.9%, T 44.1%
+     NORM: QRS 19.6%, T 49.9%
+       MI: QRS 29.8%, T 43.4%
+       CD: QRS 23.5%, T 46.0%
+     STTC: QRS 20.1%, T 51.5%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_label-mo_s44.json
+Mode label | variant mq | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached (17084, 640)
+  val: cached (2146, 640)
+  test: cached (2158, 640)
+Trainable 181,589 (branch 176,848, queries 640)
+    epoch  0 loss 0.4169 val macro AUROC 0.8557  <- best
+    epoch  1 loss 0.3325 val macro AUROC 0.8734  <- best
+    epoch  2 loss 0.3160 val macro AUROC 0.8755  <- best
+    epoch  3 loss 0.3050 val macro AUROC 0.8795  <- best
+    epoch  4 loss 0.2962 val macro AUROC 0.8821  <- best
+    epoch  5 loss 0.2870 val macro AUROC 0.8809
+    epoch  6 loss 0.2817 val macro AUROC 0.8801
+    epoch  7 loss 0.2724 val macro AUROC 0.8813
+    epoch  8 loss 0.2655 val macro AUROC 0.8850  <- best
+    epoch  9 loss 0.2561 val macro AUROC 0.8805
+    epoch 10 loss 0.2478 val macro AUROC 0.8810
+    epoch 11 loss 0.2381 val macro AUROC 0.8786
+    epoch 12 loss 0.2256 val macro AUROC 0.8721
+    epoch 13 loss 0.2165 val macro AUROC 0.8689
+    no improvement for 5 epochs, stopping
+
+  best epoch 8 | val macro AUROC 0.8850
+  TEST macro AUROC 0.8805 | micro 0.8991 | macro F1 0.6418
+  per label: HYP 0.8015, NORM 0.9215, MI 0.8892, CD 0.8879, STTC 0.9026
+  attention mass inside QRS / T:
+      HYP: QRS 23.2%, T 46.5%
+     NORM: QRS 20.1%, T 50.1%
+       MI: QRS 24.2%, T 42.8%
+       CD: QRS 19.4%, T 49.1%
+     STTC: QRS 19.1%, T 50.2%
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/lqa_v8.csv; curve in lqa_v8_curve_label-mq_mq_s42.json
+lqa_v8.csv — 10 runs, metric test_macro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            mo     9   89.66  0.16       -       -   10.0   179,343
+         mq mq     1   88.05     -       -       -    8.0   181,589
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+           mq mq  0.9215  0.8892  0.9026  0.8879  0.8015

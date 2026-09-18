@@ -1,0 +1,31 @@
+# Route A, rotational loop geometry (research plan section 3, Tier 1: frozen backbone).
+# A beat's rotations are composed in order over several time scales, encoded, and read
+# beside the frozen LVCG embedding. The plan's structural representation is the mean of
+# the beat tokens; --struct anchor keeps the released behaviour for comparison.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+loop:
+  scales: [8, 32, 0]           # short, medium, whole beat (0 = everything so far)
+  embedding_dim: 128
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+  min_magnitude_fraction: 0.02 # steps below this share of the record's 99th percentile
+                               # magnitude carry no reliable direction
+  sign_continuity: true
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4
