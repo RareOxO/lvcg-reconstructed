@@ -51,7 +51,10 @@ from probing.datasets import create_provider  # noqa: E402
 
 FEATURE_SETS = {
     "qdf": ("q", "theta", "omega", "magnitude"),
+    # V3's plan renames this: the quaternion channels are real numbers too, so the
+    # contrast being measured is Cartesian versus decomposed, not "quaternion vs real".
     "control": ("position", "next_position", "delta"),
+    "cdf": ("position", "next_position", "delta"),
 }
 LABELS = ("NORM", "MI", "STTC", "CD", "HYP")
 
@@ -177,7 +180,7 @@ def train(model, data, device, probe_cfg, seed) -> Tuple[Dict, List[Dict]]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=os.path.join(REPO_ROOT, "configs", "eval", "qdf_v1.yaml"))
-    parser.add_argument("--model", choices=("qdf", "control", "v0"), default="qdf")
+    parser.add_argument("--model", choices=("qdf", "control", "cdf", "v0"), default="qdf")
     parser.add_argument("--features", nargs="+", help="override the feature set (plan 6.2 ablations)")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--ratio", type=float, default=1.0, help="label ratio")

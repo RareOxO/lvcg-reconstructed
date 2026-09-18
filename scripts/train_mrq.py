@@ -1,23 +1,20 @@
-"""V3 (MRQ-LVCG), Tier 1: magnitude and rotation as separate branches on the frozen LVCG.
+"""V3 (MRQ-LVCG, revised), Tier 1: magnitude / orientation / rotation of the latent VCG.
 
-Plan section 4/6.2: the cardiac vector is split into P_t = r_t u_t, and the ablation
-matrix is a matter of listing which components the head reads:
+Plan section 5: one variant is one set of input channels into V1's encoder, so the
+architecture, the head, the frozen cache and the training loop are all V1's and the
+numbers are directly comparable to it.
 
-    --components vcg magnitude rotation      the full model
-    --components vcg rotation                VCG + rotation
-    --components vcg magnitude               VCG + magnitude
-    --components magnitude rotation          no pretrained embedding
-    --components rotation                    rotation only
-    --components magnitude                   magnitude only
-    --components vcg                         V0: the pretrained embedding alone
-    --components vcg control                 the parameter-matched real-valued control
-    --components vcg rotation direction      the diagnostic V1 and V2 asked for
+    v0   the frozen embedding alone          mq   r, q, theta, omega  (V1's QDF)
+    m    r                                   oq   u, q, theta, omega
+    o    u                                   mo   r, u
+    q    q, theta, omega                     moq  r, u, q, theta, omega
+    cdf  P_t, P_{t+1}, dP_t                  (Cartesian reference, V1's control)
 
-Everything else is V1's: the backbone runs once, frozen, and this script reuses the very
-same feature cache, so a variant trains in under a minute. Selection is on validation
-macro AUROC; the test fold is read once, at the end.
+Stage A of the revised gate is ``v0 o oq``: does absolute orientation carry information
+beyond e_base, and does adding it to the rotation close V1's gap to cdf? Stage B
+(``m mo moq``) runs only after Stage A has been analysed.
 
-    python scripts/train_mrq.py --config configs/eval/mrq_v3.yaml --components vcg magnitude rotation
+    python scripts/train_mrq.py --config configs/eval/mrq_v3.yaml --variant oq --seed 42
 """
 
 from __future__ import annotations
@@ -27,7 +24,6 @@ import csv
 import importlib.util
 import json
 import os
-import re
 import sys
 import time
 
@@ -38,7 +34,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
-from lvcg.quaternion.mrq import COMPONENTS, MRQProbe  # noqa: E402
+from lvcg.quaternion.mrq import LOCKED_FROM_V1, STAGE_A, STAGE_B, VARIANTS, build_probe  # noqa: E402
 from probing.datasets import create_provider  # noqa: E402
 from probing.encoders.lvcg_encoder import LVCGEncoder  # noqa: E402
 
@@ -55,9 +51,9 @@ LABELS = train_qdf.LABELS
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=os.path.join(REPO_ROOT, "configs", "eval", "mrq_v3.yaml"))
-    parser.add_argument("--components", nargs="+", default=["vcg", "magnitude", "rotation"],
-                        help=f"vcg plus any of {list(COMPONENTS)}; separate them with spaces, "
-                             "commas or plus signs")
+    parser.add_argument("--variant", default="oq", choices=list(VARIANTS),
+                        help=f"Stage A: {' '.join(STAGE_A)}; Stage B: {' '.join(STAGE_B)}; "
+                             "reference: mq cdf")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--ratio", type=float, default=1.0)
     parser.add_argument("--checkpoint")
@@ -74,13 +70,12 @@ def main() -> None:
     device = torch.device(args.device)
     train_qdf.set_seed(args.seed)
 
-    # zsh does not split an unquoted variable, so "vcg rotation" can arrive as one
-    # argument; accept spaces, commas and plus signs alike.
-    components = tuple(
-        part for argument in args.components
-        for part in re.split(r"[\s,+]+", argument.strip()) if part
-    )
-    print(f"Components {' + '.join(components)} | seed {args.seed} | ratio {args.ratio:.0%}")
+    variant = args.variant
+    channels = VARIANTS[variant]
+    locked = LOCKED_FROM_V1.get(variant)
+    print(f"Variant {variant} | channels {' '.join(channels) if variant != 'v0' else '(branch off)'} "
+          f"| seed {args.seed} | ratio {args.ratio:.0%}"
+          + (f" | V1 locked reference {locked:.2f}" if locked else ""))
 
     provider_cfg = {
         "type": "benchmark", "dataset_name": "ptbxl_super_class",
@@ -104,8 +99,8 @@ def main() -> None:
         device, args.cache, checkpoint, args.ratio,
     )
 
-    model = MRQProbe(
-        components=components,
+    model = build_probe(
+        variant,
         base_dim=data["train"][0].shape[1],
         num_classes=bundle.num_classes,
         fs=int(quaternion_cfg.pop("fs", 100)),
@@ -114,9 +109,8 @@ def main() -> None:
             "min_magnitude_fraction", "sign_continuity", "masked_pooling"}},
     ).to(device)
     counts = model.parameter_counts()
-    print("Trainable {:,} ({})".format(
-        counts["trainable_total"],
-        ", ".join(f"{k.replace('branch_', '')} {v:,}" for k, v in counts.items() if k != "trainable_total")))
+    print(f"Trainable {counts['trainable_total']:,} "
+          f"(branch {counts['quaternion_branch']:,}, V0 head {counts['v0_head']:,})")
 
     started = time.perf_counter()
     best, curve = train_qdf.train(model, data, device, probe_cfg, args.seed)
@@ -130,8 +124,9 @@ def main() -> None:
         f"{name} {auroc:.4f}" for name, auroc in zip(label_names, test["per_label_auroc"])))
 
     row = {
-        "model": "v0" if components == ("vcg",) else "mrq",
-        "components": "+".join(components), "tag": args.tag,
+        "model": "v0" if variant == "v0" else "mrq",
+        "variant": variant, "channels": "+".join(channels) if variant != "v0" else "",
+        "tag": args.tag,
         "label_ratio": args.ratio, "seed": args.seed,
         "test_macro_auroc": test["macro_auroc"], "test_micro_auroc": test["micro_auroc"],
         "test_macro_f1": test["macro_f1"], "test_micro_f1": test["micro_f1"],
@@ -151,8 +146,7 @@ def main() -> None:
         if not exists:
             writer.writeheader()
         writer.writerow(row)
-    curve_path = results_path.replace(
-        ".csv", f"_curve_{'-'.join(components)}{args.tag}_s{args.seed}.json")
+    curve_path = results_path.replace(".csv", f"_curve_{variant}{args.tag}_s{args.seed}.json")
     with open(curve_path, "w", encoding="utf-8") as handle:
         json.dump({"row": row, "curve": curve}, handle, indent=1)
     print(f"\nAppended to {results_path}; curve in {os.path.basename(curve_path)}")

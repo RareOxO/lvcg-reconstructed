@@ -1,106 +1,69 @@
-"""V3, MRQ-LVCG: the cardiac vector split into magnitude and rotation.
+"""V3, MRQ-LVCG (revised after V1): magnitude / absolute orientation / relative rotation.
 
-    P_t = r_t u_t,    r_t = ||P_t||,    q_t = Rot(u_t -> u_{t+1})
+The revised plan turns V3 from "quaternion instead of Cartesian" into a decomposition
+diagnostic. Each latent cardiac vector is split into
 
-Each factor gets its own encoder beside the frozen LVCG embedding, and the head sees
-whichever components are switched on:
+    P_t = r_t u_t,   r_t = ||P_t||,   u_t = P_t / ||P_t||,   q_t = Rot(u_t -> u_{t+1})
 
-    logits = Linear([ e_base? ; e_magnitude? ; e_rotation? ; e_direction? ])
+where r_t says how strong the vector is, u_t where it points in the fixed latent VCG
+frame, and q_t how the direction turns between samples. V1 modelled only q_t (plus a
+magnitude channel) and lost to the Cartesian reference by 1.33 pp; V3 asks how much of
+that gap is the absent absolute orientation.
 
-That makes the ablation matrix of plan section 6.2 a matter of listing components --
-magnitude only, rotation only, magnitude+rotation, VCG+rotation, VCG+magnitude, all --
-with the encoder, the pooling and the head identical in every case. With ``vcg`` alone
-the model is V0's linear probe, which is this stage's V0-equivalence check.
+Architecture is V1's, unchanged on purpose (plan section 6): one feature extractor, one
+``DynamicEncoder``, one linear head over ``[e_base ; scale * e_G]``, the same frozen
+feature cache. A variant is therefore only a choice of input channels, which keeps the
+comparison attributable and the parameter counts within a percent of each other.
 
-The attachment point is V1's: parallel branches read by the head. V2 showed that routing
-the same information through a beat token instead costs most of the effect, because the
-released architecture lets only beat token 1 reach the output.
+    variant  channels                          question
+    m        r                                 magnitude alone
+    o        u                                 absolute orientation alone
+    q        q, theta, omega                    relative rotation alone
+    mq       r, q, theta, omega                 V1's QDF, bit-for-bit
+    oq       u, q, theta, omega                 does orientation close V1's gap?
+    mo       r, u                               the Cartesian vector, factorised
+    moq      r, u, q, theta, omega              the full decomposition
+    cdf      P_t, P_{t+1}, dP_t                 Cartesian reference (V1's control)
+    v0       -                                  the frozen embedding alone
 
-``direction`` is an addition to the plan, not one of its components. V1 and V2 both found
-the parameter-matched real-valued control ahead of the quaternion features, and the
-explanation on offer was that q_t keeps only how the vector turns and discards where it
-points. ``direction`` is u_t itself, so a rotation branch that gains from adding it
-confirms that explanation, and one that does not, refutes it.
+``cdf`` is what earlier reports called the "real-valued control". The new name is the
+plan's: quaternion components are stored as real numbers too, so "quaternion vs real"
+was never the contrast being measured -- Cartesian versus decomposed is.
 """
 
-import torch
-import torch.nn as nn
+from .qdf import QDFProbe
 
-from .features import QuaternionDynamicFeatures
-from .qdf import DynamicEncoder
-
-# The plan's factorisation, plus the two diagnostics the earlier stages asked for.
-COMPONENTS = {
-    "magnitude": ("magnitude", "linear_velocity"),
-    "rotation": ("q", "theta", "omega"),
-    "direction": ("direction",),
-    "control": ("position", "next_position", "delta"),
+# The plan's feature sets. Channels keep one canonical order everywhere -- rotation,
+# then magnitude, then orientation -- which is V1's order, so ``mq`` is V1's QDF
+# channel for channel and its locked numbers carry over.
+VARIANTS = {
+    "m": ("magnitude",),
+    "o": ("direction",),
+    "q": ("q", "theta", "omega"),
+    "mq": ("q", "theta", "omega", "magnitude"),
+    "oq": ("q", "theta", "omega", "direction"),
+    "mo": ("magnitude", "direction"),
+    "moq": ("q", "theta", "omega", "magnitude", "direction"),
+    "cdf": ("position", "next_position", "delta"),
+    "v0": ("q", "theta", "omega", "magnitude"),  # channels unused: the branch is scaled to 0
 }
+# V1 named these two differently; its rows stay valid and comparable.
+LEGACY_NAMES = {"qdf": "mq", "control": "cdf"}
+
+STAGE_A = ("v0", "o", "oq")           # the orientation diagnostic, run first
+STAGE_B = ("m", "mo", "moq")          # the full decomposition, only after Gate A
+LOCKED_FROM_V1 = {"v0": 85.28, "mq": 88.00, "cdf": 89.33, "q": 87.49}
 
 
-class MRQProbe(nn.Module):
-    """Frozen LVCG embedding plus one encoder per enabled component.
+def build_probe(variant: str, base_dim=640, num_classes=5, **kwargs) -> QDFProbe:
+    """A V1 probe reading the variant's channels; ``v0`` scales the branch to zero.
 
-    Args:
-        components: names from ``COMPONENTS``, in the order the head reads them.
-            ``vcg`` stands for the frozen embedding itself and carries no parameters.
-        base_dim: width of the frozen embedding (640).
-        fs: sampling rate of the cached VCG, so dt = 1 / fs.
+    ``magnitude`` reaches the encoder through its input BatchNorm, which standardises it
+    against the training set -- the stabilising transform the plan asks for, applied
+    identically in every set that contains it.
     """
-
-    def __init__(
-        self,
-        components=("vcg", "magnitude", "rotation"),
-        base_dim=640,
-        num_classes=5,
-        fs=100,
-        embedding_dim=128,
-        hidden=64,
-        kernel=7,
-        dropout=0.1,
-        min_magnitude_fraction=0.02,
-        sign_continuity=True,
-        masked_pooling=True,
-    ):
-        super().__init__()
-        unknown = [c for c in components if c != "vcg" and c not in COMPONENTS]
-        if unknown or not components:
-            raise ValueError(f"Unknown or empty components {components!r}")
-        self.components = tuple(components)
-        self.use_base = "vcg" in self.components
-
-        self.dynamics = nn.ModuleDict()
-        self.encoders = nn.ModuleDict()
-        width = base_dim if self.use_base else 0
-        for name in self.components:
-            if name == "vcg":
-                continue
-            dynamics = QuaternionDynamicFeatures(
-                COMPONENTS[name], 1.0 / float(fs), min_magnitude_fraction, sign_continuity
-            )
-            self.dynamics[name] = dynamics
-            self.encoders[name] = DynamicEncoder(dynamics.channels, embedding_dim, hidden, kernel, dropout)
-            width += embedding_dim
-        self.head = nn.Linear(width, num_classes)
-        self.masked_pooling = bool(masked_pooling)
-        self.embedding_dim = embedding_dim
-
-    def embeddings(self, base_embedding, vcg):
-        """The parts the head concatenates, in order."""
-        parts = [base_embedding] if self.use_base else []
-        for name in self.components:
-            if name == "vcg":
-                continue
-            features, mask = self.dynamics[name](vcg)
-            parts.append(self.encoders[name](features, mask if self.masked_pooling else None))
-        return parts
-
-    def forward(self, base_embedding, vcg):
-        return self.head(torch.cat(self.embeddings(base_embedding, vcg), dim=-1))
-
-    def parameter_counts(self):
-        counts = {"trainable_total": sum(p.numel() for p in self.parameters() if p.requires_grad)}
-        for name, encoder in self.encoders.items():
-            counts[f"branch_{name}"] = sum(p.numel() for p in encoder.parameters())
-        counts["head"] = sum(p.numel() for p in self.head.parameters())
-        return counts
+    name = LEGACY_NAMES.get(variant, variant)
+    if name not in VARIANTS:
+        raise ValueError(f"Unknown variant {variant!r}; expected one of {list(VARIANTS)}")
+    kwargs.setdefault("scale", 0.0 if name == "v0" else 1.0)
+    return QDFProbe(base_dim=base_dim, num_classes=num_classes, features=VARIANTS[name], **kwargs)

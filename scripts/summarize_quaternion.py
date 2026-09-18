@@ -35,8 +35,11 @@ SHORT_FEATURES = {
 def _variant(row) -> str:
     """The run's identity: model, features or components, fusion and tag, minus the seed."""
     parts = [row["model"]]
-    # V3 names its runs by the components the head reads; V1 and V2 by the feature set.
-    if row.get("components"):
+    # V3 names its runs by variant (m / o / q / mq / oq / mo / moq / cdf); V1 and V2 by
+    # the feature set. An older V3 CSV used a "components" column.
+    if row.get("variant"):
+        parts = [row["variant"]]
+    elif row.get("components"):
         parts = [row["components"].replace("+", " + ")]
     features = row.get("features", "")
     if row["model"] != "v0" and features:
