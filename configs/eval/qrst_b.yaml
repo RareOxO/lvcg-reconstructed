@@ -1,0 +1,34 @@
+# Route B, QRS-T inter-loop relation (research plan section 4, Tier 1: frozen backbone).
+#
+# DELINEATION CAVEAT (plan B1): this repository has no QRS onset/offset or T-wave
+# delineation. The windows below are R-peak relative fractions of the beat -- the plan's
+# fallback, explicitly a Tier 1 exploratory setting, not physiologically precise
+# segmentation. A beat patch starts at its own R peak, so "qrs" covers R to the J point;
+# the upstroke before R belongs to the previous patch.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+interloop:
+  windows:
+    qrs: [0.00, 0.12]          # fractions of the R-R interval, from this beat's R peak
+    t: [0.15, 0.55]
+  steps: 32                    # resampled length per loop, trajectory level only
+  embedding_dim: 128
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4

@@ -1,0 +1,379 @@
+(/home/featurize/work/quaternion_env) ➜ lvcg-reconstructed for s in 42 43 44; do for v in v0 local loop; do
+  python scripts/train_loop.py --config configs/eval/loop_a.yaml --variant $v --struct mean --seed $s
+done; done
+python scripts/train_loop.py --config configs/eval/loop_a.yaml --variant v0 --struct anchor --tag _anchor --seed 42
+Variant v0 | struct mean | scales (8, 32, 0) | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.4194 val macro AUROC 0.8577  <- best
+    epoch  1 loss 0.3467 val macro AUROC 0.8698  <- best
+    epoch  2 loss 0.3348 val macro AUROC 0.8739  <- best
+    epoch  3 loss 0.3287 val macro AUROC 0.8764  <- best
+    epoch  4 loss 0.3249 val macro AUROC 0.8789  <- best
+    epoch  5 loss 0.3220 val macro AUROC 0.8792  <- best
+    epoch  6 loss 0.3207 val macro AUROC 0.8798  <- best
+    epoch  7 loss 0.3188 val macro AUROC 0.8807  <- best
+    epoch  8 loss 0.3175 val macro AUROC 0.8805
+    epoch  9 loss 0.3164 val macro AUROC 0.8804
+    epoch 10 loss 0.3152 val macro AUROC 0.8814  <- best
+    epoch 11 loss 0.3148 val macro AUROC 0.8810
+    epoch 12 loss 0.3136 val macro AUROC 0.8817  <- best
+    epoch 13 loss 0.3132 val macro AUROC 0.8808
+    epoch 14 loss 0.3123 val macro AUROC 0.8815
+    epoch 15 loss 0.3122 val macro AUROC 0.8817  <- best
+    epoch 16 loss 0.3115 val macro AUROC 0.8819  <- best
+    epoch 17 loss 0.3110 val macro AUROC 0.8813
+    epoch 18 loss 0.3104 val macro AUROC 0.8817
+    epoch 19 loss 0.3102 val macro AUROC 0.8818
+    epoch 20 loss 0.3096 val macro AUROC 0.8815
+    epoch 21 loss 0.3094 val macro AUROC 0.8821  <- best
+    epoch 22 loss 0.3089 val macro AUROC 0.8809
+    epoch 23 loss 0.3089 val macro AUROC 0.8816
+    epoch 24 loss 0.3086 val macro AUROC 0.8814
+    epoch 25 loss 0.3084 val macro AUROC 0.8812
+    epoch 26 loss 0.3081 val macro AUROC 0.8819
+    no improvement for 5 epochs, stopping
+
+  best epoch 21 | val macro AUROC 0.8821
+  TEST macro AUROC 0.8737 | micro 0.8975 | macro F1 0.6197
+  per label: HYP 0.8069, NORM 0.9148, MI 0.8653, CD 0.8792, STTC 0.9025
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 61.08 (-26.29), embedding moved base 0.973, loop 0.000
+      block: AUROC 66.08 (-21.29), embedding moved base 0.911, loop 0.000
+    reverse: AUROC 61.70 (-25.67), embedding moved base 0.926, loop 0.000
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_v0-mean_s42.json
+Variant local | struct mean | scales (8, 32, 0) | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 179,793 (loop branch 175,948, head 3,845); 6 input channels
+    epoch  0 loss 0.3916 val macro AUROC 0.8714  <- best
+    epoch  1 loss 0.3278 val macro AUROC 0.8795  <- best
+    epoch  2 loss 0.3153 val macro AUROC 0.8830  <- best
+    epoch  3 loss 0.3078 val macro AUROC 0.8855  <- best
+    epoch  4 loss 0.3027 val macro AUROC 0.8874  <- best
+    epoch  5 loss 0.2964 val macro AUROC 0.8883  <- best
+    epoch  6 loss 0.2937 val macro AUROC 0.8894  <- best
+    epoch  7 loss 0.2872 val macro AUROC 0.8873
+    epoch  8 loss 0.2834 val macro AUROC 0.8866
+    epoch  9 loss 0.2788 val macro AUROC 0.8870
+    epoch 10 loss 0.2746 val macro AUROC 0.8846
+    epoch 11 loss 0.2677 val macro AUROC 0.8868
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.8894
+  TEST macro AUROC 0.8807 | micro 0.9024 | macro F1 0.6397
+  per label: HYP 0.8060, NORM 0.9177, MI 0.8816, CD 0.8908, STTC 0.9073
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 63.23 (-24.84), embedding moved base 0.973, loop 1.187
+      block: AUROC 73.76 (-14.31), embedding moved base 0.911, loop 0.721
+    reverse: AUROC 67.15 (-20.92), embedding moved base 0.926, loop 0.909
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_local-mean_s42.json
+Variant loop | struct mean | scales (8, 32, 0) | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.3910 val macro AUROC 0.8646  <- best
+    epoch  1 loss 0.3331 val macro AUROC 0.8777  <- best
+    epoch  2 loss 0.3212 val macro AUROC 0.8810  <- best
+    epoch  3 loss 0.3134 val macro AUROC 0.8798
+    epoch  4 loss 0.3081 val macro AUROC 0.8870  <- best
+    epoch  5 loss 0.3011 val macro AUROC 0.8870  <- best
+    epoch  6 loss 0.2986 val macro AUROC 0.8879  <- best
+    epoch  7 loss 0.2941 val macro AUROC 0.8864
+    epoch  8 loss 0.2916 val macro AUROC 0.8872
+    epoch  9 loss 0.2895 val macro AUROC 0.8883  <- best
+    epoch 10 loss 0.2863 val macro AUROC 0.8891  <- best
+    epoch 11 loss 0.2834 val macro AUROC 0.8862
+    epoch 12 loss 0.2801 val macro AUROC 0.8895  <- best
+    epoch 13 loss 0.2777 val macro AUROC 0.8867
+    epoch 14 loss 0.2738 val macro AUROC 0.8868
+    epoch 15 loss 0.2701 val macro AUROC 0.8862
+    epoch 16 loss 0.2655 val macro AUROC 0.8860
+    epoch 17 loss 0.2614 val macro AUROC 0.8868
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8895
+  TEST macro AUROC 0.8820 | micro 0.9033 | macro F1 0.6451
+  per label: HYP 0.8086, NORM 0.9203, MI 0.8799, CD 0.8906, STTC 0.9108
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 64.08 (-24.12), embedding moved base 0.973, loop 1.092
+      block: AUROC 72.07 (-16.14), embedding moved base 0.911, loop 0.881
+    reverse: AUROC 65.00 (-23.20), embedding moved base 0.926, loop 1.004
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_loop-mean_s42.json
+Variant v0 | struct mean | scales (8, 32, 0) | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.4191 val macro AUROC 0.8591  <- best
+    epoch  1 loss 0.3459 val macro AUROC 0.8702  <- best
+    epoch  2 loss 0.3342 val macro AUROC 0.8744  <- best
+    epoch  3 loss 0.3282 val macro AUROC 0.8768  <- best
+    epoch  4 loss 0.3242 val macro AUROC 0.8784  <- best
+    epoch  5 loss 0.3221 val macro AUROC 0.8797  <- best
+    epoch  6 loss 0.3202 val macro AUROC 0.8800  <- best
+    epoch  7 loss 0.3184 val macro AUROC 0.8803  <- best
+    epoch  8 loss 0.3174 val macro AUROC 0.8806  <- best
+    epoch  9 loss 0.3163 val macro AUROC 0.8808  <- best
+    epoch 10 loss 0.3149 val macro AUROC 0.8812  <- best
+    epoch 11 loss 0.3142 val macro AUROC 0.8810
+    epoch 12 loss 0.3136 val macro AUROC 0.8815  <- best
+    epoch 13 loss 0.3128 val macro AUROC 0.8810
+    epoch 14 loss 0.3122 val macro AUROC 0.8817  <- best
+    epoch 15 loss 0.3116 val macro AUROC 0.8809
+    epoch 16 loss 0.3114 val macro AUROC 0.8817  <- best
+    epoch 17 loss 0.3114 val macro AUROC 0.8816
+    epoch 18 loss 0.3107 val macro AUROC 0.8817
+    epoch 19 loss 0.3104 val macro AUROC 0.8818  <- best
+    epoch 20 loss 0.3097 val macro AUROC 0.8811
+    epoch 21 loss 0.3092 val macro AUROC 0.8811
+    epoch 22 loss 0.3096 val macro AUROC 0.8817
+    epoch 23 loss 0.3091 val macro AUROC 0.8815
+    epoch 24 loss 0.3088 val macro AUROC 0.8820  <- best
+    epoch 25 loss 0.3083 val macro AUROC 0.8818
+    epoch 26 loss 0.3082 val macro AUROC 0.8811
+    epoch 27 loss 0.3078 val macro AUROC 0.8813
+    epoch 28 loss 0.3074 val macro AUROC 0.8813
+    epoch 29 loss 0.3073 val macro AUROC 0.8814
+    no improvement for 5 epochs, stopping
+
+  best epoch 24 | val macro AUROC 0.8820
+  TEST macro AUROC 0.8737 | micro 0.8963 | macro F1 0.6100
+  per label: HYP 0.8061, NORM 0.9150, MI 0.8652, CD 0.8797, STTC 0.9026
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 61.03 (-26.35), embedding moved base 0.973, loop 0.000
+      block: AUROC 65.80 (-21.57), embedding moved base 0.911, loop 0.000
+    reverse: AUROC 61.41 (-25.96), embedding moved base 0.926, loop 0.000
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_v0-mean_s43.json
+Variant local | struct mean | scales (8, 32, 0) | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 179,793 (loop branch 175,948, head 3,845); 6 input channels
+    epoch  0 loss 0.3933 val macro AUROC 0.8705  <- best
+    epoch  1 loss 0.3276 val macro AUROC 0.8789  <- best
+    epoch  2 loss 0.3155 val macro AUROC 0.8816  <- best
+    epoch  3 loss 0.3078 val macro AUROC 0.8840  <- best
+    epoch  4 loss 0.3027 val macro AUROC 0.8860  <- best
+    epoch  5 loss 0.2974 val macro AUROC 0.8868  <- best
+    epoch  6 loss 0.2934 val macro AUROC 0.8880  <- best
+    epoch  7 loss 0.2888 val macro AUROC 0.8873
+    epoch  8 loss 0.2853 val macro AUROC 0.8878
+    epoch  9 loss 0.2810 val macro AUROC 0.8861
+    epoch 10 loss 0.2750 val macro AUROC 0.8860
+    epoch 11 loss 0.2695 val macro AUROC 0.8858
+    no improvement for 5 epochs, stopping
+
+  best epoch 6 | val macro AUROC 0.8880
+  TEST macro AUROC 0.8803 | micro 0.8999 | macro F1 0.6162
+  per label: HYP 0.8048, NORM 0.9183, MI 0.8827, CD 0.8908, STTC 0.9049
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 63.18 (-24.85), embedding moved base 0.973, loop 1.194
+      block: AUROC 74.94 (-13.09), embedding moved base 0.911, loop 0.658
+    reverse: AUROC 65.75 (-22.28), embedding moved base 0.926, loop 0.965
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_local-mean_s43.json
+Variant loop | struct mean | scales (8, 32, 0) | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.3903 val macro AUROC 0.8663  <- best
+    epoch  1 loss 0.3329 val macro AUROC 0.8766  <- best
+    epoch  2 loss 0.3218 val macro AUROC 0.8795  <- best
+    epoch  3 loss 0.3136 val macro AUROC 0.8816  <- best
+    epoch  4 loss 0.3074 val macro AUROC 0.8854  <- best
+    epoch  5 loss 0.3034 val macro AUROC 0.8864  <- best
+    epoch  6 loss 0.2990 val macro AUROC 0.8866  <- best
+    epoch  7 loss 0.2959 val macro AUROC 0.8847
+    epoch  8 loss 0.2937 val macro AUROC 0.8876  <- best
+    epoch  9 loss 0.2904 val macro AUROC 0.8864
+    epoch 10 loss 0.2880 val macro AUROC 0.8873
+    epoch 11 loss 0.2857 val macro AUROC 0.8865
+    epoch 12 loss 0.2837 val macro AUROC 0.8882  <- best
+    epoch 13 loss 0.2786 val macro AUROC 0.8863
+    epoch 14 loss 0.2777 val macro AUROC 0.8874
+    epoch 15 loss 0.2739 val macro AUROC 0.8838
+    epoch 16 loss 0.2722 val macro AUROC 0.8872
+    epoch 17 loss 0.2684 val macro AUROC 0.8856
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8882
+  TEST macro AUROC 0.8811 | micro 0.8965 | macro F1 0.6229
+  per label: HYP 0.8080, NORM 0.9164, MI 0.8804, CD 0.8887, STTC 0.9119
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 62.31 (-25.80), embedding moved base 0.973, loop 1.125
+      block: AUROC 70.79 (-17.31), embedding moved base 0.911, loop 0.887
+    reverse: AUROC 62.18 (-25.93), embedding moved base 0.926, loop 1.005
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_loop-mean_s43.json
+Variant v0 | struct mean | scales (8, 32, 0) | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.4134 val macro AUROC 0.8598  <- best
+    epoch  1 loss 0.3464 val macro AUROC 0.8704  <- best
+    epoch  2 loss 0.3346 val macro AUROC 0.8751  <- best
+    epoch  3 loss 0.3288 val macro AUROC 0.8768  <- best
+    epoch  4 loss 0.3253 val macro AUROC 0.8790  <- best
+    epoch  5 loss 0.3225 val macro AUROC 0.8795  <- best
+    epoch  6 loss 0.3205 val macro AUROC 0.8806  <- best
+    epoch  7 loss 0.3186 val macro AUROC 0.8799
+    epoch  8 loss 0.3174 val macro AUROC 0.8813  <- best
+    epoch  9 loss 0.3166 val macro AUROC 0.8817  <- best
+    epoch 10 loss 0.3154 val macro AUROC 0.8822  <- best
+    epoch 11 loss 0.3142 val macro AUROC 0.8820
+    epoch 12 loss 0.3137 val macro AUROC 0.8815
+    epoch 13 loss 0.3133 val macro AUROC 0.8813
+    epoch 14 loss 0.3124 val macro AUROC 0.8816
+    epoch 15 loss 0.3122 val macro AUROC 0.8822  <- best
+    epoch 16 loss 0.3113 val macro AUROC 0.8819
+    epoch 17 loss 0.3111 val macro AUROC 0.8815
+    epoch 18 loss 0.3105 val macro AUROC 0.8823  <- best
+    epoch 19 loss 0.3102 val macro AUROC 0.8816
+    epoch 20 loss 0.3098 val macro AUROC 0.8826  <- best
+    epoch 21 loss 0.3094 val macro AUROC 0.8816
+    epoch 22 loss 0.3089 val macro AUROC 0.8816
+    epoch 23 loss 0.3089 val macro AUROC 0.8817
+    epoch 24 loss 0.3086 val macro AUROC 0.8809
+    epoch 25 loss 0.3081 val macro AUROC 0.8817
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8826
+  TEST macro AUROC 0.8738 | micro 0.8972 | macro F1 0.5978
+  per label: HYP 0.8078, NORM 0.9152, MI 0.8649, CD 0.8789, STTC 0.9023
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 61.24 (-26.14), embedding moved base 0.973, loop 0.000
+      block: AUROC 66.13 (-21.25), embedding moved base 0.911, loop 0.000
+    reverse: AUROC 61.37 (-26.01), embedding moved base 0.926, loop 0.000
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_v0-mean_s44.json
+Variant local | struct mean | scales (8, 32, 0) | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 179,793 (loop branch 175,948, head 3,845); 6 input channels
+    epoch  0 loss 0.3991 val macro AUROC 0.8677  <- best
+    epoch  1 loss 0.3292 val macro AUROC 0.8772  <- best
+    epoch  2 loss 0.3156 val macro AUROC 0.8830  <- best
+    epoch  3 loss 0.3079 val macro AUROC 0.8839  <- best
+    epoch  4 loss 0.3024 val macro AUROC 0.8863  <- best
+    epoch  5 loss 0.2975 val macro AUROC 0.8864  <- best
+    epoch  6 loss 0.2929 val macro AUROC 0.8862
+    epoch  7 loss 0.2885 val macro AUROC 0.8866  <- best
+    epoch  8 loss 0.2835 val macro AUROC 0.8888  <- best
+    epoch  9 loss 0.2793 val macro AUROC 0.8873
+    epoch 10 loss 0.2722 val macro AUROC 0.8874
+    epoch 11 loss 0.2664 val macro AUROC 0.8855
+    epoch 12 loss 0.2610 val macro AUROC 0.8832
+    epoch 13 loss 0.2530 val macro AUROC 0.8835
+    no improvement for 5 epochs, stopping
+
+  best epoch 8 | val macro AUROC 0.8888
+  TEST macro AUROC 0.8811 | micro 0.8956 | macro F1 0.6116
+  per label: HYP 0.8028, NORM 0.9175, MI 0.8850, CD 0.8921, STTC 0.9083
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 64.38 (-23.74), embedding moved base 0.973, loop 1.196
+      block: AUROC 74.95 (-13.16), embedding moved base 0.911, loop 0.684
+    reverse: AUROC 66.92 (-21.20), embedding moved base 0.926, loop 0.949
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_local-mean_s44.json
+Variant loop | struct mean | scales (8, 32, 0) | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.3847 val macro AUROC 0.8689  <- best
+    epoch  1 loss 0.3315 val macro AUROC 0.8782  <- best
+    epoch  2 loss 0.3196 val macro AUROC 0.8833  <- best
+    epoch  3 loss 0.3119 val macro AUROC 0.8835  <- best
+    epoch  4 loss 0.3059 val macro AUROC 0.8849  <- best
+    epoch  5 loss 0.3013 val macro AUROC 0.8841
+    epoch  6 loss 0.2981 val macro AUROC 0.8872  <- best
+    epoch  7 loss 0.2942 val macro AUROC 0.8874  <- best
+    epoch  8 loss 0.2912 val macro AUROC 0.8876  <- best
+    epoch  9 loss 0.2890 val macro AUROC 0.8889  <- best
+    epoch 10 loss 0.2855 val macro AUROC 0.8898  <- best
+    epoch 11 loss 0.2821 val macro AUROC 0.8883
+    epoch 12 loss 0.2791 val macro AUROC 0.8873
+    epoch 13 loss 0.2760 val macro AUROC 0.8880
+    epoch 14 loss 0.2726 val macro AUROC 0.8854
+    epoch 15 loss 0.2697 val macro AUROC 0.8832
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8898
+  TEST macro AUROC 0.8806 | micro 0.9012 | macro F1 0.6406
+  per label: HYP 0.8007, NORM 0.9195, MI 0.8827, CD 0.8896, STTC 0.9105
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 63.87 (-24.19), embedding moved base 0.973, loop 1.220
+      block: AUROC 72.54 (-15.52), embedding moved base 0.911, loop 0.966
+    reverse: AUROC 64.09 (-23.97), embedding moved base 0.926, loop 1.065
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_loop-mean_s44.json
+Variant v0 | struct anchor | scales (8, 32, 0) | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 184,293 (loop branch 180,448, head 3,845); 16 input channels
+    epoch  0 loss 0.4389 val macro AUROC 0.8394  <- best
+    epoch  1 loss 0.3670 val macro AUROC 0.8524  <- best
+    epoch  2 loss 0.3556 val macro AUROC 0.8568  <- best
+    epoch  3 loss 0.3501 val macro AUROC 0.8590  <- best
+    epoch  4 loss 0.3469 val macro AUROC 0.8608  <- best
+    epoch  5 loss 0.3444 val macro AUROC 0.8613  <- best
+    epoch  6 loss 0.3434 val macro AUROC 0.8620  <- best
+    epoch  7 loss 0.3416 val macro AUROC 0.8628  <- best
+    epoch  8 loss 0.3403 val macro AUROC 0.8622
+    epoch  9 loss 0.3392 val macro AUROC 0.8623
+    epoch 10 loss 0.3381 val macro AUROC 0.8635  <- best
+    epoch 11 loss 0.3376 val macro AUROC 0.8631
+    epoch 12 loss 0.3366 val macro AUROC 0.8637  <- best
+    epoch 13 loss 0.3360 val macro AUROC 0.8634
+    epoch 14 loss 0.3352 val macro AUROC 0.8634
+    epoch 15 loss 0.3349 val macro AUROC 0.8636
+    epoch 16 loss 0.3342 val macro AUROC 0.8642  <- best
+    epoch 17 loss 0.3337 val macro AUROC 0.8640
+    epoch 18 loss 0.3329 val macro AUROC 0.8646  <- best
+    epoch 19 loss 0.3327 val macro AUROC 0.8649  <- best
+    epoch 20 loss 0.3323 val macro AUROC 0.8642
+    epoch 21 loss 0.3319 val macro AUROC 0.8650  <- best
+    epoch 22 loss 0.3313 val macro AUROC 0.8634
+    epoch 23 loss 0.3312 val macro AUROC 0.8644
+    epoch 24 loss 0.3309 val macro AUROC 0.8641
+    epoch 25 loss 0.3309 val macro AUROC 0.8646
+    epoch 26 loss 0.3305 val macro AUROC 0.8651  <- best
+    epoch 27 loss 0.3300 val macro AUROC 0.8645
+    epoch 28 loss 0.3298 val macro AUROC 0.8642
+    epoch 29 loss 0.3295 val macro AUROC 0.8648
+    epoch 30 loss 0.3296 val macro AUROC 0.8650
+    epoch 31 loss 0.3291 val macro AUROC 0.8645
+    no improvement for 5 epochs, stopping
+
+  best epoch 26 | val macro AUROC 0.8651
+  TEST macro AUROC 0.8576 | micro 0.8821 | macro F1 0.5780
+  per label: HYP 0.7881, NORM 0.9021, MI 0.8481, CD 0.8578, STTC 0.8919
+  signature test (rotation order changed, step sizes kept):
+    shuffle: AUROC 59.57 (-26.19), embedding moved base 1.019, loop 0.000
+      block: AUROC 62.37 (-23.39), embedding moved base 0.957, loop 0.000
+    reverse: AUROC 59.60 (-26.15), embedding moved base 1.009, loop 0.000
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/loop_a.csv; curve in loop_a_curve_v0-anchor_anchor_s42.json

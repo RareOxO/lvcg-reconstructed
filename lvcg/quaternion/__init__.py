@@ -6,6 +6,7 @@ contribution can be switched off, and with it off the model must reproduce V0.
 
 from .attention import LabelAttentionProbe
 from .canon import CanonProbe, PoseNet, random_rotations, rotate_beats
+from .interloop import InterLoopEncoder, QRSTProbe, spatial_qrst_angle
 from .loop import LoopProbe, RotationalLoopEncoder, multi_scale_rotations, perturb_rotation_order
 from .geometry import GlobalRotation, QAProbe, rotated_directions
 from .features import (
@@ -23,6 +24,9 @@ __all__ = [
     "LabelAttentionProbe",
     "CanonProbe",
     "GlobalRotation",
+    "InterLoopEncoder",
+    "QRSTProbe",
+    "spatial_qrst_angle",
     "LoopProbe",
     "RotationalLoopEncoder",
     "multi_scale_rotations",
