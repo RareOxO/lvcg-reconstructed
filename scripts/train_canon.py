@@ -130,8 +130,10 @@ def train(model, data, device, probe_cfg, seed, augment=False, identity_weight=0
 @torch.no_grad()
 def pose_report(model, tensors, device, batch_size=256, limit=2048):
     """What the pose head actually does: the distribution of its correction angles."""
+    # The columns must not depend on the model: a V0 run has no pose head, and reports
+    # zeros, so every row of the stage's CSV has the same schema.
     if not model.canonicalize:
-        return {}
+        return {"pose_median_deg": 0.0, "pose_p90_deg": 0.0, "pose_max_deg": 0.0}
     model.eval()
     beats, _rr, mask = tensors[0], tensors[1], tensors[2]
     angles = []
@@ -226,7 +228,7 @@ def main() -> None:
           f"| macro F1 {test['macro_f1']:.4f}")
     print("  per label: " + ", ".join(
         f"{name} {auroc:.4f}" for name, auroc in zip(label_names, test["per_label_auroc"])))
-    if poses:
+    if model.canonicalize:
         print(f"  pose correction: median {poses['pose_median_deg']:.1f} deg, "
               f"p90 {poses['pose_p90_deg']:.1f}, max {poses['pose_max_deg']:.1f}")
     if sweep:
@@ -243,7 +245,7 @@ def main() -> None:
         "test_macro_f1": test["macro_f1"], "test_micro_f1": test["micro_f1"],
         "val_macro_auroc": best["val_macro_auroc"], "best_epoch": best["epoch"],
         "trainable_params": counts["trainable_total"],
-        **{f"pose_{k}": v for k, v in poses.items()},
+        **poses,
         **{f"rot{d}_macro_auroc": s["macro_auroc"] for d, s in sweep.items()},
         "checkpoint": checkpoint, "seconds": round(seconds, 1),
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
