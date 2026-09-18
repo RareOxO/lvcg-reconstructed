@@ -1,0 +1,352 @@
+(base) ➜ lvcg-reconstructed python scripts/train_qa.py --config configs/eval/qa_v6.yaml --mode fixed  --seed 42
+python scripts/train_qa.py --config configs/eval/qa_v6.yaml --mode global --seed 42
+for d in 5 10 30 0; do
+  python scripts/train_qa.py --config configs/eval/qa_v6.yaml --mode conditioned --max-degrees $d --tag _${d}deg --seed 42
+done
+Mode fixed | max_degrees 10 | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (geometry 0, head 3,205)
+    epoch  0 loss 0.4422 val macro AUROC 0.8356  <- best
+    epoch  1 loss 0.3675 val macro AUROC 0.8506  <- best
+    epoch  2 loss 0.3557 val macro AUROC 0.8557  <- best
+    epoch  3 loss 0.3500 val macro AUROC 0.8580  <- best
+    epoch  4 loss 0.3468 val macro AUROC 0.8600  <- best
+    epoch  5 loss 0.3442 val macro AUROC 0.8608  <- best
+    epoch  6 loss 0.3430 val macro AUROC 0.8615  <- best
+    epoch  7 loss 0.3414 val macro AUROC 0.8623  <- best
+    epoch  8 loss 0.3401 val macro AUROC 0.8618
+    epoch  9 loss 0.3390 val macro AUROC 0.8621
+    epoch 10 loss 0.3379 val macro AUROC 0.8631  <- best
+    epoch 11 loss 0.3374 val macro AUROC 0.8628
+    epoch 12 loss 0.3363 val macro AUROC 0.8634  <- best
+    epoch 13 loss 0.3359 val macro AUROC 0.8631
+    epoch 14 loss 0.3351 val macro AUROC 0.8632
+    epoch 15 loss 0.3347 val macro AUROC 0.8635  <- best
+    epoch 16 loss 0.3340 val macro AUROC 0.8640  <- best
+    epoch 17 loss 0.3335 val macro AUROC 0.8639
+    epoch 18 loss 0.3328 val macro AUROC 0.8644  <- best
+    epoch 19 loss 0.3325 val macro AUROC 0.8647  <- best
+    epoch 20 loss 0.3322 val macro AUROC 0.8642
+    epoch 21 loss 0.3318 val macro AUROC 0.8648  <- best
+    epoch 22 loss 0.3312 val macro AUROC 0.8632
+    epoch 23 loss 0.3310 val macro AUROC 0.8642
+    epoch 24 loss 0.3308 val macro AUROC 0.8640
+    epoch 25 loss 0.3308 val macro AUROC 0.8646
+    epoch 26 loss 0.3304 val macro AUROC 0.8649  <- best
+    epoch 27 loss 0.3299 val macro AUROC 0.8643
+    epoch 28 loss 0.3298 val macro AUROC 0.8641
+    epoch 29 loss 0.3295 val macro AUROC 0.8646
+    epoch 30 loss 0.3295 val macro AUROC 0.8649  <- best
+    epoch 31 loss 0.3291 val macro AUROC 0.8644
+    epoch 32 loss 0.3289 val macro AUROC 0.8646
+    epoch 33 loss 0.3288 val macro AUROC 0.8645
+    epoch 34 loss 0.3288 val macro AUROC 0.8644
+    epoch 35 loss 0.3286 val macro AUROC 0.8644
+    no improvement for 5 epochs, stopping
+
+  best epoch 30 | val macro AUROC 0.8649
+  TEST macro AUROC 0.8575 | micro 0.8829 | macro F1 0.5736
+  per label: HYP 0.7869, NORM 0.9028, MI 0.8492, CD 0.8588, STTC 0.8899
+  rotation sweep: 0deg 85.75 (+0.00), 5deg 85.73 (-0.02), 10deg 85.44 (-0.32), 30deg 82.24 (-3.51), 60deg 74.64 (-11.11), 90deg 65.36 (-20.39), 150deg 52.27 (-33.48)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_fixed_s42.json
+Mode global | max_degrees 10 | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,208 (geometry 3, head 3,205)
+    epoch  0 loss 0.4421 val macro AUROC 0.8356  <- best
+    epoch  1 loss 0.3675 val macro AUROC 0.8507  <- best
+    epoch  2 loss 0.3557 val macro AUROC 0.8557  <- best
+    epoch  3 loss 0.3500 val macro AUROC 0.8581  <- best
+    epoch  4 loss 0.3468 val macro AUROC 0.8600  <- best
+    epoch  5 loss 0.3442 val macro AUROC 0.8608  <- best
+    epoch  6 loss 0.3430 val macro AUROC 0.8615  <- best
+    epoch  7 loss 0.3414 val macro AUROC 0.8623  <- best
+    epoch  8 loss 0.3401 val macro AUROC 0.8618
+    epoch  9 loss 0.3390 val macro AUROC 0.8621
+    epoch 10 loss 0.3379 val macro AUROC 0.8632  <- best
+    epoch 11 loss 0.3374 val macro AUROC 0.8629
+    epoch 12 loss 0.3363 val macro AUROC 0.8635  <- best
+    epoch 13 loss 0.3359 val macro AUROC 0.8632
+    epoch 14 loss 0.3350 val macro AUROC 0.8632
+    epoch 15 loss 0.3347 val macro AUROC 0.8636  <- best
+    epoch 16 loss 0.3340 val macro AUROC 0.8641  <- best
+    epoch 17 loss 0.3335 val macro AUROC 0.8640
+    epoch 18 loss 0.3328 val macro AUROC 0.8645  <- best
+    epoch 19 loss 0.3325 val macro AUROC 0.8647  <- best
+    epoch 20 loss 0.3322 val macro AUROC 0.8642
+    epoch 21 loss 0.3318 val macro AUROC 0.8649  <- best
+    epoch 22 loss 0.3312 val macro AUROC 0.8633
+    epoch 23 loss 0.3310 val macro AUROC 0.8642
+    epoch 24 loss 0.3308 val macro AUROC 0.8641
+    epoch 25 loss 0.3308 val macro AUROC 0.8646
+    epoch 26 loss 0.3304 val macro AUROC 0.8650  <- best
+    epoch 27 loss 0.3299 val macro AUROC 0.8644
+    epoch 28 loss 0.3297 val macro AUROC 0.8642
+    epoch 29 loss 0.3295 val macro AUROC 0.8646
+    epoch 30 loss 0.3295 val macro AUROC 0.8650
+    epoch 31 loss 0.3290 val macro AUROC 0.8645
+    no improvement for 5 epochs, stopping
+
+  best epoch 26 | val macro AUROC 0.8650
+  TEST macro AUROC 0.8573 | micro 0.8820 | macro F1 0.5779
+  per label: HYP 0.7863, NORM 0.9020, MI 0.8484, CD 0.8581, STTC 0.8916
+  geometry: correction 1.1 deg, mean lead direction moved 0.9 deg (per record median 1.1, max 1.1)
+  rotation sweep: 0deg 85.73 (+0.00), 5deg 85.70 (-0.02), 10deg 85.40 (-0.33), 30deg 82.18 (-3.55), 60deg 74.44 (-11.29), 90deg 65.23 (-20.50), 150deg 52.19 (-33.54)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_global_s42.json
+Mode conditioned | max_degrees 5.0 | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (geometry 44,489, head 3,205)
+    epoch  0 loss 0.4374 val macro AUROC 0.8403  <- best
+    epoch  1 loss 0.3643 val macro AUROC 0.8534  <- best
+    epoch  2 loss 0.3519 val macro AUROC 0.8585  <- best
+    epoch  3 loss 0.3461 val macro AUROC 0.8608  <- best
+    epoch  4 loss 0.3425 val macro AUROC 0.8625  <- best
+    epoch  5 loss 0.3394 val macro AUROC 0.8634  <- best
+    epoch  6 loss 0.3378 val macro AUROC 0.8648  <- best
+    epoch  7 loss 0.3358 val macro AUROC 0.8657  <- best
+    epoch  8 loss 0.3341 val macro AUROC 0.8661  <- best
+    epoch  9 loss 0.3330 val macro AUROC 0.8656
+    epoch 10 loss 0.3313 val macro AUROC 0.8667  <- best
+    epoch 11 loss 0.3308 val macro AUROC 0.8662
+    epoch 12 loss 0.3289 val macro AUROC 0.8654
+    epoch 13 loss 0.3286 val macro AUROC 0.8664
+    epoch 14 loss 0.3275 val macro AUROC 0.8663
+    epoch 15 loss 0.3269 val macro AUROC 0.8671  <- best
+    epoch 16 loss 0.3256 val macro AUROC 0.8673  <- best
+    epoch 17 loss 0.3249 val macro AUROC 0.8682  <- best
+    epoch 18 loss 0.3241 val macro AUROC 0.8685  <- best
+    epoch 19 loss 0.3232 val macro AUROC 0.8690  <- best
+    epoch 20 loss 0.3225 val macro AUROC 0.8677
+    epoch 21 loss 0.3220 val macro AUROC 0.8687
+    epoch 22 loss 0.3212 val macro AUROC 0.8670
+    epoch 23 loss 0.3207 val macro AUROC 0.8680
+    epoch 24 loss 0.3204 val macro AUROC 0.8675
+    no improvement for 5 epochs, stopping
+
+  best epoch 19 | val macro AUROC 0.8690
+  TEST macro AUROC 0.8611 | micro 0.8851 | macro F1 0.5850
+  per label: HYP 0.7890, NORM 0.9038, MI 0.8585, CD 0.8603, STTC 0.8940
+  geometry: correction 5.0 deg, mean lead direction moved 4.1 deg (per record median 5.0, max 5.0)
+  rotation sweep: 0deg 86.11 (+0.00), 5deg 86.06 (-0.05), 10deg 85.72 (-0.40), 30deg 81.81 (-4.30), 60deg 73.20 (-12.91), 90deg 63.84 (-22.27), 150deg 51.46 (-34.65)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_conditioned_5deg_s42.json
+Mode conditioned | max_degrees 10.0 | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (geometry 44,489, head 3,205)
+    epoch  0 loss 0.4345 val macro AUROC 0.8408  <- best
+    epoch  1 loss 0.3615 val macro AUROC 0.8532  <- best
+    epoch  2 loss 0.3493 val macro AUROC 0.8595  <- best
+    epoch  3 loss 0.3431 val macro AUROC 0.8617  <- best
+    epoch  4 loss 0.3395 val macro AUROC 0.8632  <- best
+    epoch  5 loss 0.3360 val macro AUROC 0.8648  <- best
+    epoch  6 loss 0.3339 val macro AUROC 0.8655  <- best
+    epoch  7 loss 0.3323 val macro AUROC 0.8662  <- best
+    epoch  8 loss 0.3304 val macro AUROC 0.8658
+    epoch  9 loss 0.3288 val macro AUROC 0.8639
+    epoch 10 loss 0.3269 val macro AUROC 0.8665  <- best
+    epoch 11 loss 0.3262 val macro AUROC 0.8666  <- best
+    epoch 12 loss 0.3239 val macro AUROC 0.8663
+    epoch 13 loss 0.3238 val macro AUROC 0.8671  <- best
+    epoch 14 loss 0.3228 val macro AUROC 0.8671
+    epoch 15 loss 0.3212 val macro AUROC 0.8670
+    epoch 16 loss 0.3206 val macro AUROC 0.8677  <- best
+    epoch 17 loss 0.3189 val macro AUROC 0.8694  <- best
+    epoch 18 loss 0.3178 val macro AUROC 0.8686
+    epoch 19 loss 0.3164 val macro AUROC 0.8703  <- best
+    epoch 20 loss 0.3156 val macro AUROC 0.8672
+    epoch 21 loss 0.3149 val macro AUROC 0.8696
+    epoch 22 loss 0.3137 val macro AUROC 0.8680
+    epoch 23 loss 0.3131 val macro AUROC 0.8683
+    epoch 24 loss 0.3116 val macro AUROC 0.8687
+    no improvement for 5 epochs, stopping
+
+  best epoch 19 | val macro AUROC 0.8703
+  TEST macro AUROC 0.8634 | micro 0.8871 | macro F1 0.5962
+  per label: HYP 0.7889, NORM 0.9046, MI 0.8655, CD 0.8617, STTC 0.8962
+  geometry: correction 9.9 deg, mean lead direction moved 8.2 deg (per record median 10.0, max 10.0)
+  rotation sweep: 0deg 86.34 (+0.00), 5deg 86.30 (-0.04), 10deg 85.91 (-0.43), 30deg 81.62 (-4.71), 60deg 72.36 (-13.97), 90deg 62.89 (-23.45), 150deg 51.45 (-34.89)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_conditioned_10deg_s42.json
+Mode conditioned | max_degrees 30.0 | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (geometry 44,489, head 3,205)
+    epoch  0 loss 0.4278 val macro AUROC 0.8430  <- best
+    epoch  1 loss 0.3552 val macro AUROC 0.8536  <- best
+    epoch  2 loss 0.3415 val macro AUROC 0.8600  <- best
+    epoch  3 loss 0.3360 val macro AUROC 0.8614  <- best
+    epoch  4 loss 0.3307 val macro AUROC 0.8620  <- best
+    epoch  5 loss 0.3273 val macro AUROC 0.8646  <- best
+    epoch  6 loss 0.3251 val macro AUROC 0.8653  <- best
+    epoch  7 loss 0.3214 val macro AUROC 0.8624
+    epoch  8 loss 0.3203 val macro AUROC 0.8639
+    epoch  9 loss 0.3187 val macro AUROC 0.8623
+    epoch 10 loss 0.3159 val macro AUROC 0.8683  <- best
+    epoch 11 loss 0.3149 val macro AUROC 0.8661
+    epoch 12 loss 0.3127 val macro AUROC 0.8654
+    epoch 13 loss 0.3117 val macro AUROC 0.8672
+    epoch 14 loss 0.3094 val macro AUROC 0.8676
+    epoch 15 loss 0.3080 val macro AUROC 0.8669
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8683
+  TEST macro AUROC 0.8604 | micro 0.8851 | macro F1 0.5910
+  per label: HYP 0.7849, NORM 0.9067, MI 0.8619, CD 0.8496, STTC 0.8990
+  geometry: correction 25.9 deg, mean lead direction moved 21.6 deg (per record median 27.3, max 30.0)
+  rotation sweep: 0deg 86.04 (+0.00), 5deg 86.03 (-0.02), 10deg 85.70 (-0.34), 30deg 81.86 (-4.18), 60deg 72.58 (-13.46), 90deg 62.18 (-23.86), 150deg 52.31 (-33.73)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_conditioned_30deg_s42.json
+Mode conditioned | max_degrees unbounded | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (geometry 44,489, head 3,205)
+    epoch  0 loss 0.4237 val macro AUROC 0.8466  <- best
+    epoch  1 loss 0.3495 val macro AUROC 0.8587  <- best
+    epoch  2 loss 0.3348 val macro AUROC 0.8626  <- best
+    epoch  3 loss 0.3281 val macro AUROC 0.8647  <- best
+    epoch  4 loss 0.3221 val macro AUROC 0.8660  <- best
+    epoch  5 loss 0.3178 val macro AUROC 0.8689  <- best
+    epoch  6 loss 0.3140 val macro AUROC 0.8692  <- best
+    epoch  7 loss 0.3103 val macro AUROC 0.8689
+    epoch  8 loss 0.3083 val macro AUROC 0.8709  <- best
+    epoch  9 loss 0.3056 val macro AUROC 0.8718  <- best
+    epoch 10 loss 0.3028 val macro AUROC 0.8727  <- best
+    epoch 11 loss 0.3004 val macro AUROC 0.8738  <- best
+    epoch 12 loss 0.2968 val macro AUROC 0.8724
+    epoch 13 loss 0.2941 val macro AUROC 0.8723
+    epoch 14 loss 0.2929 val macro AUROC 0.8719
+    epoch 15 loss 0.2894 val macro AUROC 0.8718
+    epoch 16 loss 0.2867 val macro AUROC 0.8709
+    no improvement for 5 epochs, stopping
+
+  best epoch 11 | val macro AUROC 0.8738
+  TEST macro AUROC 0.8673 | micro 0.8888 | macro F1 0.5958
+  per label: HYP 0.7850, NORM 0.9119, MI 0.8754, CD 0.8587, STTC 0.9054
+  geometry: correction 44.7 deg, mean lead direction moved 39.0 deg (per record median 43.5, max 122.8)
+  rotation sweep: 0deg 86.73 (+0.00), 5deg 86.65 (-0.08), 10deg 86.43 (-0.30), 30deg 83.06 (-3.67), 60deg 73.86 (-12.87), 90deg 63.34 (-23.39), 150deg 54.96 (-31.77)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_conditioned_0deg_s42.json
+
+
+(base) ➜ lvcg-reconstructed python scripts/train_qa.py --config configs/eval/qa_v6.yaml --mode conditioned --max-degrees 0 \
+  --geodesic-weight 1.0 --tag _free_geo1 --seed 42
+python scripts/train_qa.py --config configs/eval/qa_v6.yaml --mode global --max-degrees 0 \
+  --tag _free --seed 42
+python scripts/summarize_quaternion.py --results probing/results/qa_v6.csv
+Mode conditioned | max_degrees unbounded | geodesic_weight 1.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (geometry 44,489, head 3,205)
+    epoch  0 loss 0.4352 val macro AUROC 0.8434  <- best
+    epoch  1 loss 0.3625 val macro AUROC 0.8565  <- best
+    epoch  2 loss 0.3493 val macro AUROC 0.8617  <- best
+    epoch  3 loss 0.3432 val macro AUROC 0.8633  <- best
+    epoch  4 loss 0.3379 val macro AUROC 0.8634  <- best
+    epoch  5 loss 0.3350 val macro AUROC 0.8670  <- best
+    epoch  6 loss 0.3314 val macro AUROC 0.8663
+    epoch  7 loss 0.3284 val macro AUROC 0.8673  <- best
+    epoch  8 loss 0.3260 val macro AUROC 0.8675  <- best
+    epoch  9 loss 0.3242 val macro AUROC 0.8666
+    epoch 10 loss 0.3225 val macro AUROC 0.8689  <- best
+    epoch 11 loss 0.3202 val macro AUROC 0.8683
+    epoch 12 loss 0.3176 val macro AUROC 0.8677
+    epoch 13 loss 0.3158 val macro AUROC 0.8683
+    epoch 14 loss 0.3136 val macro AUROC 0.8679
+    epoch 15 loss 0.3117 val macro AUROC 0.8684
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8689
+  TEST macro AUROC 0.8625 | micro 0.8870 | macro F1 0.6068
+  per label: HYP 0.7893, NORM 0.9063, MI 0.8676, CD 0.8532, STTC 0.8960
+  geometry: correction 11.3 deg, mean lead direction moved 11.0 deg (per record median 10.4, max 44.9)
+  rotation sweep: 0deg 86.25 (+0.00), 5deg 86.21 (-0.03), 10deg 85.90 (-0.34), 30deg 82.01 (-4.24), 60deg 72.95 (-13.30), 90deg 63.50 (-22.74), 150deg 51.49 (-34.75)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_conditioned_free_geo1_s42.json
+Mode global | max_degrees unbounded | geodesic_weight 0.0 | augment False | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,208 (geometry 3, head 3,205)
+    epoch  0 loss 0.4421 val macro AUROC 0.8356  <- best
+    epoch  1 loss 0.3675 val macro AUROC 0.8506  <- best
+    epoch  2 loss 0.3557 val macro AUROC 0.8557  <- best
+    epoch  3 loss 0.3500 val macro AUROC 0.8582  <- best
+    epoch  4 loss 0.3468 val macro AUROC 0.8600  <- best
+    epoch  5 loss 0.3442 val macro AUROC 0.8608  <- best
+    epoch  6 loss 0.3431 val macro AUROC 0.8615  <- best
+    epoch  7 loss 0.3414 val macro AUROC 0.8623  <- best
+    epoch  8 loss 0.3401 val macro AUROC 0.8618
+    epoch  9 loss 0.3390 val macro AUROC 0.8621
+    epoch 10 loss 0.3379 val macro AUROC 0.8632  <- best
+    epoch 11 loss 0.3374 val macro AUROC 0.8629
+    epoch 12 loss 0.3363 val macro AUROC 0.8635  <- best
+    epoch 13 loss 0.3359 val macro AUROC 0.8632
+    epoch 14 loss 0.3351 val macro AUROC 0.8632
+    epoch 15 loss 0.3347 val macro AUROC 0.8636  <- best
+    epoch 16 loss 0.3340 val macro AUROC 0.8641  <- best
+    epoch 17 loss 0.3335 val macro AUROC 0.8640
+    epoch 18 loss 0.3328 val macro AUROC 0.8645  <- best
+    epoch 19 loss 0.3325 val macro AUROC 0.8647  <- best
+    epoch 20 loss 0.3322 val macro AUROC 0.8642
+    epoch 21 loss 0.3318 val macro AUROC 0.8649  <- best
+    epoch 22 loss 0.3312 val macro AUROC 0.8633
+    epoch 23 loss 0.3310 val macro AUROC 0.8643
+    epoch 24 loss 0.3308 val macro AUROC 0.8641
+    epoch 25 loss 0.3308 val macro AUROC 0.8646
+    epoch 26 loss 0.3304 val macro AUROC 0.8650  <- best
+    epoch 27 loss 0.3299 val macro AUROC 0.8643
+    epoch 28 loss 0.3297 val macro AUROC 0.8642
+    epoch 29 loss 0.3295 val macro AUROC 0.8646
+    epoch 30 loss 0.3295 val macro AUROC 0.8650
+    epoch 31 loss 0.3290 val macro AUROC 0.8645
+    no improvement for 5 epochs, stopping
+
+  best epoch 26 | val macro AUROC 0.8650
+  TEST macro AUROC 0.8573 | micro 0.8820 | macro F1 0.5782
+  per label: HYP 0.7864, NORM 0.9020, MI 0.8485, CD 0.8580, STTC 0.8916
+  geometry: correction 1.1 deg, mean lead direction moved 0.8 deg (per record median 1.1, max 1.1)
+  rotation sweep: 0deg 85.73 (+0.00), 5deg 85.70 (-0.03), 10deg 85.40 (-0.33), 30deg 82.18 (-3.55), 60deg 74.44 (-11.29), 90deg 65.23 (-20.50), 150deg 52.19 (-33.54)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qa_v6.csv; curve in qa_v6_curve_global_free_s42.json
+qa_v6.csv — 8 runs, metric test_macro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            v0     1   85.75     -   +0.00       -   30.0     3,205
+            qa     1   85.73     -   -0.02   -0.02   26.0     3,208
+       qa 0deg     1   86.73     -   +0.98   +0.98   11.0    47,694
+      qa 10deg     1   86.34     -   +0.58   +0.58   19.0    47,694
+      qa 30deg     1   86.04     -   +0.29   +0.29   10.0    47,694
+       qa 5deg     1   86.11     -   +0.36   +0.36   19.0    47,694
+       qa free     1   85.73     -   -0.02   -0.02   26.0     3,208
+  qa free_geo1     1   86.25     -   +0.50   +0.50   10.0    47,694
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              v0  0.9028  0.8492  0.8899  0.8588  0.7869
+              qa  0.9020  0.8484  0.8916  0.8581  0.7863
+         qa 0deg  0.9119  0.8754  0.9054  0.8587  0.7850
+        qa 10deg  0.9046  0.8655  0.8962  0.8617  0.7889
+        qa 30deg  0.9067  0.8619  0.8990  0.8496  0.7849
+         qa 5deg  0.9038  0.8585  0.8940  0.8603  0.7890
+         qa free  0.9020  0.8485  0.8916  0.8580  0.7864
+    qa free_geo1  0.9063  0.8676  0.8960  0.8532  0.7893

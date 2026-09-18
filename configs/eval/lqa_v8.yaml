@@ -1,0 +1,33 @@
+# V8, LQA-LVCG (plan section 4, Tier 1: frozen backbone).
+# Five learnable label queries read the dynamics sequence; each label pools it where it
+# wants. One small head per label, not five MLPs.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+phase_windows:                 # only for the attention report, not for the model
+  qrs_ms: [-40.0, 60.0]
+  t_fraction: [0.15, 0.55]
+
+quaternion:
+  fs: 100
+  embedding_dim: 128
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+  min_magnitude_fraction: 0.02
+  sign_continuity: true
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4
