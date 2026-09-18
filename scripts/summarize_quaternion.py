@@ -32,6 +32,14 @@ SHORT_FEATURES = {
 }
 
 
+def _number(value, default=0.0) -> float:
+    """CSV cells can be empty or missing when a run was interrupted mid-row."""
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
 def _variant(row) -> str:
     """The run's identity: model, features or components, fusion and tag, minus the seed."""
     parts = [row["model"]]
@@ -46,18 +54,19 @@ def _variant(row) -> str:
         parts.append(SHORT_FEATURES.get(features, features.replace("+", "/")))
     if row.get("fusion"):
         parts.append(row["fusion"])
-    if float(row.get("fusion_init_std") or 0):
+    if _number(row.get("fusion_init_std")):
         parts.append(f"init{row['fusion_init_std']}")
     if row.get("tag"):
         parts.append(row["tag"].lstrip("_"))
-    if float(row.get("label_ratio", 1.0)) != 1.0:
-        parts.append(f"{float(row['label_ratio']):.0%}")
+    ratio = _number(row.get("label_ratio"), 1.0)
+    if ratio != 1.0:
+        parts.append(f"{ratio:.0%}")
     return " ".join(parts)
 
 
 def summarize(path: str, metric: str) -> None:
     with open(path, newline="", encoding="utf-8") as handle:
-        rows = [r for r in csv.DictReader(handle) if r.get(metric)]
+        rows = [r for r in csv.DictReader(handle) if _number(r.get(metric), -1) >= 0]
     if not rows:
         print(f"{os.path.basename(path)}: no runs\n")
         return
@@ -65,7 +74,7 @@ def summarize(path: str, metric: str) -> None:
     groups = defaultdict(list)
     for row in rows:
         groups[_variant(row)].append(row)
-    v0 = {int(r["seed"]): float(r[metric]) for r in rows if r["model"] == "v0"}
+    v0 = {int(_number(r["seed"])): _number(r[metric]) for r in rows if r.get("model") == "v0"}
     is_v0 = lambda name: name.startswith("v0") or name == "vcg"  # noqa: E731
     reference = mean(v0.values()) if v0 else None
 
@@ -76,20 +85,20 @@ def summarize(path: str, metric: str) -> None:
     print(header + "\n  " + "-" * (len(header) - 2))
     for name in sorted(groups, key=lambda n: (not is_v0(n), n)):
         group = groups[name]
-        scores = [float(r[metric]) * 100 for r in group]
+        scores = [_number(r[metric]) * 100 for r in group]
         spread = f"{pstdev(scores):.2f}" if len(scores) > 1 else "-"
         delta = f"{mean(scores) - reference * 100:+.2f}" if reference else "-"
         # Paired: only over the seeds where a V0 run exists, which removes seed variance.
-        paired = [float(r[metric]) * 100 - v0[int(r["seed"])] * 100
-                  for r in group if int(r["seed"]) in v0]
+        paired = [_number(r[metric]) * 100 - v0[int(_number(r["seed"]))] * 100
+                  for r in group if int(_number(r["seed"])) in v0]
         paired_text = f"{mean(paired):+.2f}" if paired and not is_v0(name) else "-"
-        epochs = mean(float(r["best_epoch"]) for r in group)
-        params = int(float(group[0]["trainable_params"]))
+        epochs = mean(_number(r.get("best_epoch")) for r in group)
+        params = int(_number(group[0].get("trainable_params")))
         print(f"  {name[:width]:>{width}} {len(group):>5} {mean(scores):>7.2f} {spread:>5} {delta:>7} "
               f"{paired_text:>7} {epochs:>6.1f} {params:>9,}")
 
     best = max((g for n, g in groups.items() if not is_v0(n)), default=None,
-               key=lambda g: mean(float(r[metric]) for r in g))
+               key=lambda g: mean(_number(r[metric]) for r in g))
     if best:
         print("\n  per-label test AUROC (seed of the first run of each variant):")
         print(f"    {'variant':>{width}} " + " ".join(f"{label:>7}" for label in LABELS))
@@ -116,7 +125,11 @@ def main() -> None:
     if not paths:
         raise SystemExit("No stage CSVs found; run scripts/train_qdf.py or train_qdt.py first")
     for path in paths:
-        summarize(path if os.path.isabs(path) else os.path.join(REPO_ROOT, path), args.metric)
+        full = path if os.path.isabs(path) else os.path.join(REPO_ROOT, path)
+        try:
+            summarize(full, args.metric)
+        except Exception as error:  # one unreadable CSV must not hide the other stages
+            print(f"{os.path.basename(full)}: could not be summarised ({error})\n")
 
 
 if __name__ == "__main__":
