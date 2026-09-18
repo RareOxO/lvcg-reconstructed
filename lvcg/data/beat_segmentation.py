@@ -122,6 +122,26 @@ class BeatSegmenter(nn.Module):
             intervals = [*head, (start, length)]
         return intervals
 
+    def r_peaks(
+        self, ecg: torch.Tensor, rr_lead_idx: int = 1, max_peaks: int = 32
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        """R-peak sample positions per record: (peaks [B, max_peaks], mask [B, max_peaks]).
+
+        The same detection ``forward`` segments with, exposed for the phase windows of
+        V4. Padding positions are 0 and masked; a record with more peaks than
+        ``max_peaks`` keeps the first ones, which is what segmentation does as well.
+        """
+        reference = ecg[:, rr_lead_idx].detach().float().cpu().numpy()
+        records = [self._detect_r_peaks(lead) for lead in reference]
+        batch = len(records)
+        peaks = torch.zeros(batch, max_peaks, dtype=torch.long)
+        mask = torch.zeros(batch, max_peaks, dtype=torch.bool)
+        for row, found in enumerate(records):
+            kept = found[:max_peaks]
+            peaks[row, : len(kept)] = torch.as_tensor(kept, dtype=torch.long)
+            mask[row, : len(kept)] = True
+        return peaks.to(ecg.device), mask.to(ecg.device)
+
     def forward(
         self, vcg: torch.Tensor, ecg: torch.Tensor, rr_lead_idx: int = 1
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:

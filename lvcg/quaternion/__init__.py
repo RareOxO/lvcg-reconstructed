@@ -12,6 +12,7 @@ from .features import (
 )
 from .qdf import DynamicEncoder, QDFProbe
 from .mrq import VARIANTS, build_probe
+from .phase import PHASES, PhaseProbe, phase_masks
 from .qdt import QDTProbe, TokenFusion
 
 __all__ = [
@@ -22,6 +23,9 @@ __all__ = [
     "DynamicEncoder",
     "VARIANTS",
     "build_probe",
+    "PHASES",
+    "PhaseProbe",
+    "phase_masks",
     "QDFProbe",
     "QDTProbe",
     "TokenFusion",

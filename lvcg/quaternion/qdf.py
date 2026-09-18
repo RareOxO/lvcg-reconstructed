@@ -48,14 +48,18 @@ class DynamicEncoder(nn.Module):
         # LVCG layer-normalises each embedding part before concatenation; e_Q follows suit.
         self.norm = nn.LayerNorm(embedding_dim)
 
-    def forward(self, x, pool_mask=None):
-        """Average over time; with ``pool_mask`` [B, T], over the masked steps only.
+    def encode(self, x):
+        """The convolutional feature map [B, E, T'], before pooling."""
+        return self.net(x)
+
+    def pool(self, h, pool_mask=None):
+        """Average a feature map over time; with ``pool_mask`` [B, T], over its steps only.
 
         The mask is carried through the strides with max pooling, which reproduces each
         convolution's output length exactly, so a pooled step counts when any input step
         it summarises was inside the mask. A record whose mask is empty pools to zero.
+        V4 pools one feature map several times, once per cardiac phase.
         """
-        h = self.net(x)
         if pool_mask is None:
             pooled = h.mean(dim=-1)
         else:
@@ -64,6 +68,9 @@ class DynamicEncoder(nn.Module):
                 m = F.max_pool1d(m, kernel_size=2, stride=2, ceil_mode=True)
             pooled = (h * m).sum(dim=-1) / m.sum(dim=-1).clamp_min(1.0)
         return self.norm(self.dropout(pooled))
+
+    def forward(self, x, pool_mask=None):
+        return self.pool(self.encode(x), pool_mask)
 
 
 class QDFProbe(nn.Module):

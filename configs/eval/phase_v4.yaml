@@ -1,0 +1,33 @@
+# V4, Phase-Q LVCG (plan section 4, Tier 1: frozen backbone).
+# The same feature encoder, pooled separately over QRS, T and the whole beat. Windows are
+# R-peak relative, because the repository's segmentation gives R peaks and nothing finer.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+phase_windows:
+  qrs_ms: [-40.0, 60.0]        # milliseconds either side of R
+  t_fraction: [0.15, 0.55]     # fraction of the R-R interval that follows R
+
+quaternion:
+  fs: 100
+  embedding_dim: 128           # per phase; the encoder itself is shared
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+  min_magnitude_fraction: 0.02
+  sign_continuity: true
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4
