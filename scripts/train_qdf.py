@@ -191,8 +191,16 @@ def append_row(path: str, row: dict) -> None:
         with open(path, newline="", encoding="utf-8") as handle:
             header = next(_csv.reader(handle), [])
         if header and header != list(row):
+            missing = [name for name in row if name not in header]
+            extra = [name for name in header if name not in row]
+            parts = []
+            if missing:
+                parts.append(f"this run adds {missing}")
+            if extra:
+                parts.append(f"the file has {extra}")
             raise SystemExit(
-                f"{path} has different columns ({header[:4]}... vs {list(row)[:4]}...).\n"
+                f"{path} has different columns: "
+                f"{'; '.join(parts) or 'the same names in another order'}.\n"
                 "It was written by another variant of this experiment. Move it aside, "
                 "e.g.\n  mkdir -p probing/results/superseded && "
                 f"mv {path} probing/results/superseded/"
