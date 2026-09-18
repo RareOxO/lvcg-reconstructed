@@ -1,0 +1,434 @@
+(/home/featurize/work/quaternion_env) ➜ lvcg-reconstructed for s in 42 43 44; do
+  python scripts/train_frame.py --config configs/eval/frame_c.yaml --variant v0 --seed $s
+  for p in invariant equivariant "invariant,equivariant"; do
+    python scripts/train_frame.py --config configs/eval/frame_c.yaml --parts $p --seed $s
+  done
+done
+Parts invariant + equivariant | variant v0 | struct mean | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,069 (frame branch 184,584, head 4,485)
+    epoch  0 loss 0.4244 val macro AUROC 0.8549  <- best
+    epoch  1 loss 0.3480 val macro AUROC 0.8678  <- best
+    epoch  2 loss 0.3355 val macro AUROC 0.8723  <- best
+    epoch  3 loss 0.3292 val macro AUROC 0.8750  <- best
+    epoch  4 loss 0.3252 val macro AUROC 0.8776  <- best
+    epoch  5 loss 0.3223 val macro AUROC 0.8782  <- best
+    epoch  6 loss 0.3209 val macro AUROC 0.8789  <- best
+    epoch  7 loss 0.3190 val macro AUROC 0.8799  <- best
+    epoch  8 loss 0.3176 val macro AUROC 0.8797
+    epoch  9 loss 0.3165 val macro AUROC 0.8798
+    epoch 10 loss 0.3153 val macro AUROC 0.8808  <- best
+    epoch 11 loss 0.3149 val macro AUROC 0.8804
+    epoch 12 loss 0.3137 val macro AUROC 0.8811  <- best
+    epoch 13 loss 0.3133 val macro AUROC 0.8802
+    epoch 14 loss 0.3125 val macro AUROC 0.8810
+    epoch 15 loss 0.3123 val macro AUROC 0.8812  <- best
+    epoch 16 loss 0.3116 val macro AUROC 0.8815  <- best
+    epoch 17 loss 0.3111 val macro AUROC 0.8810
+    epoch 18 loss 0.3105 val macro AUROC 0.8815
+    epoch 19 loss 0.3103 val macro AUROC 0.8815  <- best
+    epoch 20 loss 0.3097 val macro AUROC 0.8812
+    epoch 21 loss 0.3095 val macro AUROC 0.8819  <- best
+    epoch 22 loss 0.3090 val macro AUROC 0.8806
+    epoch 23 loss 0.3090 val macro AUROC 0.8813
+    epoch 24 loss 0.3086 val macro AUROC 0.8811
+    epoch 25 loss 0.3084 val macro AUROC 0.8809
+    epoch 26 loss 0.3082 val macro AUROC 0.8817
+    no improvement for 5 epochs, stopping
+
+  best epoch 21 | val macro AUROC 0.8819
+  TEST macro AUROC 0.8735 | micro 0.8974 | macro F1 0.6206
+  per label: HYP 0.8059, NORM 0.9143, MI 0.8654, CD 0.8794, STTC 0.9022
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.35 (+0.00), 5deg 87.35 (+0.00), 10deg 87.35 (+0.00), 30deg 87.35 (+0.00), 60deg 87.35 (+0.00), 90deg 87.35 (+0.00), 150deg 87.35 (+0.00)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_v0-invariant-equivariant_s42.json
+Parts invariant | variant frame | struct mean | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 178,893 (frame branch 175,048, head 3,845)
+    epoch  0 loss 0.4026 val macro AUROC 0.8566  <- best
+    epoch  1 loss 0.3400 val macro AUROC 0.8718  <- best
+    epoch  2 loss 0.3278 val macro AUROC 0.8763  <- best
+    epoch  3 loss 0.3217 val macro AUROC 0.8788  <- best
+    epoch  4 loss 0.3163 val macro AUROC 0.8827  <- best
+    epoch  5 loss 0.3113 val macro AUROC 0.8825
+    epoch  6 loss 0.3095 val macro AUROC 0.8837  <- best
+    epoch  7 loss 0.3054 val macro AUROC 0.8837  <- best
+    epoch  8 loss 0.3028 val macro AUROC 0.8839  <- best
+    epoch  9 loss 0.3000 val macro AUROC 0.8854  <- best
+    epoch 10 loss 0.2972 val macro AUROC 0.8855  <- best
+    epoch 11 loss 0.2927 val macro AUROC 0.8838
+    epoch 12 loss 0.2920 val macro AUROC 0.8862  <- best
+    epoch 13 loss 0.2881 val macro AUROC 0.8840
+    epoch 14 loss 0.2849 val macro AUROC 0.8864  <- best
+    epoch 15 loss 0.2820 val macro AUROC 0.8850
+    epoch 16 loss 0.2780 val macro AUROC 0.8835
+    epoch 17 loss 0.2751 val macro AUROC 0.8850
+    epoch 18 loss 0.2703 val macro AUROC 0.8830
+    epoch 19 loss 0.2655 val macro AUROC 0.8800
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8864
+  TEST macro AUROC 0.8771 | micro 0.8998 | macro F1 0.6394
+  per label: HYP 0.8026, NORM 0.9185, MI 0.8757, CD 0.8848, STTC 0.9041
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.71 (+0.00), 5deg 87.71 (+0.00), 10deg 87.71 (+0.00), 30deg 87.71 (+0.00), 60deg 87.71 (+0.00), 90deg 87.71 (+0.00), 150deg 87.71 (+0.00)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-invariant_s42.json
+Parts equivariant | variant frame | struct mean | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,381 (frame branch 9,536, head 3,845)
+    epoch  0 loss 0.4166 val macro AUROC 0.8595  <- best
+    epoch  1 loss 0.3456 val macro AUROC 0.8703  <- best
+    epoch  2 loss 0.3339 val macro AUROC 0.8745  <- best
+    epoch  3 loss 0.3278 val macro AUROC 0.8768  <- best
+    epoch  4 loss 0.3243 val macro AUROC 0.8793  <- best
+    epoch  5 loss 0.3208 val macro AUROC 0.8795  <- best
+    epoch  6 loss 0.3196 val macro AUROC 0.8803  <- best
+    epoch  7 loss 0.3177 val macro AUROC 0.8808  <- best
+    epoch  8 loss 0.3161 val macro AUROC 0.8805
+    epoch  9 loss 0.3152 val macro AUROC 0.8802
+    epoch 10 loss 0.3141 val macro AUROC 0.8816  <- best
+    epoch 11 loss 0.3141 val macro AUROC 0.8809
+    epoch 12 loss 0.3124 val macro AUROC 0.8819  <- best
+    epoch 13 loss 0.3120 val macro AUROC 0.8810
+    epoch 14 loss 0.3111 val macro AUROC 0.8815
+    epoch 15 loss 0.3110 val macro AUROC 0.8815
+    epoch 16 loss 0.3106 val macro AUROC 0.8820  <- best
+    epoch 17 loss 0.3098 val macro AUROC 0.8814
+    epoch 18 loss 0.3091 val macro AUROC 0.8819
+    epoch 19 loss 0.3087 val macro AUROC 0.8816
+    epoch 20 loss 0.3083 val macro AUROC 0.8816
+    epoch 21 loss 0.3080 val macro AUROC 0.8823  <- best
+    epoch 22 loss 0.3073 val macro AUROC 0.8807
+    epoch 23 loss 0.3074 val macro AUROC 0.8817
+    epoch 24 loss 0.3070 val macro AUROC 0.8816
+    epoch 25 loss 0.3067 val macro AUROC 0.8808
+    epoch 26 loss 0.3069 val macro AUROC 0.8820
+    no improvement for 5 epochs, stopping
+
+  best epoch 21 | val macro AUROC 0.8823
+  TEST macro AUROC 0.8732 | micro 0.8967 | macro F1 0.6091
+  per label: HYP 0.8068, NORM 0.9142, MI 0.8657, CD 0.8781, STTC 0.9011
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.32 (+0.00), 5deg 87.33 (+0.01), 10deg 87.31 (-0.01), 30deg 87.13 (-0.19), 60deg 87.08 (-0.24), 90deg 86.61 (-0.71), 150deg 86.46 (-0.86)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-equivariant_s42.json
+Parts invariant + equivariant | variant frame | struct mean | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,069 (frame branch 184,584, head 4,485)
+    epoch  0 loss 0.4008 val macro AUROC 0.8576  <- best
+    epoch  1 loss 0.3404 val macro AUROC 0.8718  <- best
+    epoch  2 loss 0.3279 val macro AUROC 0.8760  <- best
+    epoch  3 loss 0.3217 val macro AUROC 0.8786  <- best
+    epoch  4 loss 0.3165 val macro AUROC 0.8820  <- best
+    epoch  5 loss 0.3113 val macro AUROC 0.8830  <- best
+    epoch  6 loss 0.3097 val macro AUROC 0.8837  <- best
+    epoch  7 loss 0.3055 val macro AUROC 0.8835
+    epoch  8 loss 0.3035 val macro AUROC 0.8835
+    epoch  9 loss 0.3001 val macro AUROC 0.8846  <- best
+    epoch 10 loss 0.2979 val macro AUROC 0.8848  <- best
+    epoch 11 loss 0.2931 val macro AUROC 0.8817
+    epoch 12 loss 0.2927 val macro AUROC 0.8860  <- best
+    epoch 13 loss 0.2890 val macro AUROC 0.8829
+    epoch 14 loss 0.2864 val macro AUROC 0.8861  <- best
+    epoch 15 loss 0.2832 val macro AUROC 0.8857
+    epoch 16 loss 0.2797 val macro AUROC 0.8837
+    epoch 17 loss 0.2760 val macro AUROC 0.8817
+    epoch 18 loss 0.2729 val macro AUROC 0.8820
+    epoch 19 loss 0.2671 val macro AUROC 0.8807
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8861
+  TEST macro AUROC 0.8782 | micro 0.8996 | macro F1 0.6363
+  per label: HYP 0.8017, NORM 0.9195, MI 0.8786, CD 0.8871, STTC 0.9039
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.82 (+0.00), 5deg 87.83 (+0.01), 10deg 87.83 (+0.01), 30deg 87.71 (-0.11), 60deg 87.66 (-0.16), 90deg 87.45 (-0.36), 150deg 87.29 (-0.53)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-invariant-equivariant_s42.json
+Parts invariant + equivariant | variant v0 | struct mean | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,069 (frame branch 184,584, head 4,485)
+    epoch  0 loss 0.4182 val macro AUROC 0.8580  <- best
+    epoch  1 loss 0.3469 val macro AUROC 0.8701  <- best
+    epoch  2 loss 0.3350 val macro AUROC 0.8747  <- best
+    epoch  3 loss 0.3287 val macro AUROC 0.8771  <- best
+    epoch  4 loss 0.3246 val macro AUROC 0.8787  <- best
+    epoch  5 loss 0.3224 val macro AUROC 0.8802  <- best
+    epoch  6 loss 0.3204 val macro AUROC 0.8806  <- best
+    epoch  7 loss 0.3185 val macro AUROC 0.8808  <- best
+    epoch  8 loss 0.3175 val macro AUROC 0.8811  <- best
+    epoch  9 loss 0.3165 val macro AUROC 0.8812  <- best
+    epoch 10 loss 0.3150 val macro AUROC 0.8817  <- best
+    epoch 11 loss 0.3143 val macro AUROC 0.8813
+    epoch 12 loss 0.3137 val macro AUROC 0.8819  <- best
+    epoch 13 loss 0.3128 val macro AUROC 0.8814
+    epoch 14 loss 0.3122 val macro AUROC 0.8821  <- best
+    epoch 15 loss 0.3117 val macro AUROC 0.8813
+    epoch 16 loss 0.3114 val macro AUROC 0.8819
+    epoch 17 loss 0.3114 val macro AUROC 0.8819
+    epoch 18 loss 0.3107 val macro AUROC 0.8820
+    epoch 19 loss 0.3105 val macro AUROC 0.8820
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8821
+  TEST macro AUROC 0.8730 | micro 0.8961 | macro F1 0.6107
+  per label: HYP 0.8059, NORM 0.9150, MI 0.8634, CD 0.8791, STTC 0.9019
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.30 (+0.00), 5deg 87.30 (+0.00), 10deg 87.30 (+0.00), 30deg 87.30 (+0.00), 60deg 87.30 (+0.00), 90deg 87.30 (+0.00), 150deg 87.30 (+0.00)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_v0-invariant-equivariant_s43.json
+Parts invariant | variant frame | struct mean | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 178,893 (frame branch 175,048, head 3,845)
+    epoch  0 loss 0.4006 val macro AUROC 0.8591  <- best
+    epoch  1 loss 0.3403 val macro AUROC 0.8721  <- best
+    epoch  2 loss 0.3288 val macro AUROC 0.8765  <- best
+    epoch  3 loss 0.3221 val macro AUROC 0.8790  <- best
+    epoch  4 loss 0.3170 val macro AUROC 0.8806  <- best
+    epoch  5 loss 0.3131 val macro AUROC 0.8836  <- best
+    epoch  6 loss 0.3082 val macro AUROC 0.8831
+    epoch  7 loss 0.3063 val macro AUROC 0.8837  <- best
+    epoch  8 loss 0.3039 val macro AUROC 0.8844  <- best
+    epoch  9 loss 0.3005 val macro AUROC 0.8848  <- best
+    epoch 10 loss 0.2974 val macro AUROC 0.8854  <- best
+    epoch 11 loss 0.2938 val macro AUROC 0.8864  <- best
+    epoch 12 loss 0.2911 val macro AUROC 0.8830
+    epoch 13 loss 0.2868 val macro AUROC 0.8824
+    epoch 14 loss 0.2841 val macro AUROC 0.8842
+    epoch 15 loss 0.2804 val macro AUROC 0.8815
+    epoch 16 loss 0.2771 val macro AUROC 0.8846
+    no improvement for 5 epochs, stopping
+
+  best epoch 11 | val macro AUROC 0.8864
+  TEST macro AUROC 0.8763 | micro 0.8956 | macro F1 0.6238
+  per label: HYP 0.8039, NORM 0.9150, MI 0.8739, CD 0.8850, STTC 0.9039
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.63 (+0.00), 5deg 87.63 (+0.00), 10deg 87.63 (+0.00), 30deg 87.63 (+0.00), 60deg 87.63 (+0.00), 90deg 87.63 (+0.00), 150deg 87.63 (+0.00)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-invariant_s43.json
+Parts equivariant | variant frame | struct mean | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,381 (frame branch 9,536, head 3,845)
+    epoch  0 loss 0.4144 val macro AUROC 0.8587  <- best
+    epoch  1 loss 0.3450 val macro AUROC 0.8699  <- best
+    epoch  2 loss 0.3338 val macro AUROC 0.8743  <- best
+    epoch  3 loss 0.3277 val macro AUROC 0.8766  <- best
+    epoch  4 loss 0.3237 val macro AUROC 0.8789  <- best
+    epoch  5 loss 0.3214 val macro AUROC 0.8802  <- best
+    epoch  6 loss 0.3189 val macro AUROC 0.8806  <- best
+    epoch  7 loss 0.3173 val macro AUROC 0.8809  <- best
+    epoch  8 loss 0.3166 val macro AUROC 0.8806
+    epoch  9 loss 0.3155 val macro AUROC 0.8814  <- best
+    epoch 10 loss 0.3140 val macro AUROC 0.8819  <- best
+    epoch 11 loss 0.3133 val macro AUROC 0.8813
+    epoch 12 loss 0.3128 val macro AUROC 0.8824  <- best
+    epoch 13 loss 0.3117 val macro AUROC 0.8813
+    epoch 14 loss 0.3110 val macro AUROC 0.8823
+    epoch 15 loss 0.3102 val macro AUROC 0.8813
+    epoch 16 loss 0.3103 val macro AUROC 0.8823
+    epoch 17 loss 0.3103 val macro AUROC 0.8819
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8824
+  TEST macro AUROC 0.8734 | micro 0.8962 | macro F1 0.6159
+  per label: HYP 0.8080, NORM 0.9136, MI 0.8659, CD 0.8779, STTC 0.9015
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.34 (+0.00), 5deg 87.35 (+0.01), 10deg 87.34 (-0.00), 30deg 87.21 (-0.12), 60deg 87.17 (-0.17), 90deg 86.86 (-0.48), 150deg 86.62 (-0.71)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-equivariant_s43.json
+Parts invariant + equivariant | variant frame | struct mean | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,069 (frame branch 184,584, head 4,485)
+    epoch  0 loss 0.4001 val macro AUROC 0.8624  <- best
+    epoch  1 loss 0.3397 val macro AUROC 0.8743  <- best
+    epoch  2 loss 0.3284 val macro AUROC 0.8775  <- best
+    epoch  3 loss 0.3211 val macro AUROC 0.8804  <- best
+    epoch  4 loss 0.3162 val macro AUROC 0.8809  <- best
+    epoch  5 loss 0.3129 val macro AUROC 0.8850  <- best
+    epoch  6 loss 0.3075 val macro AUROC 0.8846
+    epoch  7 loss 0.3058 val macro AUROC 0.8849
+    epoch  8 loss 0.3032 val macro AUROC 0.8854  <- best
+    epoch  9 loss 0.2997 val macro AUROC 0.8849
+    epoch 10 loss 0.2972 val macro AUROC 0.8860  <- best
+    epoch 11 loss 0.2932 val macro AUROC 0.8869  <- best
+    epoch 12 loss 0.2901 val macro AUROC 0.8835
+    epoch 13 loss 0.2860 val macro AUROC 0.8832
+    epoch 14 loss 0.2841 val macro AUROC 0.8854
+    epoch 15 loss 0.2801 val macro AUROC 0.8822
+    epoch 16 loss 0.2767 val macro AUROC 0.8846
+    no improvement for 5 epochs, stopping
+
+  best epoch 11 | val macro AUROC 0.8869
+  TEST macro AUROC 0.8767 | micro 0.8954 | macro F1 0.6288
+  per label: HYP 0.8031, NORM 0.9159, MI 0.8723, CD 0.8882, STTC 0.9038
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.67 (+0.00), 5deg 87.68 (+0.01), 10deg 87.69 (+0.02), 30deg 87.58 (-0.09), 60deg 87.49 (-0.17), 90deg 87.28 (-0.38), 150deg 87.13 (-0.54)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-invariant-equivariant_s43.json
+Parts invariant + equivariant | variant v0 | struct mean | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,069 (frame branch 184,584, head 4,485)
+    epoch  0 loss 0.4323 val macro AUROC 0.8555  <- best
+    epoch  1 loss 0.3484 val macro AUROC 0.8684  <- best
+    epoch  2 loss 0.3358 val macro AUROC 0.8739  <- best
+    epoch  3 loss 0.3296 val macro AUROC 0.8761  <- best
+    epoch  4 loss 0.3260 val macro AUROC 0.8785  <- best
+    epoch  5 loss 0.3231 val macro AUROC 0.8792  <- best
+    epoch  6 loss 0.3211 val macro AUROC 0.8802  <- best
+    epoch  7 loss 0.3192 val macro AUROC 0.8798
+    epoch  8 loss 0.3179 val macro AUROC 0.8811  <- best
+    epoch  9 loss 0.3169 val macro AUROC 0.8815  <- best
+    epoch 10 loss 0.3159 val macro AUROC 0.8821  <- best
+    epoch 11 loss 0.3147 val macro AUROC 0.8820
+    epoch 12 loss 0.3141 val macro AUROC 0.8814
+    epoch 13 loss 0.3135 val macro AUROC 0.8813
+    epoch 14 loss 0.3127 val macro AUROC 0.8817
+    epoch 15 loss 0.3125 val macro AUROC 0.8822  <- best
+    epoch 16 loss 0.3116 val macro AUROC 0.8820
+    epoch 17 loss 0.3114 val macro AUROC 0.8816
+    epoch 18 loss 0.3108 val macro AUROC 0.8825  <- best
+    epoch 19 loss 0.3105 val macro AUROC 0.8817
+    epoch 20 loss 0.3100 val macro AUROC 0.8827  <- best
+    epoch 21 loss 0.3097 val macro AUROC 0.8818
+    epoch 22 loss 0.3091 val macro AUROC 0.8818
+    epoch 23 loss 0.3092 val macro AUROC 0.8819
+    epoch 24 loss 0.3088 val macro AUROC 0.8813
+    epoch 25 loss 0.3084 val macro AUROC 0.8819
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8827
+  TEST macro AUROC 0.8739 | micro 0.8972 | macro F1 0.5975
+  per label: HYP 0.8075, NORM 0.9149, MI 0.8652, CD 0.8795, STTC 0.9022
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.39 (+0.00), 5deg 87.39 (+0.00), 10deg 87.39 (+0.00), 30deg 87.39 (+0.00), 60deg 87.39 (+0.00), 90deg 87.39 (+0.00), 150deg 87.39 (+0.00)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_v0-invariant-equivariant_s44.json
+Parts invariant | variant frame | struct mean | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 178,893 (frame branch 175,048, head 3,845)
+    epoch  0 loss 0.3985 val macro AUROC 0.8616  <- best
+    epoch  1 loss 0.3387 val macro AUROC 0.8728  <- best
+    epoch  2 loss 0.3268 val macro AUROC 0.8781  <- best
+    epoch  3 loss 0.3200 val macro AUROC 0.8787  <- best
+    epoch  4 loss 0.3154 val macro AUROC 0.8829  <- best
+    epoch  5 loss 0.3113 val macro AUROC 0.8829
+    epoch  6 loss 0.3082 val macro AUROC 0.8827
+    epoch  7 loss 0.3047 val macro AUROC 0.8831  <- best
+    epoch  8 loss 0.3019 val macro AUROC 0.8856  <- best
+    epoch  9 loss 0.2990 val macro AUROC 0.8856
+    epoch 10 loss 0.2955 val macro AUROC 0.8865  <- best
+    epoch 11 loss 0.2919 val macro AUROC 0.8855
+    epoch 12 loss 0.2901 val macro AUROC 0.8839
+    epoch 13 loss 0.2866 val macro AUROC 0.8839
+    epoch 14 loss 0.2828 val macro AUROC 0.8848
+    epoch 15 loss 0.2806 val macro AUROC 0.8822
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8865
+  TEST macro AUROC 0.8778 | micro 0.8996 | macro F1 0.6424
+  per label: HYP 0.8080, NORM 0.9176, MI 0.8771, CD 0.8839, STTC 0.9026
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.78 (+0.00), 5deg 87.78 (+0.00), 10deg 87.78 (+0.00), 30deg 87.78 (+0.00), 60deg 87.78 (+0.00), 90deg 87.78 (+0.00), 150deg 87.78 (+0.00)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-invariant_s44.json
+Parts equivariant | variant frame | struct mean | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,381 (frame branch 9,536, head 3,845)
+    epoch  0 loss 0.4195 val macro AUROC 0.8584  <- best
+    epoch  1 loss 0.3457 val macro AUROC 0.8691  <- best
+    epoch  2 loss 0.3338 val macro AUROC 0.8746  <- best
+    epoch  3 loss 0.3280 val macro AUROC 0.8758  <- best
+    epoch  4 loss 0.3246 val macro AUROC 0.8785  <- best
+    epoch  5 loss 0.3216 val macro AUROC 0.8786  <- best
+    epoch  6 loss 0.3197 val macro AUROC 0.8799  <- best
+    epoch  7 loss 0.3178 val macro AUROC 0.8795
+    epoch  8 loss 0.3166 val macro AUROC 0.8803  <- best
+    epoch  9 loss 0.3158 val macro AUROC 0.8811  <- best
+    epoch 10 loss 0.3142 val macro AUROC 0.8816  <- best
+    epoch 11 loss 0.3135 val macro AUROC 0.8812
+    epoch 12 loss 0.3127 val macro AUROC 0.8812
+    epoch 13 loss 0.3122 val macro AUROC 0.8802
+    epoch 14 loss 0.3111 val macro AUROC 0.8805
+    epoch 15 loss 0.3108 val macro AUROC 0.8817  <- best
+    epoch 16 loss 0.3103 val macro AUROC 0.8815
+    epoch 17 loss 0.3099 val macro AUROC 0.8810
+    epoch 18 loss 0.3089 val macro AUROC 0.8822  <- best
+    epoch 19 loss 0.3089 val macro AUROC 0.8810
+    epoch 20 loss 0.3082 val macro AUROC 0.8822
+    epoch 21 loss 0.3080 val macro AUROC 0.8815
+    epoch 22 loss 0.3075 val macro AUROC 0.8815
+    epoch 23 loss 0.3072 val macro AUROC 0.8812
+    no improvement for 5 epochs, stopping
+
+  best epoch 18 | val macro AUROC 0.8822
+  TEST macro AUROC 0.8729 | micro 0.8931 | macro F1 0.5925
+  per label: HYP 0.8050, NORM 0.9142, MI 0.8653, CD 0.8784, STTC 0.9015
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.29 (+0.00), 5deg 87.30 (+0.01), 10deg 87.28 (-0.01), 30deg 87.13 (-0.16), 60deg 87.09 (-0.20), 90deg 86.67 (-0.62), 150deg 86.50 (-0.79)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-equivariant_s44.json
+Parts invariant + equivariant | variant frame | struct mean | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,069 (frame branch 184,584, head 4,485)
+    epoch  0 loss 0.4086 val macro AUROC 0.8603  <- best
+    epoch  1 loss 0.3406 val macro AUROC 0.8724  <- best
+    epoch  2 loss 0.3279 val macro AUROC 0.8782  <- best
+    epoch  3 loss 0.3211 val macro AUROC 0.8796  <- best
+    epoch  4 loss 0.3168 val macro AUROC 0.8833  <- best
+    epoch  5 loss 0.3128 val macro AUROC 0.8832
+    epoch  6 loss 0.3101 val macro AUROC 0.8837  <- best
+    epoch  7 loss 0.3064 val macro AUROC 0.8840  <- best
+    epoch  8 loss 0.3031 val macro AUROC 0.8856  <- best
+    epoch  9 loss 0.3004 val macro AUROC 0.8866  <- best
+    epoch 10 loss 0.2974 val macro AUROC 0.8868  <- best
+    epoch 11 loss 0.2938 val macro AUROC 0.8862
+    epoch 12 loss 0.2923 val macro AUROC 0.8851
+    epoch 13 loss 0.2896 val macro AUROC 0.8848
+    epoch 14 loss 0.2858 val macro AUROC 0.8854
+    epoch 15 loss 0.2830 val macro AUROC 0.8847
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8868
+  TEST macro AUROC 0.8779 | micro 0.9000 | macro F1 0.6414
+  per label: HYP 0.8096, NORM 0.9176, MI 0.8747, CD 0.8844, STTC 0.9032
+  frame properties on real records: equivariance error 4.00e-06, invariance error 3.00e-06
+  rotation sweep: 0deg 87.79 (+0.00), 5deg 87.80 (+0.01), 10deg 87.80 (+0.01), 30deg 87.67 (-0.12), 60deg 87.65 (-0.15), 90deg 87.42 (-0.38), 150deg 87.21 (-0.59)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/frame_c.csv; curve in frame_c_curve_frame-invariant-equivariant_s44.json

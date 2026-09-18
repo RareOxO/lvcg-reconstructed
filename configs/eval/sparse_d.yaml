@@ -1,0 +1,29 @@
+# Route D, sparse-lead capability test (research plan section 6, Tier 1: frozen backbone).
+#
+# The visible-lead protocol is the release's: only the VCG recovery is restricted, the R
+# peaks still come from lead II of the full recording, and the pseudo-inverse keeps its
+# regularisation. With one or two leads the recovery is rank-deficient and collapses onto
+# a line or plane -- the geometry-fidelity columns say how far.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+frame:
+  embedding_dim: 128
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4

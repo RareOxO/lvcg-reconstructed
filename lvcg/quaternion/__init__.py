@@ -9,6 +9,7 @@ from .canon import CanonProbe, PoseNet, random_rotations, rotate_beats
 from .interloop import InterLoopEncoder, QRSTProbe, spatial_qrst_angle
 from .loop import LoopProbe, RotationalLoopEncoder, multi_scale_rotations, perturb_rotation_order
 from .frame import FrameProbe, FrameSplitEncoder, intrinsic_frame, to_frame
+from .sparse import LEAD_SETS, frame_agreement, geometry_fidelity, recover_vcg
 from .geometry import GlobalRotation, QAProbe, rotated_directions
 from .features import (
     FEATURE_CHANNELS,
@@ -24,6 +25,10 @@ from .qdt import QDTProbe, TokenFusion
 __all__ = [
     "LabelAttentionProbe",
     "CanonProbe",
+    "LEAD_SETS",
+    "frame_agreement",
+    "geometry_fidelity",
+    "recover_vcg",
     "FrameProbe",
     "FrameSplitEncoder",
     "intrinsic_frame",
