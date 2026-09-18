@@ -5,6 +5,7 @@ contribution can be switched off, and with it off the model must reproduce V0.
 """
 
 from .canon import CanonProbe, PoseNet, random_rotations, rotate_beats
+from .geometry import GlobalRotation, QAProbe, rotated_directions
 from .features import (
     FEATURE_CHANNELS,
     BeatQuaternionFeatures,
@@ -18,6 +19,9 @@ from .qdt import QDTProbe, TokenFusion
 
 __all__ = [
     "CanonProbe",
+    "GlobalRotation",
+    "QAProbe",
+    "rotated_directions",
     "PoseNet",
     "random_rotations",
     "rotate_beats",

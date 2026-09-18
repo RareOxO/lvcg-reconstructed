@@ -1,0 +1,28 @@
+# V6, QA-LVCG (plan section 4, Tier 1: frozen backbone, identity-initialised geometry).
+# A_Q = A_0 R(q_A): the published lead matrix may be turned, not replaced. The plan's
+# order is global first, then sample-conditioned with a bounded correction angle.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+lead_order: mimic              # the order the probing loader feeds (aVL/aVF swapped)
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+geometry:
+  max_degrees: 10              # bound on the correction; 0 means unbounded (plan asks for both)
+  geodesic_weight: 0.0         # penalty on the squared correction angle
+  pose_dim: 64                 # conditioned mode only
+  pose_hidden: 32
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4

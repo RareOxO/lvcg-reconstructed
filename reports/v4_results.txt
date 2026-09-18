@@ -1,0 +1,306 @@
+qdf_v1.csv — 13 runs, metric test_micro_auroc
+            variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  ----------------------------------------------------------------------
+                 v0     4   87.75  0.06   +0.01       -   17.5   180,693
+   control xyz-pair     4   91.07  0.39   +3.34   +3.32    6.8   181,593
+  qdf q/th/om nomag     1   89.39     -   +1.65   +1.60    6.0   180,243
+    qdf q/th/om/mag     4   89.96  0.39   +2.22   +2.21    6.8   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+              variant    NORM      MI    STTC      CD     HYP
+                   v0  0.8982  0.8395  0.8869  0.8560  0.7815
+     control xyz-pair  0.9296  0.9093  0.9242  0.9036  0.7984
+    qdf q/th/om nomag  0.9153  0.8767  0.9038  0.8746  0.8043
+      qdf q/th/om/mag  0.9212  0.8875  0.9043  0.8832  0.8033
+
+qdt_v2.csv — 11 runs, metric test_micro_auroc
+                         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------------------------
+                        v0 gated     3   88.15  0.05   +0.00       -   17.7   311,637
+          control xyz-pair gated     3   89.53  0.04   +1.37   +1.37    5.3   312,537
+   qdt q/th/om/mag concat concat     1   88.43     -   +0.28   +0.31    4.0   278,613
+           qdt q/th/om/mag gated     3   88.28  0.07   +0.13   +0.13    3.0   311,637
+  qdt q/th/om/mag gated init0.01     1   88.43     -   +0.28   +0.31    5.0   311,637
+
+  per-label test AUROC (seed of the first run of each variant):
+                           variant    NORM      MI    STTC      CD     HYP
+                          v0 gated  0.9008  0.8474  0.8915  0.8570  0.7854
+            control xyz-pair gated  0.9163  0.8821  0.9101  0.8720  0.7976
+     qdt q/th/om/mag concat concat  0.9084  0.8568  0.8947  0.8628  0.7818
+             qdt q/th/om/mag gated  0.9063  0.8485  0.8971  0.8660  0.7896
+    qdt q/th/om/mag gated init0.01  0.9064  0.8543  0.8911  0.8590  0.7934
+
+mrq_v3.csv — 27 runs, metric test_micro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            v0     3   87.74  0.06   +0.00       -   17.0   180,693
+           cdf     3   90.99  0.42   +3.26   +3.26    7.0   181,593
+             m     3   88.11  0.56   +0.37   +0.37   12.3   177,993
+            mo     3   90.93  0.41   +3.19   +3.19    9.0   179,343
+           moq     3   91.05  0.18   +3.31   +3.31    6.7   182,043
+            mq     3   89.87  0.41   +2.13   +2.13    6.3   180,693
+             o     3   90.54  0.13   +2.80   +2.80    7.3   178,893
+            oq     3   89.62  1.00   +1.88   +1.88    6.7   181,593
+             q     3   88.78  0.48   +1.04   +1.04    5.3   180,243
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              v0  0.8982  0.8397  0.8869  0.8556  0.7819
+             cdf  0.9296  0.9094  0.9242  0.9036  0.7984
+               m  0.9093  0.8623  0.8962  0.8740  0.8065
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+             moq  0.9247  0.9029  0.9213  0.8948  0.8071
+              mq  0.9212  0.8875  0.9043  0.8832  0.8033
+               o  0.9245  0.9006  0.9206  0.8865  0.8016
+              oq  0.9228  0.8928  0.9173  0.8877  0.7977
+               q  0.9153  0.8767  0.9038  0.8746  0.8043
+
+phase_v4.csv — 31 runs, metric test_micro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            mo    15   91.06  0.32       -       -    6.9   179,343
+            mq    16   88.96  1.18       -       -    4.6   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+              mq  0.9198  0.8776  0.9036  0.8883  0.8056
+
+qdf_v1.csv — 13 runs, metric test_macro_auroc
+            variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  ----------------------------------------------------------------------
+                 v0     4   85.27  0.03   -0.01       -   17.5   180,693
+   control xyz-pair     4   89.32  0.09   +4.04   +4.05    6.8   181,593
+  qdf q/th/om nomag     1   87.49     -   +2.22   +2.24    6.0   180,243
+    qdf q/th/om/mag     4   88.00  0.06   +2.72   +2.73    6.8   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+              variant    NORM      MI    STTC      CD     HYP
+                   v0  0.8982  0.8395  0.8869  0.8560  0.7815
+     control xyz-pair  0.9296  0.9093  0.9242  0.9036  0.7984
+    qdf q/th/om nomag  0.9153  0.8767  0.9038  0.8746  0.8043
+      qdf q/th/om/mag  0.9212  0.8875  0.9043  0.8832  0.8033
+
+qdt_v2.csv — 11 runs, metric test_macro_auroc
+                         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------------------------
+                        v0 gated     3   85.67  0.03   +0.00       -   17.7   311,637
+          control xyz-pair gated     3   87.28  0.20   +1.61   +1.61    5.3   312,537
+   qdt q/th/om/mag concat concat     1   86.09     -   +0.42   +0.45    4.0   278,613
+           qdt q/th/om/mag gated     3   86.10  0.04   +0.43   +0.43    3.0   311,637
+  qdt q/th/om/mag gated init0.01     1   86.09     -   +0.41   +0.44    5.0   311,637
+
+  per-label test AUROC (seed of the first run of each variant):
+                           variant    NORM      MI    STTC      CD     HYP
+                          v0 gated  0.9008  0.8474  0.8915  0.8570  0.7854
+            control xyz-pair gated  0.9163  0.8821  0.9101  0.8720  0.7976
+     qdt q/th/om/mag concat concat  0.9084  0.8568  0.8947  0.8628  0.7818
+             qdt q/th/om/mag gated  0.9063  0.8485  0.8971  0.8660  0.7896
+    qdt q/th/om/mag gated init0.01  0.9064  0.8543  0.8911  0.8590  0.7934
+
+mrq_v3.csv — 27 runs, metric test_macro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            v0     3   85.28  0.04   +0.00       -   17.0   180,693
+           cdf     3   89.33  0.10   +4.05   +4.05    7.0   181,593
+             m     3   86.64  0.33   +1.37   +1.37   12.3   177,993
+            mo     3   89.55  0.03   +4.27   +4.27    9.0   179,343
+           moq     3   88.99  0.06   +3.72   +3.72    6.7   182,043
+            mq     3   88.00  0.07   +2.72   +2.72    6.3   180,693
+             o     3   88.75  0.06   +3.47   +3.47    7.3   178,893
+            oq     3   88.16  0.16   +2.88   +2.88    6.7   181,593
+             q     3   87.29  0.15   +2.01   +2.01    5.3   180,243
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              v0  0.8982  0.8397  0.8869  0.8556  0.7819
+             cdf  0.9296  0.9094  0.9242  0.9036  0.7984
+               m  0.9093  0.8623  0.8962  0.8740  0.8065
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+             moq  0.9247  0.9029  0.9213  0.8948  0.8071
+              mq  0.9212  0.8875  0.9043  0.8832  0.8033
+               o  0.9245  0.9006  0.9206  0.8865  0.8016
+              oq  0.9228  0.8928  0.9173  0.8877  0.7977
+               q  0.9153  0.8767  0.9038  0.8746  0.8043
+
+phase_v4.csv — 31 runs, metric test_macro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            mo    15   89.19  0.31       -       -    6.9   179,343
+            mq    16   87.63  0.37       -       -    4.6   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+              mq  0.9198  0.8776  0.9036  0.8883  0.8056
+
+
+------------ new
+python scripts/summarize_quaternion.py --metric test_micro_auroc
+qdf_v1.csv — 13 runs, metric test_macro_auroc
+            variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  ----------------------------------------------------------------------
+                 v0     4   85.27  0.03   -0.01       -   17.5   180,693
+   control xyz-pair     4   89.32  0.09   +4.04   +4.05    6.8   181,593
+  qdf q/th/om nomag     1   87.49     -   +2.22   +2.24    6.0   180,243
+    qdf q/th/om/mag     4   88.00  0.06   +2.72   +2.73    6.8   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+              variant    NORM      MI    STTC      CD     HYP
+                   v0  0.8982  0.8395  0.8869  0.8560  0.7815
+     control xyz-pair  0.9296  0.9093  0.9242  0.9036  0.7984
+    qdf q/th/om nomag  0.9153  0.8767  0.9038  0.8746  0.8043
+      qdf q/th/om/mag  0.9212  0.8875  0.9043  0.8832  0.8033
+
+qdt_v2.csv — 11 runs, metric test_macro_auroc
+                         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------------------------
+                        v0 gated     3   85.67  0.03   +0.00       -   17.7   311,637
+          control xyz-pair gated     3   87.28  0.20   +1.61   +1.61    5.3   312,537
+   qdt q/th/om/mag concat concat     1   86.09     -   +0.42   +0.45    4.0   278,613
+           qdt q/th/om/mag gated     3   86.10  0.04   +0.43   +0.43    3.0   311,637
+  qdt q/th/om/mag gated init0.01     1   86.09     -   +0.41   +0.44    5.0   311,637
+
+  per-label test AUROC (seed of the first run of each variant):
+                           variant    NORM      MI    STTC      CD     HYP
+                          v0 gated  0.9008  0.8474  0.8915  0.8570  0.7854
+            control xyz-pair gated  0.9163  0.8821  0.9101  0.8720  0.7976
+     qdt q/th/om/mag concat concat  0.9084  0.8568  0.8947  0.8628  0.7818
+             qdt q/th/om/mag gated  0.9063  0.8485  0.8971  0.8660  0.7896
+    qdt q/th/om/mag gated init0.01  0.9064  0.8543  0.8911  0.8590  0.7934
+
+mrq_v3.csv — 27 runs, metric test_macro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            v0     3   85.28  0.04   +0.00       -   17.0   180,693
+           cdf     3   89.33  0.10   +4.05   +4.05    7.0   181,593
+             m     3   86.64  0.33   +1.37   +1.37   12.3   177,993
+            mo     3   89.55  0.03   +4.27   +4.27    9.0   179,343
+           moq     3   88.99  0.06   +3.72   +3.72    6.7   182,043
+            mq     3   88.00  0.07   +2.72   +2.72    6.3   180,693
+             o     3   88.75  0.06   +3.47   +3.47    7.3   178,893
+            oq     3   88.16  0.16   +2.88   +2.88    6.7   181,593
+             q     3   87.29  0.15   +2.01   +2.01    5.3   180,243
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              v0  0.8982  0.8397  0.8869  0.8556  0.7819
+             cdf  0.9296  0.9094  0.9242  0.9036  0.7984
+               m  0.9093  0.8623  0.8962  0.8740  0.8065
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+             moq  0.9247  0.9029  0.9213  0.8948  0.8071
+              mq  0.9212  0.8875  0.9043  0.8832  0.8033
+               o  0.9245  0.9006  0.9206  0.8865  0.8016
+              oq  0.9228  0.8928  0.9173  0.8877  0.7977
+               q  0.9153  0.8767  0.9038  0.8746  0.8043
+
+phase_v4.csv — 34 runs, metric test_macro_auroc
+         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -------------------------------------------------------------------
+          mo qrs     3   88.77  0.10   +3.49   +3.49    4.3   179,343
+        mo qrs/t     3   89.23  0.08   +3.95   +3.95    5.3   179,983
+  mo qrs/t/whole     3   89.46  0.07   +4.19   +4.19    6.7   180,623
+            mo t     3   88.96  0.19   +3.69   +3.69    9.0   179,343
+        mo whole     3   89.55  0.03   +4.27   +4.27    9.0   179,343
+          mq qrs     3   86.99  0.20   +1.72   +1.72    2.3   180,693
+        mq qrs/t     3   87.76  0.13   +2.48   +2.48    4.3   181,333
+  mq qrs/t/whole     3   87.86  0.02   +2.58   +2.58    5.0   181,973
+            mq t     3   87.46  0.06   +2.18   +2.18    4.7   180,693
+        mq whole     7   86.82  1.34   +1.54   +1.54   10.9   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+           variant    NORM      MI    STTC      CD     HYP
+            mo qrs  0.9253  0.8987  0.9154  0.9006  0.8032
+          mo qrs/t  0.9303  0.9038  0.9200  0.9023  0.8102
+    mo qrs/t/whole  0.9273  0.9083  0.9208  0.9062  0.8125
+              mo t  0.9286  0.9063  0.9220  0.9003  0.7954
+          mo whole  0.9304  0.9041  0.9261  0.9028  0.8119
+            mq qrs  0.9117  0.8779  0.8900  0.8717  0.7909
+          mq qrs/t  0.9197  0.8845  0.8996  0.8776  0.8025
+    mq qrs/t/whole  0.9169  0.8839  0.9066  0.8845  0.8022
+              mq t  0.9173  0.8785  0.9001  0.8833  0.7977
+          mq whole  0.9198  0.8776  0.9036  0.8883  0.8056
+
+qdf_v1.csv — 13 runs, metric test_micro_auroc
+            variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  ----------------------------------------------------------------------
+                 v0     4   87.75  0.06   +0.01       -   17.5   180,693
+   control xyz-pair     4   91.07  0.39   +3.34   +3.32    6.8   181,593
+  qdf q/th/om nomag     1   89.39     -   +1.65   +1.60    6.0   180,243
+    qdf q/th/om/mag     4   89.96  0.39   +2.22   +2.21    6.8   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+              variant    NORM      MI    STTC      CD     HYP
+                   v0  0.8982  0.8395  0.8869  0.8560  0.7815
+     control xyz-pair  0.9296  0.9093  0.9242  0.9036  0.7984
+    qdf q/th/om nomag  0.9153  0.8767  0.9038  0.8746  0.8043
+      qdf q/th/om/mag  0.9212  0.8875  0.9043  0.8832  0.8033
+
+qdt_v2.csv — 11 runs, metric test_micro_auroc
+                         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------------------------
+                        v0 gated     3   88.15  0.05   +0.00       -   17.7   311,637
+          control xyz-pair gated     3   89.53  0.04   +1.37   +1.37    5.3   312,537
+   qdt q/th/om/mag concat concat     1   88.43     -   +0.28   +0.31    4.0   278,613
+           qdt q/th/om/mag gated     3   88.28  0.07   +0.13   +0.13    3.0   311,637
+  qdt q/th/om/mag gated init0.01     1   88.43     -   +0.28   +0.31    5.0   311,637
+
+  per-label test AUROC (seed of the first run of each variant):
+                           variant    NORM      MI    STTC      CD     HYP
+                          v0 gated  0.9008  0.8474  0.8915  0.8570  0.7854
+            control xyz-pair gated  0.9163  0.8821  0.9101  0.8720  0.7976
+     qdt q/th/om/mag concat concat  0.9084  0.8568  0.8947  0.8628  0.7818
+             qdt q/th/om/mag gated  0.9063  0.8485  0.8971  0.8660  0.7896
+    qdt q/th/om/mag gated init0.01  0.9064  0.8543  0.8911  0.8590  0.7934
+
+mrq_v3.csv — 27 runs, metric test_micro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            v0     3   87.74  0.06   +0.00       -   17.0   180,693
+           cdf     3   90.99  0.42   +3.26   +3.26    7.0   181,593
+             m     3   88.11  0.56   +0.37   +0.37   12.3   177,993
+            mo     3   90.93  0.41   +3.19   +3.19    9.0   179,343
+           moq     3   91.05  0.18   +3.31   +3.31    6.7   182,043
+            mq     3   89.87  0.41   +2.13   +2.13    6.3   180,693
+             o     3   90.54  0.13   +2.80   +2.80    7.3   178,893
+            oq     3   89.62  1.00   +1.88   +1.88    6.7   181,593
+             q     3   88.78  0.48   +1.04   +1.04    5.3   180,243
+
+  per-label test AUROC (seed of the first run of each variant):
+         variant    NORM      MI    STTC      CD     HYP
+              v0  0.8982  0.8397  0.8869  0.8556  0.7819
+             cdf  0.9296  0.9094  0.9242  0.9036  0.7984
+               m  0.9093  0.8623  0.8962  0.8740  0.8065
+              mo  0.9304  0.9041  0.9261  0.9028  0.8119
+             moq  0.9247  0.9029  0.9213  0.8948  0.8071
+              mq  0.9212  0.8875  0.9043  0.8832  0.8033
+               o  0.9245  0.9006  0.9206  0.8865  0.8016
+              oq  0.9228  0.8928  0.9173  0.8877  0.7977
+               q  0.9153  0.8767  0.9038  0.8746  0.8043
+
+phase_v4.csv — 34 runs, metric test_micro_auroc
+         variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -------------------------------------------------------------------
+          mo qrs     3   90.75  0.32   +3.01   +3.01    4.3   179,343
+        mo qrs/t     3   91.20  0.14   +3.46   +3.46    5.3   179,983
+  mo qrs/t/whole     3   91.30  0.15   +3.56   +3.56    6.7   180,623
+            mo t     3   91.12  0.13   +3.38   +3.38    9.0   179,343
+        mo whole     3   90.94  0.41   +3.20   +3.20    9.0   179,343
+          mq qrs     3   89.01  0.11   +1.27   +1.27    2.3   180,693
+        mq qrs/t     3   89.54  0.18   +1.80   +1.80    4.3   181,333
+  mq qrs/t/whole     3   87.95  1.87   +0.22   +0.22    5.0   181,973
+            mq t     3   89.14  0.08   +1.40   +1.40    4.7   180,693
+        mq whole     7   88.52  1.23   +0.78   +0.78   10.9   180,693
+
+  per-label test AUROC (seed of the first run of each variant):
+           variant    NORM      MI    STTC      CD     HYP
+            mo qrs  0.9253  0.8987  0.9154  0.9006  0.8032
+          mo qrs/t  0.9303  0.9038  0.9200  0.9023  0.8102
+    mo qrs/t/whole  0.9273  0.9083  0.9208  0.9062  0.8125
+              mo t  0.9286  0.9063  0.9220  0.9003  0.7954
+          mo whole  0.9304  0.9041  0.9261  0.9028  0.8119
+            mq qrs  0.9117  0.8779  0.8900  0.8717  0.7909
+          mq qrs/t  0.9197  0.8845  0.8996  0.8776  0.8025
+    mq qrs/t/whole  0.9169  0.8839  0.9066  0.8845  0.8022
+              mq t  0.9173  0.8785  0.9001  0.8833  0.7977
+          mq whole  0.9198  0.8776  0.9036  0.8883  0.8056

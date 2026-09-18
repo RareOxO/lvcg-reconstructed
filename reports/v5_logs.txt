@@ -1,0 +1,857 @@
+(base) ➜ lvcg-reconstructed for s in 42 43 44; do
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model v0 --seed $s
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --seed $s
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model augment --seed $s
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --augment --tag _aug --seed $s
+done
+Model v0 | augment False | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.4422 val macro AUROC 0.8356  <- best
+    epoch  1 loss 0.3675 val macro AUROC 0.8506  <- best
+    epoch  2 loss 0.3557 val macro AUROC 0.8557  <- best
+    epoch  3 loss 0.3500 val macro AUROC 0.8580  <- best
+    epoch  4 loss 0.3468 val macro AUROC 0.8600  <- best
+    epoch  5 loss 0.3442 val macro AUROC 0.8608  <- best
+    epoch  6 loss 0.3430 val macro AUROC 0.8615  <- best
+    epoch  7 loss 0.3414 val macro AUROC 0.8623  <- best
+    epoch  8 loss 0.3401 val macro AUROC 0.8618
+    epoch  9 loss 0.3390 val macro AUROC 0.8621
+    epoch 10 loss 0.3379 val macro AUROC 0.8631  <- best
+    epoch 11 loss 0.3374 val macro AUROC 0.8628
+    epoch 12 loss 0.3363 val macro AUROC 0.8634  <- best
+    epoch 13 loss 0.3359 val macro AUROC 0.8631
+    epoch 14 loss 0.3351 val macro AUROC 0.8632
+    epoch 15 loss 0.3347 val macro AUROC 0.8635  <- best
+    epoch 16 loss 0.3340 val macro AUROC 0.8640  <- best
+    epoch 17 loss 0.3335 val macro AUROC 0.8639
+    epoch 18 loss 0.3328 val macro AUROC 0.8644  <- best
+    epoch 19 loss 0.3325 val macro AUROC 0.8647  <- best
+    epoch 20 loss 0.3322 val macro AUROC 0.8642
+    epoch 21 loss 0.3318 val macro AUROC 0.8648  <- best
+    epoch 22 loss 0.3312 val macro AUROC 0.8632
+    epoch 23 loss 0.3310 val macro AUROC 0.8642
+    epoch 24 loss 0.3308 val macro AUROC 0.8640
+    epoch 25 loss 0.3308 val macro AUROC 0.8646
+    epoch 26 loss 0.3304 val macro AUROC 0.8649  <- best
+    epoch 27 loss 0.3299 val macro AUROC 0.8643
+    epoch 28 loss 0.3298 val macro AUROC 0.8641
+    epoch 29 loss 0.3295 val macro AUROC 0.8646
+    epoch 30 loss 0.3295 val macro AUROC 0.8649  <- best
+    epoch 31 loss 0.3291 val macro AUROC 0.8644
+    epoch 32 loss 0.3289 val macro AUROC 0.8646
+    epoch 33 loss 0.3288 val macro AUROC 0.8645
+    epoch 34 loss 0.3288 val macro AUROC 0.8644
+    epoch 35 loss 0.3286 val macro AUROC 0.8644
+    no improvement for 5 epochs, stopping
+
+  best epoch 30 | val macro AUROC 0.8649
+  TEST macro AUROC 0.8575 | micro 0.8829 | macro F1 0.5736
+  per label: HYP 0.7869, NORM 0.9028, MI 0.8492, CD 0.8588, STTC 0.8899
+  rotation sweep: 0deg 85.75 (+0.00), 5deg 85.73 (-0.02), 10deg 85.44 (-0.32), 30deg 82.24 (-3.51), 60deg 74.64 (-11.11), 90deg 65.36 (-20.39), 150deg 52.27 (-33.48)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model canon | augment False | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4279 val macro AUROC 0.8441  <- best
+    epoch  1 loss 0.3554 val macro AUROC 0.8542  <- best
+    epoch  2 loss 0.3419 val macro AUROC 0.8595  <- best
+    epoch  3 loss 0.3363 val macro AUROC 0.8615  <- best
+    epoch  4 loss 0.3305 val macro AUROC 0.8629  <- best
+    epoch  5 loss 0.3271 val macro AUROC 0.8640  <- best
+    epoch  6 loss 0.3248 val macro AUROC 0.8647  <- best
+    epoch  7 loss 0.3216 val macro AUROC 0.8637
+    epoch  8 loss 0.3203 val macro AUROC 0.8644
+    epoch  9 loss 0.3190 val macro AUROC 0.8642
+    epoch 10 loss 0.3164 val macro AUROC 0.8679  <- best
+    epoch 11 loss 0.3148 val macro AUROC 0.8656
+    epoch 12 loss 0.3124 val macro AUROC 0.8646
+    epoch 13 loss 0.3120 val macro AUROC 0.8669
+    epoch 14 loss 0.3096 val macro AUROC 0.8674
+    epoch 15 loss 0.3084 val macro AUROC 0.8659
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8679
+  TEST macro AUROC 0.8596 | micro 0.8847 | macro F1 0.5970
+  per label: HYP 0.7853, NORM 0.9054, MI 0.8577, CD 0.8493, STTC 0.9001
+  pose correction: median 27.6 deg, p90 29.7, max 29.9
+  rotation sweep: 0deg 85.96 (+0.00), 5deg 85.94 (-0.02), 10deg 85.62 (-0.34), 30deg 81.70 (-4.26), 60deg 72.40 (-13.56), 90deg 62.61 (-23.35), 150deg 52.59 (-33.37)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model augment | augment True | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.5087 val macro AUROC 0.7838  <- best
+    epoch  1 loss 0.4616 val macro AUROC 0.8021  <- best
+    epoch  2 loss 0.4520 val macro AUROC 0.8070  <- best
+    epoch  3 loss 0.4490 val macro AUROC 0.8113  <- best
+    epoch  4 loss 0.4455 val macro AUROC 0.8104
+    epoch  5 loss 0.4427 val macro AUROC 0.8132  <- best
+    epoch  6 loss 0.4427 val macro AUROC 0.8152  <- best
+    epoch  7 loss 0.4400 val macro AUROC 0.8153  <- best
+    epoch  8 loss 0.4394 val macro AUROC 0.8191  <- best
+    epoch  9 loss 0.4374 val macro AUROC 0.8212  <- best
+    epoch 10 loss 0.4386 val macro AUROC 0.8196
+    epoch 11 loss 0.4364 val macro AUROC 0.8225  <- best
+    epoch 12 loss 0.4360 val macro AUROC 0.8231  <- best
+    epoch 13 loss 0.4370 val macro AUROC 0.8208
+    epoch 14 loss 0.4366 val macro AUROC 0.8213
+    epoch 15 loss 0.4342 val macro AUROC 0.8211
+    epoch 16 loss 0.4339 val macro AUROC 0.8241  <- best
+    epoch 17 loss 0.4332 val macro AUROC 0.8240
+    epoch 18 loss 0.4306 val macro AUROC 0.8262  <- best
+    epoch 19 loss 0.4340 val macro AUROC 0.8260
+    epoch 20 loss 0.4319 val macro AUROC 0.8250
+    epoch 21 loss 0.4327 val macro AUROC 0.8270  <- best
+    epoch 22 loss 0.4323 val macro AUROC 0.8273  <- best
+    epoch 23 loss 0.4301 val macro AUROC 0.8255
+    epoch 24 loss 0.4307 val macro AUROC 0.8249
+    epoch 25 loss 0.4305 val macro AUROC 0.8251
+    epoch 26 loss 0.4301 val macro AUROC 0.8253
+    epoch 27 loss 0.4284 val macro AUROC 0.8251
+    no improvement for 5 epochs, stopping
+
+  best epoch 22 | val macro AUROC 0.8273
+  TEST macro AUROC 0.8163 | micro 0.8426 | macro F1 0.4607
+  per label: HYP 0.7608, NORM 0.8549, MI 0.7944, CD 0.8292, STTC 0.8419
+  rotation sweep: 0deg 81.63 (+0.00), 5deg 81.64 (+0.02), 10deg 81.46 (-0.16), 30deg 80.80 (-0.83), 60deg 78.68 (-2.95), 90deg 76.48 (-5.14), 150deg 72.14 (-9.48)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model canon | augment True | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.5019 val macro AUROC 0.7927  <- best
+    epoch  1 loss 0.4477 val macro AUROC 0.8090  <- best
+    epoch  2 loss 0.4379 val macro AUROC 0.8158  <- best
+    epoch  3 loss 0.4351 val macro AUROC 0.8220  <- best
+    epoch  4 loss 0.4309 val macro AUROC 0.8246  <- best
+    epoch  5 loss 0.4286 val macro AUROC 0.8235
+    epoch  6 loss 0.4272 val macro AUROC 0.8248  <- best
+    epoch  7 loss 0.4253 val macro AUROC 0.8290  <- best
+    epoch  8 loss 0.4240 val macro AUROC 0.8294  <- best
+    epoch  9 loss 0.4217 val macro AUROC 0.8268
+    epoch 10 loss 0.4233 val macro AUROC 0.8270
+    epoch 11 loss 0.4212 val macro AUROC 0.8340  <- best
+    epoch 12 loss 0.4205 val macro AUROC 0.8311
+    epoch 13 loss 0.4209 val macro AUROC 0.8302
+    epoch 14 loss 0.4198 val macro AUROC 0.8318
+    epoch 15 loss 0.4180 val macro AUROC 0.8314
+    epoch 16 loss 0.4185 val macro AUROC 0.8345  <- best
+    epoch 17 loss 0.4168 val macro AUROC 0.8344
+    epoch 18 loss 0.4142 val macro AUROC 0.8353  <- best
+    epoch 19 loss 0.4182 val macro AUROC 0.8327
+    epoch 20 loss 0.4170 val macro AUROC 0.8351
+    epoch 21 loss 0.4156 val macro AUROC 0.8365  <- best
+    epoch 22 loss 0.4156 val macro AUROC 0.8370  <- best
+    epoch 23 loss 0.4133 val macro AUROC 0.8353
+    epoch 24 loss 0.4149 val macro AUROC 0.8322
+    epoch 25 loss 0.4152 val macro AUROC 0.8362
+    epoch 26 loss 0.4137 val macro AUROC 0.8337
+    epoch 27 loss 0.4129 val macro AUROC 0.8324
+    no improvement for 5 epochs, stopping
+
+  best epoch 22 | val macro AUROC 0.8370
+  TEST macro AUROC 0.8233 | micro 0.8506 | macro F1 0.4736
+  per label: HYP 0.7635, NORM 0.8694, MI 0.8030, CD 0.8238, STTC 0.8567
+  pose correction: median 30.0 deg, p90 30.0, max 30.0
+  rotation sweep: 0deg 82.33 (+0.00), 5deg 82.34 (+0.01), 10deg 82.35 (+0.02), 30deg 82.12 (-0.21), 60deg 81.23 (-1.10), 90deg 79.64 (-2.69), 150deg 72.24 (-10.09)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model v0 | augment False | max_degrees 30 | identity_weight 0.0 | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.4496 val macro AUROC 0.8370  <- best
+    epoch  1 loss 0.3690 val macro AUROC 0.8516  <- best
+    epoch  2 loss 0.3567 val macro AUROC 0.8563  <- best
+    epoch  3 loss 0.3508 val macro AUROC 0.8585  <- best
+    epoch  4 loss 0.3471 val macro AUROC 0.8599  <- best
+    epoch  5 loss 0.3454 val macro AUROC 0.8612  <- best
+    epoch  6 loss 0.3435 val macro AUROC 0.8619  <- best
+    epoch  7 loss 0.3417 val macro AUROC 0.8621  <- best
+    epoch  8 loss 0.3407 val macro AUROC 0.8620
+    epoch  9 loss 0.3398 val macro AUROC 0.8629  <- best
+    epoch 10 loss 0.3384 val macro AUROC 0.8629  <- best
+    epoch 11 loss 0.3375 val macro AUROC 0.8625
+    epoch 12 loss 0.3369 val macro AUROC 0.8640  <- best
+    epoch 13 loss 0.3360 val macro AUROC 0.8635
+    epoch 14 loss 0.3356 val macro AUROC 0.8641  <- best
+    epoch 15 loss 0.3347 val macro AUROC 0.8637
+    epoch 16 loss 0.3343 val macro AUROC 0.8639
+    epoch 17 loss 0.3344 val macro AUROC 0.8642  <- best
+    epoch 18 loss 0.3336 val macro AUROC 0.8642
+    epoch 19 loss 0.3330 val macro AUROC 0.8643  <- best
+    epoch 20 loss 0.3325 val macro AUROC 0.8643  <- best
+    epoch 21 loss 0.3319 val macro AUROC 0.8642
+    epoch 22 loss 0.3324 val macro AUROC 0.8646  <- best
+    epoch 23 loss 0.3317 val macro AUROC 0.8652  <- best
+    epoch 24 loss 0.3314 val macro AUROC 0.8646
+    epoch 25 loss 0.3308 val macro AUROC 0.8649
+    epoch 26 loss 0.3306 val macro AUROC 0.8645
+    epoch 27 loss 0.3302 val macro AUROC 0.8646
+    epoch 28 loss 0.3298 val macro AUROC 0.8647
+    no improvement for 5 epochs, stopping
+
+  best epoch 23 | val macro AUROC 0.8652
+  TEST macro AUROC 0.8577 | micro 0.8818 | macro F1 0.5732
+  per label: HYP 0.7899, NORM 0.9017, MI 0.8459, CD 0.8592, STTC 0.8920
+  rotation sweep: 0deg 85.77 (+0.00), 5deg 85.75 (-0.02), 10deg 85.47 (-0.30), 30deg 82.31 (-3.46), 60deg 74.74 (-11.03), 90deg 65.37 (-20.41), 150deg 52.05 (-33.73)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model canon | augment False | max_degrees 30 | identity_weight 0.0 | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4232 val macro AUROC 0.8353  <- best
+    epoch  1 loss 0.3564 val macro AUROC 0.8509  <- best
+    epoch  2 loss 0.3456 val macro AUROC 0.8553  <- best
+    epoch  3 loss 0.3376 val macro AUROC 0.8630  <- best
+    epoch  4 loss 0.3324 val macro AUROC 0.8646  <- best
+    epoch  5 loss 0.3288 val macro AUROC 0.8657  <- best
+    epoch  6 loss 0.3248 val macro AUROC 0.8685  <- best
+    epoch  7 loss 0.3211 val macro AUROC 0.8683
+    epoch  8 loss 0.3188 val macro AUROC 0.8709  <- best
+    epoch  9 loss 0.3167 val macro AUROC 0.8693
+    epoch 10 loss 0.3136 val macro AUROC 0.8720  <- best
+    epoch 11 loss 0.3111 val macro AUROC 0.8693
+    epoch 12 loss 0.3098 val macro AUROC 0.8725  <- best
+    epoch 13 loss 0.3052 val macro AUROC 0.8714
+    epoch 14 loss 0.3048 val macro AUROC 0.8697
+    epoch 15 loss 0.3014 val macro AUROC 0.8704
+    epoch 16 loss 0.3005 val macro AUROC 0.8705
+    epoch 17 loss 0.2992 val macro AUROC 0.8697
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8725
+  TEST macro AUROC 0.8649 | micro 0.8907 | macro F1 0.5905
+  per label: HYP 0.7828, NORM 0.9181, MI 0.8781, CD 0.8537, STTC 0.8916
+  pose correction: median 28.7 deg, p90 29.7, max 30.0
+  rotation sweep: 0deg 86.49 (+0.00), 5deg 86.44 (-0.04), 10deg 86.25 (-0.24), 30deg 82.77 (-3.71), 60deg 72.04 (-14.45), 90deg 62.95 (-23.54), 150deg 51.46 (-35.03)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model augment | augment True | max_degrees 30 | identity_weight 0.0 | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.5102 val macro AUROC 0.7925  <- best
+    epoch  1 loss 0.4630 val macro AUROC 0.8009  <- best
+    epoch  2 loss 0.4520 val macro AUROC 0.8115  <- best
+    epoch  3 loss 0.4487 val macro AUROC 0.8118  <- best
+    epoch  4 loss 0.4462 val macro AUROC 0.8164  <- best
+    epoch  5 loss 0.4450 val macro AUROC 0.8155
+    epoch  6 loss 0.4426 val macro AUROC 0.8192  <- best
+    epoch  7 loss 0.4405 val macro AUROC 0.8190
+    epoch  8 loss 0.4385 val macro AUROC 0.8209  <- best
+    epoch  9 loss 0.4387 val macro AUROC 0.8209
+    epoch 10 loss 0.4381 val macro AUROC 0.8212  <- best
+    epoch 11 loss 0.4372 val macro AUROC 0.8227  <- best
+    epoch 12 loss 0.4368 val macro AUROC 0.8232  <- best
+    epoch 13 loss 0.4338 val macro AUROC 0.8252  <- best
+    epoch 14 loss 0.4335 val macro AUROC 0.8271  <- best
+    epoch 15 loss 0.4341 val macro AUROC 0.8262
+    epoch 16 loss 0.4335 val macro AUROC 0.8235
+    epoch 17 loss 0.4335 val macro AUROC 0.8237
+    epoch 18 loss 0.4327 val macro AUROC 0.8253
+    epoch 19 loss 0.4335 val macro AUROC 0.8251
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8271
+  TEST macro AUROC 0.8134 | micro 0.8379 | macro F1 0.4517
+  per label: HYP 0.7599, NORM 0.8540, MI 0.7874, CD 0.8231, STTC 0.8427
+  rotation sweep: 0deg 81.34 (+0.00), 5deg 81.34 (-0.00), 10deg 81.19 (-0.15), 30deg 80.50 (-0.84), 60deg 78.42 (-2.92), 90deg 76.28 (-5.06), 150deg 71.46 (-9.88)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model canon | augment True | max_degrees 30 | identity_weight 0.0 | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4973 val macro AUROC 0.7842  <- best
+    epoch  1 loss 0.4499 val macro AUROC 0.8077  <- best
+    epoch  2 loss 0.4380 val macro AUROC 0.8198  <- best
+    epoch  3 loss 0.4334 val macro AUROC 0.8220  <- best
+    epoch  4 loss 0.4304 val macro AUROC 0.8262  <- best
+    epoch  5 loss 0.4302 val macro AUROC 0.8254
+    epoch  6 loss 0.4276 val macro AUROC 0.8247
+    epoch  7 loss 0.4260 val macro AUROC 0.8287  <- best
+    epoch  8 loss 0.4230 val macro AUROC 0.8302  <- best
+    epoch  9 loss 0.4234 val macro AUROC 0.8307  <- best
+    epoch 10 loss 0.4225 val macro AUROC 0.8266
+    epoch 11 loss 0.4210 val macro AUROC 0.8306
+    epoch 12 loss 0.4208 val macro AUROC 0.8306
+    epoch 13 loss 0.4180 val macro AUROC 0.8334  <- best
+    epoch 14 loss 0.4189 val macro AUROC 0.8353  <- best
+    epoch 15 loss 0.4182 val macro AUROC 0.8352
+    epoch 16 loss 0.4177 val macro AUROC 0.8340
+    epoch 17 loss 0.4182 val macro AUROC 0.8326
+    epoch 18 loss 0.4175 val macro AUROC 0.8338
+    epoch 19 loss 0.4170 val macro AUROC 0.8352
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8353
+  TEST macro AUROC 0.8220 | micro 0.8483 | macro F1 0.4941
+  per label: HYP 0.7625, NORM 0.8722, MI 0.7935, CD 0.8248, STTC 0.8572
+  pose correction: median 30.0 deg, p90 30.0, max 30.0
+  rotation sweep: 0deg 82.20 (+0.00), 5deg 82.23 (+0.03), 10deg 82.27 (+0.07), 30deg 81.92 (-0.28), 60deg 81.11 (-1.10), 90deg 79.25 (-2.95), 150deg 71.59 (-10.62)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model v0 | augment False | max_degrees 30 | identity_weight 0.0 | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.4386 val macro AUROC 0.8405  <- best
+    epoch  1 loss 0.3665 val macro AUROC 0.8524  <- best
+    epoch  2 loss 0.3552 val macro AUROC 0.8574  <- best
+    epoch  3 loss 0.3500 val macro AUROC 0.8591  <- best
+    epoch  4 loss 0.3472 val macro AUROC 0.8605  <- best
+    epoch  5 loss 0.3446 val macro AUROC 0.8618  <- best
+    epoch  6 loss 0.3431 val macro AUROC 0.8630  <- best
+    epoch  7 loss 0.3413 val macro AUROC 0.8623
+    epoch  8 loss 0.3399 val macro AUROC 0.8631  <- best
+    epoch  9 loss 0.3391 val macro AUROC 0.8634  <- best
+    epoch 10 loss 0.3381 val macro AUROC 0.8643  <- best
+    epoch 11 loss 0.3369 val macro AUROC 0.8638
+    epoch 12 loss 0.3363 val macro AUROC 0.8637
+    epoch 13 loss 0.3358 val macro AUROC 0.8640
+    epoch 14 loss 0.3348 val macro AUROC 0.8642
+    epoch 15 loss 0.3348 val macro AUROC 0.8646  <- best
+    epoch 16 loss 0.3340 val macro AUROC 0.8646
+    epoch 17 loss 0.3336 val macro AUROC 0.8644
+    epoch 18 loss 0.3329 val macro AUROC 0.8655  <- best
+    epoch 19 loss 0.3326 val macro AUROC 0.8643
+    epoch 20 loss 0.3322 val macro AUROC 0.8656  <- best
+    epoch 21 loss 0.3317 val macro AUROC 0.8647
+    epoch 22 loss 0.3313 val macro AUROC 0.8645
+    epoch 23 loss 0.3312 val macro AUROC 0.8646
+    epoch 24 loss 0.3310 val macro AUROC 0.8638
+    epoch 25 loss 0.3304 val macro AUROC 0.8650
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8656
+  TEST macro AUROC 0.8575 | micro 0.8824 | macro F1 0.5608
+  per label: HYP 0.7882, NORM 0.9022, MI 0.8469, CD 0.8583, STTC 0.8922
+  rotation sweep: 0deg 85.75 (+0.00), 5deg 85.73 (-0.02), 10deg 85.43 (-0.33), 30deg 82.28 (-3.47), 60deg 74.66 (-11.09), 90deg 65.50 (-20.25), 150deg 52.29 (-33.46)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model canon | augment False | max_degrees 30 | identity_weight 0.0 | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4307 val macro AUROC 0.8381  <- best
+    epoch  1 loss 0.3555 val macro AUROC 0.8520  <- best
+    epoch  2 loss 0.3406 val macro AUROC 0.8590  <- best
+    epoch  3 loss 0.3329 val macro AUROC 0.8625  <- best
+    epoch  4 loss 0.3289 val macro AUROC 0.8643  <- best
+    epoch  5 loss 0.3239 val macro AUROC 0.8639
+    epoch  6 loss 0.3211 val macro AUROC 0.8696  <- best
+    epoch  7 loss 0.3181 val macro AUROC 0.8677
+    epoch  8 loss 0.3146 val macro AUROC 0.8685
+    epoch  9 loss 0.3138 val macro AUROC 0.8715  <- best
+    epoch 10 loss 0.3102 val macro AUROC 0.8688
+    epoch 11 loss 0.3078 val macro AUROC 0.8702
+    epoch 12 loss 0.3048 val macro AUROC 0.8707
+    epoch 13 loss 0.3029 val macro AUROC 0.8728  <- best
+    epoch 14 loss 0.3016 val macro AUROC 0.8714
+    epoch 15 loss 0.3004 val macro AUROC 0.8690
+    epoch 16 loss 0.2991 val macro AUROC 0.8722
+    epoch 17 loss 0.2956 val macro AUROC 0.8708
+    epoch 18 loss 0.2929 val macro AUROC 0.8727
+    no improvement for 5 epochs, stopping
+
+  best epoch 13 | val macro AUROC 0.8728
+  TEST macro AUROC 0.8656 | micro 0.8889 | macro F1 0.6072
+  per label: HYP 0.7811, NORM 0.9135, MI 0.8804, CD 0.8621, STTC 0.8911
+  pose correction: median 29.0 deg, p90 29.8, max 30.0
+  rotation sweep: 0deg 86.56 (+0.00), 5deg 86.55 (-0.01), 10deg 86.33 (-0.23), 30deg 82.51 (-4.06), 60deg 73.26 (-13.31), 90deg 63.69 (-22.87), 150deg 51.00 (-35.56)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model augment | augment True | max_degrees 30 | identity_weight 0.0 | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.5020 val macro AUROC 0.7921  <- best
+    epoch  1 loss 0.4607 val macro AUROC 0.8094  <- best
+    epoch  2 loss 0.4529 val macro AUROC 0.8112  <- best
+    epoch  3 loss 0.4481 val macro AUROC 0.8142  <- best
+    epoch  4 loss 0.4441 val macro AUROC 0.8161  <- best
+    epoch  5 loss 0.4434 val macro AUROC 0.8187  <- best
+    epoch  6 loss 0.4404 val macro AUROC 0.8206  <- best
+    epoch  7 loss 0.4408 val macro AUROC 0.8196
+    epoch  8 loss 0.4388 val macro AUROC 0.8220  <- best
+    epoch  9 loss 0.4369 val macro AUROC 0.8207
+    epoch 10 loss 0.4377 val macro AUROC 0.8222  <- best
+    epoch 11 loss 0.4371 val macro AUROC 0.8222
+    epoch 12 loss 0.4353 val macro AUROC 0.8233  <- best
+    epoch 13 loss 0.4355 val macro AUROC 0.8227
+    epoch 14 loss 0.4346 val macro AUROC 0.8218
+    epoch 15 loss 0.4343 val macro AUROC 0.8243  <- best
+    epoch 16 loss 0.4330 val macro AUROC 0.8270  <- best
+    epoch 17 loss 0.4333 val macro AUROC 0.8251
+    epoch 18 loss 0.4331 val macro AUROC 0.8271  <- best
+    epoch 19 loss 0.4340 val macro AUROC 0.8275  <- best
+    epoch 20 loss 0.4306 val macro AUROC 0.8262
+    epoch 21 loss 0.4305 val macro AUROC 0.8277  <- best
+    epoch 22 loss 0.4309 val macro AUROC 0.8259
+    epoch 23 loss 0.4291 val macro AUROC 0.8258
+    epoch 24 loss 0.4307 val macro AUROC 0.8246
+    epoch 25 loss 0.4304 val macro AUROC 0.8256
+    epoch 26 loss 0.4298 val macro AUROC 0.8265
+    no improvement for 5 epochs, stopping
+
+  best epoch 21 | val macro AUROC 0.8277
+  TEST macro AUROC 0.8164 | micro 0.8434 | macro F1 0.4823
+  per label: HYP 0.7609, NORM 0.8557, MI 0.7909, CD 0.8263, STTC 0.8483
+  rotation sweep: 0deg 81.64 (+0.00), 5deg 81.63 (-0.01), 10deg 81.47 (-0.17), 30deg 80.81 (-0.83), 60deg 78.78 (-2.86), 90deg 76.78 (-4.86), 150deg 71.92 (-9.72)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+Model canon | augment True | max_degrees 30 | identity_weight 0.0 | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.5007 val macro AUROC 0.7881  <- best
+    epoch  1 loss 0.4458 val macro AUROC 0.8108  <- best
+    epoch  2 loss 0.4386 val macro AUROC 0.8205  <- best
+    epoch  3 loss 0.4332 val macro AUROC 0.8243  <- best
+    epoch  4 loss 0.4290 val macro AUROC 0.8258  <- best
+    epoch  5 loss 0.4272 val macro AUROC 0.8268  <- best
+    epoch  6 loss 0.4259 val macro AUROC 0.8292  <- best
+    epoch  7 loss 0.4252 val macro AUROC 0.8293  <- best
+    epoch  8 loss 0.4241 val macro AUROC 0.8321  <- best
+    epoch  9 loss 0.4222 val macro AUROC 0.8296
+    epoch 10 loss 0.4220 val macro AUROC 0.8303
+    epoch 11 loss 0.4222 val macro AUROC 0.8324  <- best
+    epoch 12 loss 0.4198 val macro AUROC 0.8335  <- best
+    epoch 13 loss 0.4193 val macro AUROC 0.8327
+    epoch 14 loss 0.4198 val macro AUROC 0.8337  <- best
+    epoch 15 loss 0.4196 val macro AUROC 0.8342  <- best
+    epoch 16 loss 0.4190 val macro AUROC 0.8346  <- best
+    epoch 17 loss 0.4186 val macro AUROC 0.8338
+    epoch 18 loss 0.4163 val macro AUROC 0.8367  <- best
+    epoch 19 loss 0.4185 val macro AUROC 0.8383  <- best
+    epoch 20 loss 0.4144 val macro AUROC 0.8377
+    epoch 21 loss 0.4142 val macro AUROC 0.8354
+    epoch 22 loss 0.4156 val macro AUROC 0.8351
+    epoch 23 loss 0.4143 val macro AUROC 0.8303
+    epoch 24 loss 0.4147 val macro AUROC 0.8329
+    no improvement for 5 epochs, stopping
+
+  best epoch 19 | val macro AUROC 0.8383
+  TEST macro AUROC 0.8233 | micro 0.8514 | macro F1 0.4823
+  per label: HYP 0.7615, NORM 0.8706, MI 0.8049, CD 0.8236, STTC 0.8559
+  pose correction: median 30.0 deg, p90 30.0, max 30.0
+  rotation sweep: 0deg 82.33 (+0.00), 5deg 82.35 (+0.02), 10deg 82.32 (-0.01), 30deg 82.02 (-0.31), 60deg 81.30 (-1.03), 90deg 79.32 (-3.01), 150deg 71.94 (-10.39)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+(base) ➜ lvcg-reconstructed python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --max-degrees 10 --tag _10deg --seed 42‘
+usage: train_canon.py [-h] [--config CONFIG] [--model {canon,v0,augment}] [--augment] [--max-degrees MAX_DEGREES] [--identity-weight IDENTITY_WEIGHT] [--eval-rotations [EVAL_ROTATIONS ...]]
+                      [--seed SEED] [--ratio RATIO] [--checkpoint CHECKPOINT] [--results RESULTS] [--cache CACHE] [--tag TAG] [--device DEVICE]
+train_canon.py: error: argument --seed: invalid int value: '42‘'
+python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --max-degrees 10 --tag _10deg --seed 42%                                                                                 
+(base) ➜ lvcg-reconstructed python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --max-degrees 10 --tag _10deg --seed 42
+(base) ➜ lvcg-reconstructed python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --max-degrees 10 --tag _10deg --seed 42
+Model canon | augment False | max_degrees 10.0 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4343 val macro AUROC 0.8418  <- best
+    epoch  1 loss 0.3616 val macro AUROC 0.8539  <- best
+    epoch  2 loss 0.3493 val macro AUROC 0.8592  <- best
+    epoch  3 loss 0.3432 val macro AUROC 0.8610  <- best
+    epoch  4 loss 0.3392 val macro AUROC 0.8637  <- best
+    epoch  5 loss 0.3363 val macro AUROC 0.8648  <- best
+    epoch  6 loss 0.3340 val macro AUROC 0.8647
+    epoch  7 loss 0.3319 val macro AUROC 0.8659  <- best
+    epoch  8 loss 0.3303 val macro AUROC 0.8657
+    epoch  9 loss 0.3290 val macro AUROC 0.8625
+    epoch 10 loss 0.3272 val macro AUROC 0.8671  <- best
+    epoch 11 loss 0.3264 val macro AUROC 0.8666
+    epoch 12 loss 0.3240 val macro AUROC 0.8667
+    epoch 13 loss 0.3237 val macro AUROC 0.8672  <- best
+    epoch 14 loss 0.3222 val macro AUROC 0.8674  <- best
+    epoch 15 loss 0.3208 val macro AUROC 0.8672
+    epoch 16 loss 0.3197 val macro AUROC 0.8671
+    epoch 17 loss 0.3192 val macro AUROC 0.8681  <- best
+    epoch 18 loss 0.3179 val macro AUROC 0.8692  <- best
+    epoch 19 loss 0.3170 val macro AUROC 0.8691
+    epoch 20 loss 0.3162 val macro AUROC 0.8664
+    epoch 21 loss 0.3149 val macro AUROC 0.8697  <- best
+    epoch 22 loss 0.3137 val macro AUROC 0.8683
+    epoch 23 loss 0.3134 val macro AUROC 0.8683
+    epoch 24 loss 0.3115 val macro AUROC 0.8689
+    epoch 25 loss 0.3124 val macro AUROC 0.8690
+    epoch 26 loss 0.3108 val macro AUROC 0.8698  <- best
+    epoch 27 loss 0.3098 val macro AUROC 0.8688
+    epoch 28 loss 0.3083 val macro AUROC 0.8688
+    epoch 29 loss 0.3082 val macro AUROC 0.8692
+    epoch 30 loss 0.3072 val macro AUROC 0.8697
+    epoch 31 loss 0.3054 val macro AUROC 0.8686
+    no improvement for 5 epochs, stopping
+
+  best epoch 26 | val macro AUROC 0.8698
+  TEST macro AUROC 0.8630 | micro 0.8872 | macro F1 0.6104
+  per label: HYP 0.7850, NORM 0.9065, MI 0.8656, CD 0.8636, STTC 0.8941
+  pose correction: median 10.0 deg, p90 10.0, max 10.0
+  rotation sweep: 0deg 86.30 (+0.00), 5deg 86.21 (-0.08), 10deg 85.83 (-0.46), 30deg 81.51 (-4.79), 60deg 72.27 (-14.02), 90deg 62.79 (-23.51), 150deg 51.08 (-35.21)
+/home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv has different columns (['model', 'augment', 'tag', 'max_degrees']... vs ['model', 'augment', 'tag', 'max_degrees']...).
+It was written by another variant of this experiment. Move it aside, e.g.
+  mkdir -p probing/results/superseded && mv /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv probing/results/superseded/
+(base) ➜ lvcg-reconstructed python scripts/summarize_quaternion.py --results probing/results/canon_v5.csv
+canon_v5.csv — 1 runs, metric test_macro_auroc
+       variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  -----------------------------------------------------------------
+            v0     1   85.75     -   +0.00       -   30.0     3,205
+
+(base) ➜ lvcg-reconstructed 
+(base) ➜ lvcg-reconstructed mkdir -p probing/results/superseded && mv probing/results/canon_v5*.csv probing/results/superseded/
+
+for s in 42; do      
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model v0      --seed $s
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon   --seed $s
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model augment --seed $s
+  python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --augment --tag _aug --seed $s
+done
+python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --max-degrees 10 --tag _10deg --seed 42
+Model v0 | augment False | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.4422 val macro AUROC 0.8356  <- best
+    epoch  1 loss 0.3675 val macro AUROC 0.8506  <- best
+    epoch  2 loss 0.3557 val macro AUROC 0.8557  <- best
+    epoch  3 loss 0.3500 val macro AUROC 0.8580  <- best
+    epoch  4 loss 0.3468 val macro AUROC 0.8600  <- best
+    epoch  5 loss 0.3442 val macro AUROC 0.8608  <- best
+    epoch  6 loss 0.3430 val macro AUROC 0.8615  <- best
+    epoch  7 loss 0.3414 val macro AUROC 0.8623  <- best
+    epoch  8 loss 0.3401 val macro AUROC 0.8618
+    epoch  9 loss 0.3390 val macro AUROC 0.8621
+    epoch 10 loss 0.3379 val macro AUROC 0.8631  <- best
+    epoch 11 loss 0.3374 val macro AUROC 0.8628
+    epoch 12 loss 0.3363 val macro AUROC 0.8634  <- best
+    epoch 13 loss 0.3359 val macro AUROC 0.8631
+    epoch 14 loss 0.3351 val macro AUROC 0.8632
+    epoch 15 loss 0.3347 val macro AUROC 0.8635  <- best
+    epoch 16 loss 0.3340 val macro AUROC 0.8640  <- best
+    epoch 17 loss 0.3335 val macro AUROC 0.8639
+    epoch 18 loss 0.3328 val macro AUROC 0.8644  <- best
+    epoch 19 loss 0.3325 val macro AUROC 0.8647  <- best
+    epoch 20 loss 0.3322 val macro AUROC 0.8642
+    epoch 21 loss 0.3318 val macro AUROC 0.8648  <- best
+    epoch 22 loss 0.3312 val macro AUROC 0.8632
+    epoch 23 loss 0.3310 val macro AUROC 0.8642
+    epoch 24 loss 0.3308 val macro AUROC 0.8640
+    epoch 25 loss 0.3308 val macro AUROC 0.8646
+    epoch 26 loss 0.3304 val macro AUROC 0.8649  <- best
+    epoch 27 loss 0.3299 val macro AUROC 0.8643
+    epoch 28 loss 0.3298 val macro AUROC 0.8641
+    epoch 29 loss 0.3295 val macro AUROC 0.8646
+    epoch 30 loss 0.3295 val macro AUROC 0.8649  <- best
+    epoch 31 loss 0.3291 val macro AUROC 0.8644
+    epoch 32 loss 0.3289 val macro AUROC 0.8646
+    epoch 33 loss 0.3288 val macro AUROC 0.8645
+    epoch 34 loss 0.3288 val macro AUROC 0.8644
+    epoch 35 loss 0.3286 val macro AUROC 0.8644
+    no improvement for 5 epochs, stopping
+
+  best epoch 30 | val macro AUROC 0.8649
+  TEST macro AUROC 0.8575 | micro 0.8829 | macro F1 0.5736
+  per label: HYP 0.7869, NORM 0.9028, MI 0.8492, CD 0.8588, STTC 0.8899
+  rotation sweep: 0deg 85.75 (+0.00), 5deg 85.73 (-0.02), 10deg 85.44 (-0.32), 30deg 82.24 (-3.51), 60deg 74.64 (-11.11), 90deg 65.36 (-20.39), 150deg 52.27 (-33.48)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_v0_s42.json
+Model canon | augment False | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4275 val macro AUROC 0.8443  <- best
+    epoch  1 loss 0.3551 val macro AUROC 0.8550  <- best
+    epoch  2 loss 0.3415 val macro AUROC 0.8599  <- best
+    epoch  3 loss 0.3358 val macro AUROC 0.8612  <- best
+    epoch  4 loss 0.3304 val macro AUROC 0.8632  <- best
+    epoch  5 loss 0.3274 val macro AUROC 0.8642  <- best
+    epoch  6 loss 0.3247 val macro AUROC 0.8649  <- best
+    epoch  7 loss 0.3215 val macro AUROC 0.8636
+    epoch  8 loss 0.3199 val macro AUROC 0.8650  <- best
+    epoch  9 loss 0.3184 val macro AUROC 0.8633
+    epoch 10 loss 0.3157 val macro AUROC 0.8677  <- best
+    epoch 11 loss 0.3140 val macro AUROC 0.8657
+    epoch 12 loss 0.3130 val macro AUROC 0.8650
+    epoch 13 loss 0.3113 val macro AUROC 0.8664
+    epoch 14 loss 0.3089 val macro AUROC 0.8673
+    epoch 15 loss 0.3077 val macro AUROC 0.8663
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8677
+  TEST macro AUROC 0.8607 | micro 0.8858 | macro F1 0.5952
+  per label: HYP 0.7855, NORM 0.9052, MI 0.8616, CD 0.8496, STTC 0.9017
+  pose correction: median 27.7 deg, p90 29.7, max 30.0
+  rotation sweep: 0deg 86.07 (+0.00), 5deg 86.05 (-0.02), 10deg 85.72 (-0.35), 30deg 81.79 (-4.28), 60deg 72.29 (-13.78), 90deg 62.21 (-23.87), 150deg 52.63 (-33.45)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_canon_s42.json
+Model augment | augment True | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 3,205 (pose 0, head 3,205)
+    epoch  0 loss 0.5087 val macro AUROC 0.7838  <- best
+    epoch  1 loss 0.4616 val macro AUROC 0.8021  <- best
+    epoch  2 loss 0.4520 val macro AUROC 0.8070  <- best
+    epoch  3 loss 0.4490 val macro AUROC 0.8113  <- best
+    epoch  4 loss 0.4455 val macro AUROC 0.8104
+    epoch  5 loss 0.4427 val macro AUROC 0.8132  <- best
+    epoch  6 loss 0.4427 val macro AUROC 0.8152  <- best
+    epoch  7 loss 0.4400 val macro AUROC 0.8153  <- best
+    epoch  8 loss 0.4394 val macro AUROC 0.8191  <- best
+    epoch  9 loss 0.4374 val macro AUROC 0.8212  <- best
+    epoch 10 loss 0.4386 val macro AUROC 0.8196
+    epoch 11 loss 0.4364 val macro AUROC 0.8225  <- best
+    epoch 12 loss 0.4360 val macro AUROC 0.8231  <- best
+    epoch 13 loss 0.4370 val macro AUROC 0.8208
+    epoch 14 loss 0.4366 val macro AUROC 0.8213
+    epoch 15 loss 0.4342 val macro AUROC 0.8211
+    epoch 16 loss 0.4339 val macro AUROC 0.8241  <- best
+    epoch 17 loss 0.4332 val macro AUROC 0.8240
+    epoch 18 loss 0.4306 val macro AUROC 0.8262  <- best
+    epoch 19 loss 0.4340 val macro AUROC 0.8260
+    epoch 20 loss 0.4319 val macro AUROC 0.8250
+    epoch 21 loss 0.4327 val macro AUROC 0.8270  <- best
+    epoch 22 loss 0.4323 val macro AUROC 0.8273  <- best
+    epoch 23 loss 0.4301 val macro AUROC 0.8255
+    epoch 24 loss 0.4307 val macro AUROC 0.8249
+    epoch 25 loss 0.4305 val macro AUROC 0.8251
+    epoch 26 loss 0.4301 val macro AUROC 0.8253
+    epoch 27 loss 0.4284 val macro AUROC 0.8251
+    no improvement for 5 epochs, stopping
+
+  best epoch 22 | val macro AUROC 0.8273
+  TEST macro AUROC 0.8163 | micro 0.8426 | macro F1 0.4607
+  per label: HYP 0.7608, NORM 0.8549, MI 0.7944, CD 0.8292, STTC 0.8419
+  rotation sweep: 0deg 81.63 (+0.00), 5deg 81.64 (+0.02), 10deg 81.46 (-0.16), 30deg 80.80 (-0.83), 60deg 78.68 (-2.95), 90deg 76.48 (-5.14), 150deg 72.14 (-9.48)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_augment_s42.json
+Model canon | augment True | max_degrees 30 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.5025 val macro AUROC 0.7959  <- best
+    epoch  1 loss 0.4471 val macro AUROC 0.8065  <- best
+    epoch  2 loss 0.4376 val macro AUROC 0.8153  <- best
+    epoch  3 loss 0.4353 val macro AUROC 0.8195  <- best
+    epoch  4 loss 0.4309 val macro AUROC 0.8197  <- best
+    epoch  5 loss 0.4286 val macro AUROC 0.8236  <- best
+    epoch  6 loss 0.4277 val macro AUROC 0.8247  <- best
+    epoch  7 loss 0.4255 val macro AUROC 0.8304  <- best
+    epoch  8 loss 0.4242 val macro AUROC 0.8309  <- best
+    epoch  9 loss 0.4213 val macro AUROC 0.8311  <- best
+    epoch 10 loss 0.4236 val macro AUROC 0.8287
+    epoch 11 loss 0.4208 val macro AUROC 0.8309
+    epoch 12 loss 0.4202 val macro AUROC 0.8304
+    epoch 13 loss 0.4213 val macro AUROC 0.8321  <- best
+    epoch 14 loss 0.4197 val macro AUROC 0.8298
+    epoch 15 loss 0.4178 val macro AUROC 0.8328  <- best
+    epoch 16 loss 0.4186 val macro AUROC 0.8352  <- best
+    epoch 17 loss 0.4167 val macro AUROC 0.8330
+    epoch 18 loss 0.4144 val macro AUROC 0.8366  <- best
+    epoch 19 loss 0.4177 val macro AUROC 0.8349
+    epoch 20 loss 0.4169 val macro AUROC 0.8375  <- best
+    epoch 21 loss 0.4160 val macro AUROC 0.8370
+    epoch 22 loss 0.4160 val macro AUROC 0.8368
+    epoch 23 loss 0.4132 val macro AUROC 0.8347
+    epoch 24 loss 0.4142 val macro AUROC 0.8356
+    epoch 25 loss 0.4148 val macro AUROC 0.8357
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8375
+  TEST macro AUROC 0.8236 | micro 0.8505 | macro F1 0.4743
+  per label: HYP 0.7657, NORM 0.8695, MI 0.8055, CD 0.8210, STTC 0.8565
+  pose correction: median 30.0 deg, p90 30.0, max 30.0
+  rotation sweep: 0deg 82.36 (+0.00), 5deg 82.38 (+0.02), 10deg 82.29 (-0.07), 30deg 82.25 (-0.12), 60deg 81.21 (-1.15), 90deg 79.76 (-2.60), 150deg 72.25 (-10.12)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_canon_aug_s42.json
+Model canon | augment False | max_degrees 10.0 | identity_weight 0.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4346 val macro AUROC 0.8399  <- best
+    epoch  1 loss 0.3614 val macro AUROC 0.8548  <- best
+    epoch  2 loss 0.3493 val macro AUROC 0.8591  <- best
+    epoch  3 loss 0.3431 val macro AUROC 0.8615  <- best
+    epoch  4 loss 0.3392 val macro AUROC 0.8633  <- best
+    epoch  5 loss 0.3361 val macro AUROC 0.8647  <- best
+    epoch  6 loss 0.3337 val macro AUROC 0.8658  <- best
+    epoch  7 loss 0.3319 val macro AUROC 0.8647
+    epoch  8 loss 0.3301 val macro AUROC 0.8655
+    epoch  9 loss 0.3283 val macro AUROC 0.8648
+    epoch 10 loss 0.3269 val macro AUROC 0.8671  <- best
+    epoch 11 loss 0.3261 val macro AUROC 0.8667
+    epoch 12 loss 0.3239 val macro AUROC 0.8667
+    epoch 13 loss 0.3231 val macro AUROC 0.8674  <- best
+    epoch 14 loss 0.3220 val macro AUROC 0.8675  <- best
+    epoch 15 loss 0.3202 val macro AUROC 0.8683  <- best
+    epoch 16 loss 0.3197 val macro AUROC 0.8670
+    epoch 17 loss 0.3188 val macro AUROC 0.8693  <- best
+    epoch 18 loss 0.3178 val macro AUROC 0.8691
+    epoch 19 loss 0.3164 val macro AUROC 0.8705  <- best
+    epoch 20 loss 0.3152 val macro AUROC 0.8663
+    epoch 21 loss 0.3147 val macro AUROC 0.8705  <- best
+    epoch 22 loss 0.3134 val macro AUROC 0.8683
+    epoch 23 loss 0.3128 val macro AUROC 0.8687
+    epoch 24 loss 0.3122 val macro AUROC 0.8694
+    epoch 25 loss 0.3116 val macro AUROC 0.8694
+    epoch 26 loss 0.3106 val macro AUROC 0.8698
+    no improvement for 5 epochs, stopping
+
+  best epoch 21 | val macro AUROC 0.8705
+  TEST macro AUROC 0.8627 | micro 0.8869 | macro F1 0.6011
+  per label: HYP 0.7873, NORM 0.9060, MI 0.8673, CD 0.8605, STTC 0.8925
+  pose correction: median 10.0 deg, p90 10.0, max 10.0
+  rotation sweep: 0deg 86.27 (+0.00), 5deg 86.23 (-0.05), 10deg 85.92 (-0.36), 30deg 81.80 (-4.48), 60deg 72.87 (-13.40), 90deg 63.08 (-23.19), 150deg 51.27 (-35.01)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_canon_10deg_s42.json
+(base) ➜ lvcg-reconstructed 
+
+(base) ➜ lvcg-reconstructed python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --identity-weight 1.0 --tag _prior1 --seed 42
+python scripts/train_canon.py --config configs/eval/canon_v5.yaml --model canon --identity-weight 10.0 --tag _prior10 --seed 42
+python scripts/summarize_quaternion.py --results probing/results/canon_v5.csv
+Model canon | augment False | max_degrees 30 | identity_weight 1.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4354 val macro AUROC 0.8440  <- best
+    epoch  1 loss 0.3624 val macro AUROC 0.8562  <- best
+    epoch  2 loss 0.3493 val macro AUROC 0.8621  <- best
+    epoch  3 loss 0.3431 val macro AUROC 0.8637  <- best
+    epoch  4 loss 0.3381 val macro AUROC 0.8637  <- best
+    epoch  5 loss 0.3351 val macro AUROC 0.8665  <- best
+    epoch  6 loss 0.3319 val macro AUROC 0.8664
+    epoch  7 loss 0.3289 val macro AUROC 0.8671  <- best
+    epoch  8 loss 0.3265 val macro AUROC 0.8676  <- best
+    epoch  9 loss 0.3249 val macro AUROC 0.8675
+    epoch 10 loss 0.3230 val macro AUROC 0.8690  <- best
+    epoch 11 loss 0.3215 val macro AUROC 0.8670
+    epoch 12 loss 0.3181 val macro AUROC 0.8672
+    epoch 13 loss 0.3164 val macro AUROC 0.8680
+    epoch 14 loss 0.3147 val macro AUROC 0.8671
+    epoch 15 loss 0.3131 val macro AUROC 0.8667
+    no improvement for 5 epochs, stopping
+
+  best epoch 10 | val macro AUROC 0.8690
+  TEST macro AUROC 0.8632 | micro 0.8877 | macro F1 0.6013
+  per label: HYP 0.7893, NORM 0.9063, MI 0.8679, CD 0.8558, STTC 0.8967
+  pose correction: median 10.9 deg, p90 21.5, max 28.3
+  rotation sweep: 0deg 86.32 (+0.00), 5deg 86.32 (-0.00), 10deg 86.02 (-0.30), 30deg 82.02 (-4.30), 60deg 72.86 (-13.46), 90deg 63.34 (-22.98), 150deg 51.38 (-34.94)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_canon_prior1_s42.json
+Model canon | augment False | max_degrees 30 | identity_weight 10.0 | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 47,694 (pose 44,489, head 3,205)
+    epoch  0 loss 0.4402 val macro AUROC 0.8401  <- best
+    epoch  1 loss 0.3671 val macro AUROC 0.8531  <- best
+    epoch  2 loss 0.3547 val macro AUROC 0.8589  <- best
+    epoch  3 loss 0.3490 val macro AUROC 0.8611  <- best
+    epoch  4 loss 0.3456 val macro AUROC 0.8632  <- best
+    epoch  5 loss 0.3423 val macro AUROC 0.8638  <- best
+    epoch  6 loss 0.3404 val macro AUROC 0.8652  <- best
+    epoch  7 loss 0.3384 val macro AUROC 0.8660  <- best
+    epoch  8 loss 0.3367 val macro AUROC 0.8655
+    epoch  9 loss 0.3350 val macro AUROC 0.8661  <- best
+    epoch 10 loss 0.3339 val macro AUROC 0.8671  <- best
+    epoch 11 loss 0.3328 val macro AUROC 0.8670
+    epoch 12 loss 0.3312 val macro AUROC 0.8668
+    epoch 13 loss 0.3303 val macro AUROC 0.8671
+    epoch 14 loss 0.3295 val macro AUROC 0.8668
+    epoch 15 loss 0.3286 val macro AUROC 0.8679  <- best
+    epoch 16 loss 0.3277 val macro AUROC 0.8675
+    epoch 17 loss 0.3265 val macro AUROC 0.8683  <- best
+    epoch 18 loss 0.3252 val macro AUROC 0.8691  <- best
+    epoch 19 loss 0.3243 val macro AUROC 0.8696  <- best
+    epoch 20 loss 0.3237 val macro AUROC 0.8684
+    epoch 21 loss 0.3229 val macro AUROC 0.8688
+    epoch 22 loss 0.3211 val macro AUROC 0.8681
+    epoch 23 loss 0.3210 val macro AUROC 0.8687
+    epoch 24 loss 0.3197 val macro AUROC 0.8683
+    no improvement for 5 epochs, stopping
+
+  best epoch 19 | val macro AUROC 0.8696
+  TEST macro AUROC 0.8625 | micro 0.8866 | macro F1 0.5950
+  per label: HYP 0.7888, NORM 0.9052, MI 0.8622, CD 0.8613, STTC 0.8952
+  pose correction: median 3.4 deg, p90 7.7, max 21.1
+  rotation sweep: 0deg 86.25 (+0.00), 5deg 86.21 (-0.05), 10deg 85.82 (-0.43), 30deg 81.51 (-4.75), 60deg 72.42 (-13.84), 90deg 63.27 (-22.98), 150deg 50.86 (-35.40)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/canon_v5.csv; curve in canon_v5_curve_canon_prior10_s42.json
+canon_v5.csv — 7 runs, metric test_macro_auroc
+        variant seeds   AUROC    +-   vs V0  paired  epoch    params
+  ------------------------------------------------------------------
+             v0     1   85.75     -   +0.00       -   30.0     3,205
+        augment     1   81.63     -   -4.12   -4.12   22.0     3,205
+          canon     1   86.07     -   +0.32   +0.32   10.0    47,694
+    canon 10deg     1   86.27     -   +0.52   +0.52   21.0    47,694
+      canon aug     1   82.36     -   -3.39   -3.39   20.0    47,694
+   canon prior1     1   86.32     -   +0.57   +0.57   10.0    47,694
+  canon prior10     1   86.25     -   +0.50   +0.50   19.0    47,694
+
+  per-label test AUROC (seed of the first run of each variant):
+          variant    NORM      MI    STTC      CD     HYP
+               v0  0.9028  0.8492  0.8899  0.8588  0.7869
+          augment  0.8549  0.7944  0.8419  0.8292  0.7608
+            canon  0.9052  0.8616  0.9017  0.8496  0.7855
+      canon 10deg  0.9060  0.8673  0.8925  0.8605  0.7873
+        canon aug  0.8695  0.8055  0.8565  0.8210  0.7657
+     canon prior1  0.9063  0.8679  0.8967  0.8558  0.7893
+    canon prior10  0.9052  0.8622  0.8952  0.8613  0.7888

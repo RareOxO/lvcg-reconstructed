@@ -124,6 +124,7 @@ class CanonProbe(nn.Module):
         pose_dim=64,
         pose_hidden=32,
         max_degrees=None,
+        pose_module=None,
     ):
         super().__init__()
         self.beat_encoder = beat_encoder
@@ -141,7 +142,10 @@ class CanonProbe(nn.Module):
                 module.p = 0.0
 
         self.canonicalize = bool(canonicalize)
-        self.pose = PoseNet(pose_dim, pose_hidden, max_degrees=max_degrees) if canonicalize else None
+        # V6 supplies its own rotation source (a single shared geometry correction, or a
+        # per-record one); V5 uses the per-record pose head.
+        self.pose = pose_module or (
+            PoseNet(pose_dim, pose_hidden, max_degrees=max_degrees) if canonicalize else None)
         self.head = nn.Linear(token_dim + state_generator.hidden_dim + rhythm_dim, num_classes)
 
     def train(self, mode=True):
@@ -172,7 +176,8 @@ class CanonProbe(nn.Module):
         """Correction angle per record, in degrees -- zero for a model with no pose head."""
         if not self.canonicalize:
             return torch.zeros(beats.shape[0], device=beats.device)
-        return quaternion_angle(self.pose(beats, beat_mask)) * 180.0 / torch.pi
+        angles = quaternion_angle(self.pose(beats, beat_mask)) * 180.0 / torch.pi
+        return angles.expand(beats.shape[0]) if angles.numel() == 1 else angles
 
     def parameter_counts(self):
         trainable = [p for p in self.parameters() if p.requires_grad]
