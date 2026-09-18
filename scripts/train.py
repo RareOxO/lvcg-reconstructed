@@ -62,6 +62,9 @@ from lvcg.utils.config import Config, add_cli_overrides, apply_overrides, load_c
 from lvcg.utils.run_id import ensure_run_dirs
 
 LOSS_TERMS = ("loss", "recon", "temporal", "beat", "base")
+# Route E's term is optional and reported only when its weight is non-zero, so an
+# unchanged configuration keeps the released five terms and the released objective.
+ROTATION_TERM = "rotation"
 # Model options that change only how fast the same numbers are computed.
 SPEED_SWITCHES = ("vectorized_stitcher", "fast_upsample")
 
@@ -168,7 +171,10 @@ def _git_commit() -> Optional[str]:
 
 
 def compute_losses(model, ecg, num_visible, lambdas):
-    """The release's objective, unchanged. Returns (total, {term: detached value}).
+    """The release's objective, plus route E's optional rotation term.
+
+    Returns (total, {term: detached value}). With ``lambdas["rotation"]`` absent or zero
+    -- the default -- this is the released objective exactly, term for term.
 
     ``model`` is an LVCG, or a DistributedDataParallel-wrapped ``TrainStep`` around one.
     """
@@ -212,6 +218,21 @@ def compute_losses(model, ecg, num_visible, lambdas):
         "beat": loss_beat.detach(),
         "base": loss_base.detach(),
     }
+
+    weight = float(lambdas.get(ROTATION_TERM, 0.0))
+    if weight:
+        # Route E: squared error is dominated by amplitude and can reconstruct a beat
+        # with the right size and the wrong turning; this term sees only the turning.
+        from lvcg.quaternion.pretrain import rotational_consistency_loss
+
+        aligned = V_hat_beats if V_hat_beats.shape[1] == V_beats.shape[1] else V_hat_beats[:, 1:-1]
+        mask = (outputs["beat_mask_full"] if V_hat_beats.shape[1] == V_beats.shape[1]
+                else outputs["beat_mask_full"][:, 1:-1])
+        loss_rotation = rotational_consistency_loss(aligned, V_beats, mask)
+        loss = loss + weight * loss_rotation
+        terms["loss"] = loss.detach()
+        terms[ROTATION_TERM] = loss_rotation.detach()
+
     return loss, terms
 
 
@@ -223,7 +244,9 @@ def evaluate(model, loader, device, num_visible, lambdas, batches, seed):
     """
     was_training = model.training
     model.eval()
-    sums = {term: 0.0 for term in LOSS_TERMS}
+    # Follow whatever compute_losses returns, so route E's term is validated too when on.
+    terms_tracked = LOSS_TERMS + ((ROTATION_TERM,) if lambdas.get(ROTATION_TERM) else ())
+    sums = {term: 0.0 for term in terms_tracked}
     count = 0
     devices = [device] if device.type == "cuda" else []
     with torch.random.fork_rng(devices=devices):
@@ -233,7 +256,7 @@ def evaluate(model, loader, device, num_visible, lambdas, batches, seed):
                 break
             ecg = batch["ecg"].to(device, non_blocking=True)
             _, terms = compute_losses(model, ecg, num_visible, lambdas)
-            for term in LOSS_TERMS:
+            for term in terms_tracked:
                 sums[term] += terms[term].item() * ecg.shape[0]
             count += ecg.shape[0]
     model.train(was_training)
@@ -326,6 +349,8 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
         "temporal": float(train_cfg.get("lambda_temporal", 0.1)),
         "beat": float(train_cfg.get("lambda_beat", 1.0)),
         "base": float(train_cfg.get("lambda_base", 1.0)),
+        # Route E, off by default: with 0 the objective is the release's, term for term.
+        ROTATION_TERM: float(train_cfg.get("lambda_rotation", 0.0)),
     }
     num_visible = int(train_cfg.get("num_visible", 3))
 
@@ -445,7 +470,8 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
 
     model.train()
     pbar = tqdm(total=max_steps, initial=global_step, desc="Training", disable=not main_process)
-    sums = {term: torch.zeros((), device=device) for term in LOSS_TERMS}
+    terms_tracked = LOSS_TERMS + ((ROTATION_TERM,) if lambdas.get(ROTATION_TERM) else ())
+    sums = {term: torch.zeros((), device=device) for term in terms_tracked}
     grad_norm_sum = torch.zeros((), device=device)
     interval_steps, interval_start, run_start = 0, time.perf_counter(), time.perf_counter()
     data_seconds = pause_seconds = 0.0
@@ -472,17 +498,17 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
             optimizer.step()
             global_step += 1
             pbar.update(1)
-            for term in LOSS_TERMS:
+            for term in terms_tracked:
                 sums[term] += terms[term]
             interval_steps += 1
 
             if global_step % log_interval == 0:
                 elapsed = time.perf_counter() - interval_start
-                stacked = torch.stack([sums[term] for term in LOSS_TERMS]) / interval_steps
+                stacked = torch.stack([sums[term] for term in terms_tracked]) / interval_steps
                 if world > 1:
                     dist.all_reduce(stacked, op=dist.ReduceOp.SUM)
                     stacked /= world
-                means = dict(zip(LOSS_TERMS, stacked.tolist()))
+                means = dict(zip(terms_tracked, stacked.tolist()))
                 log(
                     {
                         "type": "train",
@@ -500,7 +526,7 @@ def train(cfg: Config, resume: Optional[str] = None) -> str:
                     }
                 )
                 pbar.set_postfix({term: f"{means[term]:.4f}" for term in LOSS_TERMS})
-                sums = {term: torch.zeros((), device=device) for term in LOSS_TERMS}
+                sums = {term: torch.zeros((), device=device) for term in terms_tracked}
                 grad_norm_sum = torch.zeros((), device=device)
                 interval_steps, interval_start = 0, time.perf_counter()
                 data_seconds = pause_seconds = 0.0

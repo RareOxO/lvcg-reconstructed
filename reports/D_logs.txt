@@ -1,0 +1,996 @@
+(/home/featurize/work/quaternion_env) ➜ lvcg-reconstructed for s in 42 43 44; do
+  python scripts/train_sparse.py --config configs/eval/sparse_d.yaml --leads 12 8 6 3 2 1 --seed $s --cache ""
+done
+Lead sweep [12, 8, 6, 3, 2, 1] | branch invariant | struct mean | seed 42 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+
+=== 12 lead(s): indices (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11) ===
+  train: (17084, 20, 3, 128) in 38.1s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.5s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.4s                                                                                                                                                                       
+  geometry kept: direction cosine 1.000, magnitude ratio 1.000, planarity 0.104, frame drift 0.0 deg
+    epoch  0 loss 0.4102 val macro AUROC 0.8587  <- best
+    epoch  1 loss 0.3451 val macro AUROC 0.8697  <- best
+    epoch  2 loss 0.3340 val macro AUROC 0.8746  <- best
+    epoch  3 loss 0.3281 val macro AUROC 0.8753  <- best
+    epoch  4 loss 0.3248 val macro AUROC 0.8778  <- best
+    epoch  5 loss 0.3222 val macro AUROC 0.8790  <- best
+    epoch  6 loss 0.3204 val macro AUROC 0.8806  <- best
+    epoch  7 loss 0.3187 val macro AUROC 0.8798
+    epoch  8 loss 0.3174 val macro AUROC 0.8804
+    epoch  9 loss 0.3161 val macro AUROC 0.8812  <- best
+    epoch 10 loss 0.3154 val macro AUROC 0.8812  <- best
+    epoch 11 loss 0.3146 val macro AUROC 0.8814  <- best
+    epoch 12 loss 0.3142 val macro AUROC 0.8817  <- best
+    epoch 13 loss 0.3134 val macro AUROC 0.8817
+    epoch 14 loss 0.3122 val macro AUROC 0.8819  <- best
+    epoch 15 loss 0.3120 val macro AUROC 0.8813
+    epoch 16 loss 0.3113 val macro AUROC 0.8817
+    epoch 17 loss 0.3107 val macro AUROC 0.8818
+    epoch 18 loss 0.3102 val macro AUROC 0.8822  <- best
+    epoch 19 loss 0.3104 val macro AUROC 0.8819
+    epoch 20 loss 0.3098 val macro AUROC 0.8818
+    epoch 21 loss 0.3094 val macro AUROC 0.8811
+    epoch 22 loss 0.3096 val macro AUROC 0.8816
+    epoch 23 loss 0.3090 val macro AUROC 0.8818
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8733 (val 0.8822, epoch 18)
+    epoch  0 loss 0.3951 val macro AUROC 0.8612  <- best
+    epoch  1 loss 0.3391 val macro AUROC 0.8716  <- best
+    epoch  2 loss 0.3281 val macro AUROC 0.8778  <- best
+    epoch  3 loss 0.3216 val macro AUROC 0.8791  <- best
+    epoch  4 loss 0.3167 val macro AUROC 0.8820  <- best
+    epoch  5 loss 0.3125 val macro AUROC 0.8830  <- best
+    epoch  6 loss 0.3098 val macro AUROC 0.8855  <- best
+    epoch  7 loss 0.3063 val macro AUROC 0.8832
+    epoch  8 loss 0.3032 val macro AUROC 0.8849
+    epoch  9 loss 0.3001 val macro AUROC 0.8852
+    epoch 10 loss 0.2981 val macro AUROC 0.8875  <- best
+    epoch 11 loss 0.2951 val macro AUROC 0.8856
+    epoch 12 loss 0.2927 val macro AUROC 0.8843
+    epoch 13 loss 0.2904 val macro AUROC 0.8858
+    epoch 14 loss 0.2859 val macro AUROC 0.8881  <- best
+    epoch 15 loss 0.2821 val macro AUROC 0.8823
+    epoch 16 loss 0.2786 val macro AUROC 0.8845
+    epoch 17 loss 0.2754 val macro AUROC 0.8839
+    epoch 18 loss 0.2708 val macro AUROC 0.8843
+    epoch 19 loss 0.2675 val macro AUROC 0.8827
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8774 (val 0.8881, epoch 14)
+  delta vs V0: +0.41 pp
+
+=== 8 lead(s): indices (0, 1, 6, 7, 8, 9, 10, 11) ===
+  train: (17084, 20, 3, 128) in 14.2s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.941, magnitude ratio 0.927, planarity 0.089, frame drift 52.6 deg
+    epoch  0 loss 0.4119 val macro AUROC 0.8577  <- best
+    epoch  1 loss 0.3481 val macro AUROC 0.8678  <- best
+    epoch  2 loss 0.3370 val macro AUROC 0.8719  <- best
+    epoch  3 loss 0.3312 val macro AUROC 0.8727  <- best
+    epoch  4 loss 0.3280 val macro AUROC 0.8752  <- best
+    epoch  5 loss 0.3255 val macro AUROC 0.8762  <- best
+    epoch  6 loss 0.3238 val macro AUROC 0.8775  <- best
+    epoch  7 loss 0.3222 val macro AUROC 0.8770
+    epoch  8 loss 0.3210 val macro AUROC 0.8773
+    epoch  9 loss 0.3198 val macro AUROC 0.8781  <- best
+    epoch 10 loss 0.3190 val macro AUROC 0.8779
+    epoch 11 loss 0.3182 val macro AUROC 0.8785  <- best
+    epoch 12 loss 0.3179 val macro AUROC 0.8785
+    epoch 13 loss 0.3172 val macro AUROC 0.8788  <- best
+    epoch 14 loss 0.3159 val macro AUROC 0.8789  <- best
+    epoch 15 loss 0.3157 val macro AUROC 0.8781
+    epoch 16 loss 0.3151 val macro AUROC 0.8784
+    epoch 17 loss 0.3145 val macro AUROC 0.8789  <- best
+    epoch 18 loss 0.3139 val macro AUROC 0.8792  <- best
+    epoch 19 loss 0.3142 val macro AUROC 0.8788
+    epoch 20 loss 0.3136 val macro AUROC 0.8786
+    epoch 21 loss 0.3132 val macro AUROC 0.8783
+    epoch 22 loss 0.3134 val macro AUROC 0.8785
+    epoch 23 loss 0.3127 val macro AUROC 0.8787
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8672 (val 0.8792, epoch 18)
+    epoch  0 loss 0.3959 val macro AUROC 0.8602  <- best
+    epoch  1 loss 0.3415 val macro AUROC 0.8708  <- best
+    epoch  2 loss 0.3306 val macro AUROC 0.8735  <- best
+    epoch  3 loss 0.3237 val macro AUROC 0.8767  <- best
+    epoch  4 loss 0.3199 val macro AUROC 0.8792  <- best
+    epoch  5 loss 0.3151 val macro AUROC 0.8792  <- best
+    epoch  6 loss 0.3121 val macro AUROC 0.8819  <- best
+    epoch  7 loss 0.3099 val macro AUROC 0.8821  <- best
+    epoch  8 loss 0.3055 val macro AUROC 0.8833  <- best
+    epoch  9 loss 0.3024 val macro AUROC 0.8813
+    epoch 10 loss 0.3002 val macro AUROC 0.8817
+    epoch 11 loss 0.2962 val macro AUROC 0.8840  <- best
+    epoch 12 loss 0.2947 val macro AUROC 0.8828
+    epoch 13 loss 0.2918 val macro AUROC 0.8834
+    epoch 14 loss 0.2878 val macro AUROC 0.8838
+    epoch 15 loss 0.2841 val macro AUROC 0.8795
+    epoch 16 loss 0.2808 val macro AUROC 0.8829
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8724 (val 0.8840, epoch 11)
+  delta vs V0: +0.52 pp
+
+=== 6 lead(s): indices (0, 1, 2, 3, 4, 5) ===
+  train: (17084, 20, 3, 128) in 14.0s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.5s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.5s                                                                                                                                                                       
+  geometry kept: direction cosine 0.817, magnitude ratio 0.902, planarity 0.000, frame drift 69.0 deg
+    epoch  0 loss 0.4234 val macro AUROC 0.8390  <- best
+    epoch  1 loss 0.3642 val macro AUROC 0.8479  <- best
+    epoch  2 loss 0.3543 val macro AUROC 0.8527  <- best
+    epoch  3 loss 0.3494 val macro AUROC 0.8521
+    epoch  4 loss 0.3465 val macro AUROC 0.8548  <- best
+    epoch  5 loss 0.3442 val macro AUROC 0.8556  <- best
+    epoch  6 loss 0.3426 val macro AUROC 0.8577  <- best
+    epoch  7 loss 0.3410 val macro AUROC 0.8566
+    epoch  8 loss 0.3401 val macro AUROC 0.8572
+    epoch  9 loss 0.3391 val macro AUROC 0.8577  <- best
+    epoch 10 loss 0.3383 val macro AUROC 0.8585  <- best
+    epoch 11 loss 0.3378 val macro AUROC 0.8583
+    epoch 12 loss 0.3376 val macro AUROC 0.8588  <- best
+    epoch 13 loss 0.3367 val macro AUROC 0.8582
+    epoch 14 loss 0.3356 val macro AUROC 0.8587
+    epoch 15 loss 0.3359 val macro AUROC 0.8586
+    epoch 16 loss 0.3351 val macro AUROC 0.8587
+    epoch 17 loss 0.3344 val macro AUROC 0.8594  <- best
+    epoch 18 loss 0.3340 val macro AUROC 0.8594  <- best
+    epoch 19 loss 0.3341 val macro AUROC 0.8585
+    epoch 20 loss 0.3336 val macro AUROC 0.8594
+    epoch 21 loss 0.3332 val macro AUROC 0.8581
+    epoch 22 loss 0.3335 val macro AUROC 0.8584
+    epoch 23 loss 0.3328 val macro AUROC 0.8589
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8550 (val 0.8594, epoch 18)
+    epoch  0 loss 0.4083 val macro AUROC 0.8424  <- best
+    epoch  1 loss 0.3581 val macro AUROC 0.8509  <- best
+    epoch  2 loss 0.3489 val macro AUROC 0.8555  <- best
+    epoch  3 loss 0.3434 val macro AUROC 0.8560  <- best
+    epoch  4 loss 0.3398 val macro AUROC 0.8592  <- best
+    epoch  5 loss 0.3366 val macro AUROC 0.8595  <- best
+    epoch  6 loss 0.3347 val macro AUROC 0.8612  <- best
+    epoch  7 loss 0.3322 val macro AUROC 0.8605
+    epoch  8 loss 0.3297 val macro AUROC 0.8620  <- best
+    epoch  9 loss 0.3276 val macro AUROC 0.8598
+    epoch 10 loss 0.3260 val macro AUROC 0.8649  <- best
+    epoch 11 loss 0.3243 val macro AUROC 0.8625
+    epoch 12 loss 0.3235 val macro AUROC 0.8625
+    epoch 13 loss 0.3200 val macro AUROC 0.8617
+    epoch 14 loss 0.3177 val macro AUROC 0.8630
+    epoch 15 loss 0.3154 val macro AUROC 0.8608
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8545 (val 0.8649, epoch 10)
+  delta vs V0: -0.05 pp
+
+=== 3 lead(s): indices (0, 1, 6) ===
+  train: (17084, 20, 3, 128) in 14.1s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.870, magnitude ratio 0.999, planarity 0.083, frame drift 66.0 deg
+    epoch  0 loss 0.4108 val macro AUROC 0.8539  <- best
+    epoch  1 loss 0.3502 val macro AUROC 0.8633  <- best
+    epoch  2 loss 0.3398 val macro AUROC 0.8669  <- best
+    epoch  3 loss 0.3348 val macro AUROC 0.8665
+    epoch  4 loss 0.3316 val macro AUROC 0.8690  <- best
+    epoch  5 loss 0.3293 val macro AUROC 0.8700  <- best
+    epoch  6 loss 0.3277 val macro AUROC 0.8715  <- best
+    epoch  7 loss 0.3261 val macro AUROC 0.8710
+    epoch  8 loss 0.3249 val macro AUROC 0.8713
+    epoch  9 loss 0.3237 val macro AUROC 0.8716  <- best
+    epoch 10 loss 0.3231 val macro AUROC 0.8721  <- best
+    epoch 11 loss 0.3224 val macro AUROC 0.8715
+    epoch 12 loss 0.3219 val macro AUROC 0.8721
+    epoch 13 loss 0.3214 val macro AUROC 0.8721  <- best
+    epoch 14 loss 0.3201 val macro AUROC 0.8722  <- best
+    epoch 15 loss 0.3200 val macro AUROC 0.8720
+    epoch 16 loss 0.3194 val macro AUROC 0.8716
+    epoch 17 loss 0.3188 val macro AUROC 0.8727  <- best
+    epoch 18 loss 0.3182 val macro AUROC 0.8730  <- best
+    epoch 19 loss 0.3185 val macro AUROC 0.8722
+    epoch 20 loss 0.3179 val macro AUROC 0.8718
+    epoch 21 loss 0.3175 val macro AUROC 0.8715
+    epoch 22 loss 0.3178 val macro AUROC 0.8717
+    epoch 23 loss 0.3172 val macro AUROC 0.8726
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8666 (val 0.8730, epoch 18)
+    epoch  0 loss 0.3979 val macro AUROC 0.8556  <- best
+    epoch  1 loss 0.3447 val macro AUROC 0.8660  <- best
+    epoch  2 loss 0.3348 val macro AUROC 0.8678  <- best
+    epoch  3 loss 0.3295 val macro AUROC 0.8700  <- best
+    epoch  4 loss 0.3253 val macro AUROC 0.8710  <- best
+    epoch  5 loss 0.3219 val macro AUROC 0.8721  <- best
+    epoch  6 loss 0.3193 val macro AUROC 0.8728  <- best
+    epoch  7 loss 0.3167 val macro AUROC 0.8738  <- best
+    epoch  8 loss 0.3131 val macro AUROC 0.8751  <- best
+    epoch  9 loss 0.3109 val macro AUROC 0.8736
+    epoch 10 loss 0.3093 val macro AUROC 0.8753  <- best
+    epoch 11 loss 0.3060 val macro AUROC 0.8760  <- best
+    epoch 12 loss 0.3027 val macro AUROC 0.8751
+    epoch 13 loss 0.3006 val macro AUROC 0.8753
+    epoch 14 loss 0.2980 val macro AUROC 0.8751
+    epoch 15 loss 0.2948 val macro AUROC 0.8723
+    epoch 16 loss 0.2902 val macro AUROC 0.8760  <- best
+    epoch 17 loss 0.2874 val macro AUROC 0.8712
+    epoch 18 loss 0.2826 val macro AUROC 0.8727
+    epoch 19 loss 0.2806 val macro AUROC 0.8704
+    epoch 20 loss 0.2743 val macro AUROC 0.8700
+    epoch 21 loss 0.2694 val macro AUROC 0.8688
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8687 (val 0.8760, epoch 16)
+  delta vs V0: +0.21 pp
+
+=== 2 lead(s): indices (0, 1) ===
+  train: (17084, 20, 3, 128) in 14.3s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.7s                                                                                                                                                                       
+  geometry kept: direction cosine 0.796, magnitude ratio 0.807, planarity 0.000, frame drift 76.7 deg
+    epoch  0 loss 0.4239 val macro AUROC 0.8387  <- best
+    epoch  1 loss 0.3658 val macro AUROC 0.8469  <- best
+    epoch  2 loss 0.3563 val macro AUROC 0.8510  <- best
+    epoch  3 loss 0.3516 val macro AUROC 0.8505
+    epoch  4 loss 0.3489 val macro AUROC 0.8527  <- best
+    epoch  5 loss 0.3467 val macro AUROC 0.8536  <- best
+    epoch  6 loss 0.3452 val macro AUROC 0.8552  <- best
+    epoch  7 loss 0.3438 val macro AUROC 0.8543
+    epoch  8 loss 0.3428 val macro AUROC 0.8549
+    epoch  9 loss 0.3420 val macro AUROC 0.8551
+    epoch 10 loss 0.3412 val macro AUROC 0.8559  <- best
+    epoch 11 loss 0.3407 val macro AUROC 0.8554
+    epoch 12 loss 0.3405 val macro AUROC 0.8558
+    epoch 13 loss 0.3399 val macro AUROC 0.8557
+    epoch 14 loss 0.3386 val macro AUROC 0.8559  <- best
+    epoch 15 loss 0.3389 val macro AUROC 0.8559
+    epoch 16 loss 0.3382 val macro AUROC 0.8561  <- best
+    epoch 17 loss 0.3376 val macro AUROC 0.8570  <- best
+    epoch 18 loss 0.3370 val macro AUROC 0.8569
+    epoch 19 loss 0.3373 val macro AUROC 0.8563
+    epoch 20 loss 0.3368 val macro AUROC 0.8564
+    epoch 21 loss 0.3364 val macro AUROC 0.8555
+    epoch 22 loss 0.3368 val macro AUROC 0.8559
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8527 (val 0.8570, epoch 17)
+    epoch  0 loss 0.4088 val macro AUROC 0.8398  <- best
+    epoch  1 loss 0.3610 val macro AUROC 0.8486  <- best
+    epoch  2 loss 0.3521 val macro AUROC 0.8531  <- best
+    epoch  3 loss 0.3464 val macro AUROC 0.8540  <- best
+    epoch  4 loss 0.3430 val macro AUROC 0.8552  <- best
+    epoch  5 loss 0.3397 val macro AUROC 0.8570  <- best
+    epoch  6 loss 0.3381 val macro AUROC 0.8584  <- best
+    epoch  7 loss 0.3359 val macro AUROC 0.8576
+    epoch  8 loss 0.3333 val macro AUROC 0.8584  <- best
+    epoch  9 loss 0.3314 val macro AUROC 0.8575
+    epoch 10 loss 0.3299 val macro AUROC 0.8604  <- best
+    epoch 11 loss 0.3275 val macro AUROC 0.8584
+    epoch 12 loss 0.3263 val macro AUROC 0.8583
+    epoch 13 loss 0.3230 val macro AUROC 0.8586
+    epoch 14 loss 0.3213 val macro AUROC 0.8597
+    epoch 15 loss 0.3187 val macro AUROC 0.8561
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8526 (val 0.8604, epoch 10)
+  delta vs V0: -0.01 pp
+
+=== 1 lead(s): indices (1,) ===
+  train: (17084, 20, 3, 128) in 14.8s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.7s                                                                                                                                                                       
+  geometry kept: direction cosine 0.594, magnitude ratio 0.566, planarity 0.000, frame drift 62.1 deg
+    epoch  0 loss 0.4530 val macro AUROC 0.8033  <- best
+    epoch  1 loss 0.4028 val macro AUROC 0.8116  <- best
+    epoch  2 loss 0.3945 val macro AUROC 0.8165  <- best
+    epoch  3 loss 0.3902 val macro AUROC 0.8171  <- best
+    epoch  4 loss 0.3874 val macro AUROC 0.8208  <- best
+    epoch  5 loss 0.3850 val macro AUROC 0.8206
+    epoch  6 loss 0.3836 val macro AUROC 0.8221  <- best
+    epoch  7 loss 0.3824 val macro AUROC 0.8212
+    epoch  8 loss 0.3813 val macro AUROC 0.8221  <- best
+    epoch  9 loss 0.3808 val macro AUROC 0.8226  <- best
+    epoch 10 loss 0.3798 val macro AUROC 0.8230  <- best
+    epoch 11 loss 0.3796 val macro AUROC 0.8228
+    epoch 12 loss 0.3797 val macro AUROC 0.8236  <- best
+    epoch 13 loss 0.3789 val macro AUROC 0.8237  <- best
+    epoch 14 loss 0.3777 val macro AUROC 0.8241  <- best
+    epoch 15 loss 0.3786 val macro AUROC 0.8237
+    epoch 16 loss 0.3768 val macro AUROC 0.8233
+    epoch 17 loss 0.3764 val macro AUROC 0.8250  <- best
+    epoch 18 loss 0.3758 val macro AUROC 0.8250  <- best
+    epoch 19 loss 0.3764 val macro AUROC 0.8244
+    epoch 20 loss 0.3756 val macro AUROC 0.8242
+    epoch 21 loss 0.3752 val macro AUROC 0.8229
+    epoch 22 loss 0.3756 val macro AUROC 0.8236
+    epoch 23 loss 0.3748 val macro AUROC 0.8246
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8180 (val 0.8250, epoch 18)
+    epoch  0 loss 0.4397 val macro AUROC 0.8077  <- best
+    epoch  1 loss 0.3973 val macro AUROC 0.8161  <- best
+    epoch  2 loss 0.3887 val macro AUROC 0.8217  <- best
+    epoch  3 loss 0.3840 val macro AUROC 0.8216
+    epoch  4 loss 0.3808 val macro AUROC 0.8247  <- best
+    epoch  5 loss 0.3776 val macro AUROC 0.8269  <- best
+    epoch  6 loss 0.3762 val macro AUROC 0.8273  <- best
+    epoch  7 loss 0.3743 val macro AUROC 0.8269
+    epoch  8 loss 0.3727 val macro AUROC 0.8247
+    epoch  9 loss 0.3708 val macro AUROC 0.8263
+    epoch 10 loss 0.3691 val macro AUROC 0.8277  <- best
+    epoch 11 loss 0.3674 val macro AUROC 0.8266
+    epoch 12 loss 0.3673 val macro AUROC 0.8253
+    epoch 13 loss 0.3656 val macro AUROC 0.8267
+    epoch 14 loss 0.3638 val macro AUROC 0.8275
+    epoch 15 loss 0.3616 val macro AUROC 0.8267
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8161 (val 0.8277, epoch 10)
+  delta vs V0: -0.19 pp
+
+  leads    V0   branch   delta   dir cos   planarity   frame drift
+     12  87.33   87.74   +0.41     1.000       0.104          0.0
+      8  86.72   87.24   +0.52     0.941       0.089         52.6
+      6  85.50   85.45   -0.05     0.817       0.000         69.0
+      3  86.66   86.87   +0.21     0.870       0.083         66.0
+      2  85.27   85.26   -0.01     0.796       0.000         76.7
+      1  81.80   81.61   -0.19     0.594       0.000         62.1
+
+  decline per lead removed: V0 0.502 pp, branch 0.557 pp
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/sparse_d.csv; curve in sparse_d_curve_invariant_s42.json
+Lead sweep [12, 8, 6, 3, 2, 1] | branch invariant | struct mean | seed 43 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+
+=== 12 lead(s): indices (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11) ===
+  train: (17084, 20, 3, 128) in 16.7s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.4s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 1.000, magnitude ratio 1.000, planarity 0.104, frame drift 0.0 deg
+    epoch  0 loss 0.4240 val macro AUROC 0.8552  <- best
+    epoch  1 loss 0.3477 val macro AUROC 0.8678  <- best
+    epoch  2 loss 0.3355 val macro AUROC 0.8729  <- best
+    epoch  3 loss 0.3290 val macro AUROC 0.8758  <- best
+    epoch  4 loss 0.3256 val macro AUROC 0.8778  <- best
+    epoch  5 loss 0.3226 val macro AUROC 0.8786  <- best
+    epoch  6 loss 0.3207 val macro AUROC 0.8796  <- best
+    epoch  7 loss 0.3190 val macro AUROC 0.8803  <- best
+    epoch  8 loss 0.3175 val macro AUROC 0.8805  <- best
+    epoch  9 loss 0.3165 val macro AUROC 0.8805
+    epoch 10 loss 0.3155 val macro AUROC 0.8806  <- best
+    epoch 11 loss 0.3146 val macro AUROC 0.8809  <- best
+    epoch 12 loss 0.3138 val macro AUROC 0.8809  <- best
+    epoch 13 loss 0.3132 val macro AUROC 0.8813  <- best
+    epoch 14 loss 0.3125 val macro AUROC 0.8815  <- best
+    epoch 15 loss 0.3122 val macro AUROC 0.8812
+    epoch 16 loss 0.3120 val macro AUROC 0.8812
+    epoch 17 loss 0.3112 val macro AUROC 0.8814
+    epoch 18 loss 0.3105 val macro AUROC 0.8813
+    epoch 19 loss 0.3105 val macro AUROC 0.8813
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8729 (val 0.8815, epoch 14)
+    epoch  0 loss 0.4031 val macro AUROC 0.8585  <- best
+    epoch  1 loss 0.3404 val macro AUROC 0.8699  <- best
+    epoch  2 loss 0.3289 val macro AUROC 0.8761  <- best
+    epoch  3 loss 0.3221 val macro AUROC 0.8795  <- best
+    epoch  4 loss 0.3173 val macro AUROC 0.8817  <- best
+    epoch  5 loss 0.3129 val macro AUROC 0.8831  <- best
+    epoch  6 loss 0.3092 val macro AUROC 0.8849  <- best
+    epoch  7 loss 0.3069 val macro AUROC 0.8848
+    epoch  8 loss 0.3035 val macro AUROC 0.8835
+    epoch  9 loss 0.3007 val macro AUROC 0.8850  <- best
+    epoch 10 loss 0.2983 val macro AUROC 0.8839
+    epoch 11 loss 0.2945 val macro AUROC 0.8839
+    epoch 12 loss 0.2916 val macro AUROC 0.8852  <- best
+    epoch 13 loss 0.2891 val macro AUROC 0.8870  <- best
+    epoch 14 loss 0.2837 val macro AUROC 0.8864
+    epoch 15 loss 0.2824 val macro AUROC 0.8849
+    epoch 16 loss 0.2793 val macro AUROC 0.8848
+    epoch 17 loss 0.2740 val macro AUROC 0.8841
+    epoch 18 loss 0.2711 val macro AUROC 0.8809
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8786 (val 0.8870, epoch 13)
+  delta vs V0: +0.57 pp
+
+=== 8 lead(s): indices (0, 1, 6, 7, 8, 9, 10, 11) ===
+  train: (17084, 20, 3, 128) in 14.1s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.5s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.941, magnitude ratio 0.927, planarity 0.089, frame drift 52.6 deg
+    epoch  0 loss 0.4270 val macro AUROC 0.8549  <- best
+    epoch  1 loss 0.3507 val macro AUROC 0.8664  <- best
+    epoch  2 loss 0.3386 val macro AUROC 0.8707  <- best
+    epoch  3 loss 0.3322 val macro AUROC 0.8734  <- best
+    epoch  4 loss 0.3289 val macro AUROC 0.8750  <- best
+    epoch  5 loss 0.3260 val macro AUROC 0.8756  <- best
+    epoch  6 loss 0.3243 val macro AUROC 0.8765  <- best
+    epoch  7 loss 0.3225 val macro AUROC 0.8770  <- best
+    epoch  8 loss 0.3211 val macro AUROC 0.8774  <- best
+    epoch  9 loss 0.3202 val macro AUROC 0.8775  <- best
+    epoch 10 loss 0.3192 val macro AUROC 0.8776  <- best
+    epoch 11 loss 0.3184 val macro AUROC 0.8778  <- best
+    epoch 12 loss 0.3174 val macro AUROC 0.8778  <- best
+    epoch 13 loss 0.3170 val macro AUROC 0.8782  <- best
+    epoch 14 loss 0.3163 val macro AUROC 0.8782  <- best
+    epoch 15 loss 0.3158 val macro AUROC 0.8779
+    epoch 16 loss 0.3158 val macro AUROC 0.8781
+    epoch 17 loss 0.3149 val macro AUROC 0.8784  <- best
+    epoch 18 loss 0.3143 val macro AUROC 0.8783
+    epoch 19 loss 0.3143 val macro AUROC 0.8780
+    epoch 20 loss 0.3137 val macro AUROC 0.8782
+    epoch 21 loss 0.3136 val macro AUROC 0.8784
+    epoch 22 loss 0.3136 val macro AUROC 0.8777
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8669 (val 0.8784, epoch 17)
+    epoch  0 loss 0.4048 val macro AUROC 0.8578  <- best
+    epoch  1 loss 0.3435 val macro AUROC 0.8700  <- best
+    epoch  2 loss 0.3320 val macro AUROC 0.8741  <- best
+    epoch  3 loss 0.3246 val macro AUROC 0.8759  <- best
+    epoch  4 loss 0.3207 val macro AUROC 0.8777  <- best
+    epoch  5 loss 0.3154 val macro AUROC 0.8794  <- best
+    epoch  6 loss 0.3120 val macro AUROC 0.8806  <- best
+    epoch  7 loss 0.3096 val macro AUROC 0.8822  <- best
+    epoch  8 loss 0.3060 val macro AUROC 0.8811
+    epoch  9 loss 0.3030 val macro AUROC 0.8826  <- best
+    epoch 10 loss 0.3003 val macro AUROC 0.8815
+    epoch 11 loss 0.2968 val macro AUROC 0.8814
+    epoch 12 loss 0.2944 val macro AUROC 0.8826  <- best
+    epoch 13 loss 0.2917 val macro AUROC 0.8851  <- best
+    epoch 14 loss 0.2882 val macro AUROC 0.8835
+    epoch 15 loss 0.2860 val macro AUROC 0.8838
+    epoch 16 loss 0.2833 val macro AUROC 0.8852  <- best
+    epoch 17 loss 0.2790 val macro AUROC 0.8830
+    epoch 18 loss 0.2760 val macro AUROC 0.8785
+    epoch 19 loss 0.2729 val macro AUROC 0.8782
+    epoch 20 loss 0.2676 val macro AUROC 0.8789
+    epoch 21 loss 0.2635 val macro AUROC 0.8792
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8706 (val 0.8852, epoch 16)
+  delta vs V0: +0.37 pp
+
+=== 6 lead(s): indices (0, 1, 2, 3, 4, 5) ===
+  train: (17084, 20, 3, 128) in 14.2s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.817, magnitude ratio 0.902, planarity 0.000, frame drift 69.0 deg
+    epoch  0 loss 0.4407 val macro AUROC 0.8339  <- best
+    epoch  1 loss 0.3675 val macro AUROC 0.8461  <- best
+    epoch  2 loss 0.3562 val macro AUROC 0.8500  <- best
+    epoch  3 loss 0.3504 val macro AUROC 0.8523  <- best
+    epoch  4 loss 0.3473 val macro AUROC 0.8545  <- best
+    epoch  5 loss 0.3446 val macro AUROC 0.8548  <- best
+    epoch  6 loss 0.3433 val macro AUROC 0.8560  <- best
+    epoch  7 loss 0.3419 val macro AUROC 0.8567  <- best
+    epoch  8 loss 0.3403 val macro AUROC 0.8568  <- best
+    epoch  9 loss 0.3396 val macro AUROC 0.8568
+    epoch 10 loss 0.3387 val macro AUROC 0.8574  <- best
+    epoch 11 loss 0.3377 val macro AUROC 0.8574  <- best
+    epoch 12 loss 0.3372 val macro AUROC 0.8580  <- best
+    epoch 13 loss 0.3365 val macro AUROC 0.8576
+    epoch 14 loss 0.3358 val macro AUROC 0.8584  <- best
+    epoch 15 loss 0.3357 val macro AUROC 0.8583
+    epoch 16 loss 0.3356 val macro AUROC 0.8574
+    epoch 17 loss 0.3346 val macro AUROC 0.8584
+    epoch 18 loss 0.3342 val macro AUROC 0.8583
+    epoch 19 loss 0.3342 val macro AUROC 0.8583
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8551 (val 0.8584, epoch 14)
+    epoch  0 loss 0.4182 val macro AUROC 0.8374  <- best
+    epoch  1 loss 0.3605 val macro AUROC 0.8487  <- best
+    epoch  2 loss 0.3500 val macro AUROC 0.8540  <- best
+    epoch  3 loss 0.3446 val macro AUROC 0.8560  <- best
+    epoch  4 loss 0.3412 val macro AUROC 0.8583  <- best
+    epoch  5 loss 0.3377 val macro AUROC 0.8589  <- best
+    epoch  6 loss 0.3351 val macro AUROC 0.8609  <- best
+    epoch  7 loss 0.3334 val macro AUROC 0.8604
+    epoch  8 loss 0.3310 val macro AUROC 0.8596
+    epoch  9 loss 0.3294 val macro AUROC 0.8612  <- best
+    epoch 10 loss 0.3277 val macro AUROC 0.8609
+    epoch 11 loss 0.3256 val macro AUROC 0.8620  <- best
+    epoch 12 loss 0.3236 val macro AUROC 0.8609
+    epoch 13 loss 0.3220 val macro AUROC 0.8588
+    epoch 14 loss 0.3187 val macro AUROC 0.8626  <- best
+    epoch 15 loss 0.3178 val macro AUROC 0.8589
+    epoch 16 loss 0.3167 val macro AUROC 0.8611
+    epoch 17 loss 0.3129 val macro AUROC 0.8605
+    epoch 18 loss 0.3129 val macro AUROC 0.8592
+    epoch 19 loss 0.3079 val macro AUROC 0.8588
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8556 (val 0.8626, epoch 14)
+  delta vs V0: +0.04 pp
+
+=== 3 lead(s): indices (0, 1, 6) ===
+  train: (17084, 20, 3, 128) in 14.3s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.7s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.870, magnitude ratio 0.999, planarity 0.083, frame drift 66.0 deg
+    epoch  0 loss 0.4283 val macro AUROC 0.8496  <- best
+    epoch  1 loss 0.3537 val macro AUROC 0.8616  <- best
+    epoch  2 loss 0.3422 val macro AUROC 0.8658  <- best
+    epoch  3 loss 0.3361 val macro AUROC 0.8682  <- best
+    epoch  4 loss 0.3328 val macro AUROC 0.8694  <- best
+    epoch  5 loss 0.3301 val macro AUROC 0.8696  <- best
+    epoch  6 loss 0.3285 val macro AUROC 0.8704  <- best
+    epoch  7 loss 0.3270 val macro AUROC 0.8711  <- best
+    epoch  8 loss 0.3253 val macro AUROC 0.8709
+    epoch  9 loss 0.3246 val macro AUROC 0.8708
+    epoch 10 loss 0.3235 val macro AUROC 0.8714  <- best
+    epoch 11 loss 0.3225 val macro AUROC 0.8717  <- best
+    epoch 12 loss 0.3217 val macro AUROC 0.8717
+    epoch 13 loss 0.3212 val macro AUROC 0.8712
+    epoch 14 loss 0.3205 val macro AUROC 0.8717
+    epoch 15 loss 0.3203 val macro AUROC 0.8716
+    epoch 16 loss 0.3203 val macro AUROC 0.8717  <- best
+    epoch 17 loss 0.3190 val macro AUROC 0.8719  <- best
+    epoch 18 loss 0.3187 val macro AUROC 0.8719  <- best
+    epoch 19 loss 0.3187 val macro AUROC 0.8721  <- best
+    epoch 20 loss 0.3181 val macro AUROC 0.8720
+    epoch 21 loss 0.3182 val macro AUROC 0.8718
+    epoch 22 loss 0.3180 val macro AUROC 0.8711
+    epoch 23 loss 0.3174 val macro AUROC 0.8713
+    epoch 24 loss 0.3166 val macro AUROC 0.8723  <- best
+    epoch 25 loss 0.3165 val macro AUROC 0.8724  <- best
+    epoch 26 loss 0.3166 val macro AUROC 0.8716
+    epoch 27 loss 0.3165 val macro AUROC 0.8723
+    epoch 28 loss 0.3159 val macro AUROC 0.8722
+    epoch 29 loss 0.3158 val macro AUROC 0.8712
+    epoch 30 loss 0.3161 val macro AUROC 0.8714
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8673 (val 0.8724, epoch 25)
+    epoch  0 loss 0.4075 val macro AUROC 0.8538  <- best
+    epoch  1 loss 0.3472 val macro AUROC 0.8631  <- best
+    epoch  2 loss 0.3368 val macro AUROC 0.8676  <- best
+    epoch  3 loss 0.3303 val macro AUROC 0.8704  <- best
+    epoch  4 loss 0.3263 val macro AUROC 0.8719  <- best
+    epoch  5 loss 0.3225 val macro AUROC 0.8716
+    epoch  6 loss 0.3192 val macro AUROC 0.8722  <- best
+    epoch  7 loss 0.3179 val macro AUROC 0.8729  <- best
+    epoch  8 loss 0.3152 val macro AUROC 0.8721
+    epoch  9 loss 0.3126 val macro AUROC 0.8728
+    epoch 10 loss 0.3103 val macro AUROC 0.8744  <- best
+    epoch 11 loss 0.3073 val macro AUROC 0.8755  <- best
+    epoch 12 loss 0.3050 val macro AUROC 0.8761  <- best
+    epoch 13 loss 0.3031 val macro AUROC 0.8743
+    epoch 14 loss 0.2995 val macro AUROC 0.8757
+    epoch 15 loss 0.2976 val macro AUROC 0.8735
+    epoch 16 loss 0.2951 val macro AUROC 0.8757
+    epoch 17 loss 0.2901 val macro AUROC 0.8732
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8733 (val 0.8761, epoch 12)
+  delta vs V0: +0.59 pp
+
+=== 2 lead(s): indices (0, 1) ===
+  train: (17084, 20, 3, 128) in 14.2s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.7s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.796, magnitude ratio 0.807, planarity 0.000, frame drift 76.7 deg
+    epoch  0 loss 0.4415 val macro AUROC 0.8343  <- best
+    epoch  1 loss 0.3689 val macro AUROC 0.8458  <- best
+    epoch  2 loss 0.3582 val macro AUROC 0.8490  <- best
+    epoch  3 loss 0.3526 val macro AUROC 0.8512  <- best
+    epoch  4 loss 0.3497 val macro AUROC 0.8524  <- best
+    epoch  5 loss 0.3472 val macro AUROC 0.8524
+    epoch  6 loss 0.3459 val macro AUROC 0.8533  <- best
+    epoch  7 loss 0.3446 val macro AUROC 0.8543  <- best
+    epoch  8 loss 0.3431 val macro AUROC 0.8542
+    epoch  9 loss 0.3425 val macro AUROC 0.8542
+    epoch 10 loss 0.3416 val macro AUROC 0.8546  <- best
+    epoch 11 loss 0.3408 val macro AUROC 0.8547  <- best
+    epoch 12 loss 0.3401 val macro AUROC 0.8551  <- best
+    epoch 13 loss 0.3395 val macro AUROC 0.8547
+    epoch 14 loss 0.3388 val macro AUROC 0.8555  <- best
+    epoch 15 loss 0.3387 val macro AUROC 0.8554
+    epoch 16 loss 0.3386 val macro AUROC 0.8547
+    epoch 17 loss 0.3376 val macro AUROC 0.8554
+    epoch 18 loss 0.3374 val macro AUROC 0.8555  <- best
+    epoch 19 loss 0.3374 val macro AUROC 0.8554
+    epoch 20 loss 0.3369 val macro AUROC 0.8557  <- best
+    epoch 21 loss 0.3371 val macro AUROC 0.8554
+    epoch 22 loss 0.3368 val macro AUROC 0.8551
+    epoch 23 loss 0.3363 val macro AUROC 0.8550
+    epoch 24 loss 0.3355 val macro AUROC 0.8561  <- best
+    epoch 25 loss 0.3354 val macro AUROC 0.8564  <- best
+    epoch 26 loss 0.3355 val macro AUROC 0.8556
+    epoch 27 loss 0.3355 val macro AUROC 0.8561
+    epoch 28 loss 0.3349 val macro AUROC 0.8558
+    epoch 29 loss 0.3348 val macro AUROC 0.8558
+    epoch 30 loss 0.3353 val macro AUROC 0.8551
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8532 (val 0.8564, epoch 25)
+    epoch  0 loss 0.4202 val macro AUROC 0.8379  <- best
+    epoch  1 loss 0.3634 val macro AUROC 0.8462  <- best
+    epoch  2 loss 0.3534 val macro AUROC 0.8515  <- best
+    epoch  3 loss 0.3482 val macro AUROC 0.8535  <- best
+    epoch  4 loss 0.3445 val macro AUROC 0.8538  <- best
+    epoch  5 loss 0.3420 val macro AUROC 0.8543  <- best
+    epoch  6 loss 0.3393 val macro AUROC 0.8570  <- best
+    epoch  7 loss 0.3380 val macro AUROC 0.8579  <- best
+    epoch  8 loss 0.3355 val macro AUROC 0.8575
+    epoch  9 loss 0.3342 val macro AUROC 0.8545
+    epoch 10 loss 0.3327 val macro AUROC 0.8577
+    epoch 11 loss 0.3302 val macro AUROC 0.8591  <- best
+    epoch 12 loss 0.3289 val macro AUROC 0.8590
+    epoch 13 loss 0.3270 val macro AUROC 0.8574
+    epoch 14 loss 0.3239 val macro AUROC 0.8564
+    epoch 15 loss 0.3238 val macro AUROC 0.8565
+    epoch 16 loss 0.3214 val macro AUROC 0.8594  <- best
+    epoch 17 loss 0.3182 val macro AUROC 0.8588
+    epoch 18 loss 0.3180 val macro AUROC 0.8569
+    epoch 19 loss 0.3131 val macro AUROC 0.8564
+    epoch 20 loss 0.3109 val macro AUROC 0.8555
+    epoch 21 loss 0.3075 val macro AUROC 0.8553
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8530 (val 0.8594, epoch 16)
+  delta vs V0: -0.01 pp
+
+=== 1 lead(s): indices (1,) ===
+  train: (17084, 20, 3, 128) in 14.2s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.7s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.5s                                                                                                                                                                       
+  geometry kept: direction cosine 0.594, magnitude ratio 0.566, planarity 0.000, frame drift 62.1 deg
+    epoch  0 loss 0.4623 val macro AUROC 0.8022  <- best
+    epoch  1 loss 0.4034 val macro AUROC 0.8125  <- best
+    epoch  2 loss 0.3950 val macro AUROC 0.8153  <- best
+    epoch  3 loss 0.3900 val macro AUROC 0.8181  <- best
+    epoch  4 loss 0.3874 val macro AUROC 0.8198  <- best
+    epoch  5 loss 0.3853 val macro AUROC 0.8202  <- best
+    epoch  6 loss 0.3845 val macro AUROC 0.8211  <- best
+    epoch  7 loss 0.3834 val macro AUROC 0.8217  <- best
+    epoch  8 loss 0.3821 val macro AUROC 0.8223  <- best
+    epoch  9 loss 0.3807 val macro AUROC 0.8224  <- best
+    epoch 10 loss 0.3804 val macro AUROC 0.8225  <- best
+    epoch 11 loss 0.3791 val macro AUROC 0.8222
+    epoch 12 loss 0.3791 val macro AUROC 0.8225  <- best
+    epoch 13 loss 0.3782 val macro AUROC 0.8231  <- best
+    epoch 14 loss 0.3774 val macro AUROC 0.8235  <- best
+    epoch 15 loss 0.3775 val macro AUROC 0.8235  <- best
+    epoch 16 loss 0.3775 val macro AUROC 0.8221
+    epoch 17 loss 0.3764 val macro AUROC 0.8233
+    epoch 18 loss 0.3762 val macro AUROC 0.8226
+    epoch 19 loss 0.3759 val macro AUROC 0.8234
+    epoch 20 loss 0.3760 val macro AUROC 0.8227
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8175 (val 0.8235, epoch 15)
+    epoch  0 loss 0.4482 val macro AUROC 0.8062  <- best
+    epoch  1 loss 0.3976 val macro AUROC 0.8162  <- best
+    epoch  2 loss 0.3892 val macro AUROC 0.8186  <- best
+    epoch  3 loss 0.3847 val macro AUROC 0.8218  <- best
+    epoch  4 loss 0.3816 val macro AUROC 0.8244  <- best
+    epoch  5 loss 0.3790 val macro AUROC 0.8248  <- best
+    epoch  6 loss 0.3765 val macro AUROC 0.8259  <- best
+    epoch  7 loss 0.3764 val macro AUROC 0.8256
+    epoch  8 loss 0.3736 val macro AUROC 0.8259
+    epoch  9 loss 0.3725 val macro AUROC 0.8264  <- best
+    epoch 10 loss 0.3705 val macro AUROC 0.8290  <- best
+    epoch 11 loss 0.3684 val macro AUROC 0.8298  <- best
+    epoch 12 loss 0.3679 val macro AUROC 0.8264
+    epoch 13 loss 0.3662 val macro AUROC 0.8284
+    epoch 14 loss 0.3646 val macro AUROC 0.8276
+    epoch 15 loss 0.3635 val macro AUROC 0.8279
+    epoch 16 loss 0.3618 val macro AUROC 0.8269
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8179 (val 0.8298, epoch 11)
+  delta vs V0: +0.05 pp
+
+  leads    V0   branch   delta   dir cos   planarity   frame drift
+     12  87.29   87.86   +0.57     1.000       0.104          0.0
+      8  86.69   87.06   +0.37     0.941       0.089         52.6
+      6  85.51   85.56   +0.04     0.817       0.000         69.0
+      3  86.73   87.33   +0.59     0.870       0.083         66.0
+      2  85.32   85.30   -0.01     0.796       0.000         76.7
+      1  81.75   81.79   +0.05     0.594       0.000         62.1
+
+  decline per lead removed: V0 0.504 pp, branch 0.551 pp
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/sparse_d.csv; curve in sparse_d_curve_invariant_s43.json
+Lead sweep [12, 8, 6, 3, 2, 1] | branch invariant | struct mean | seed 44 | ratio 100%
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+
+=== 12 lead(s): indices (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11) ===
+  train: (17084, 20, 3, 128) in 16.5s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.4s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.5s                                                                                                                                                                       
+  geometry kept: direction cosine 1.000, magnitude ratio 1.000, planarity 0.104, frame drift 0.0 deg
+    epoch  0 loss 0.4264 val macro AUROC 0.8541  <- best
+    epoch  1 loss 0.3483 val macro AUROC 0.8678  <- best
+    epoch  2 loss 0.3355 val macro AUROC 0.8731  <- best
+    epoch  3 loss 0.3296 val macro AUROC 0.8749  <- best
+    epoch  4 loss 0.3257 val macro AUROC 0.8777  <- best
+    epoch  5 loss 0.3229 val macro AUROC 0.8787  <- best
+    epoch  6 loss 0.3207 val macro AUROC 0.8795  <- best
+    epoch  7 loss 0.3190 val macro AUROC 0.8806  <- best
+    epoch  8 loss 0.3176 val macro AUROC 0.8800
+    epoch  9 loss 0.3168 val macro AUROC 0.8806
+    epoch 10 loss 0.3155 val macro AUROC 0.8802
+    epoch 11 loss 0.3150 val macro AUROC 0.8808  <- best
+    epoch 12 loss 0.3139 val macro AUROC 0.8805
+    epoch 13 loss 0.3130 val macro AUROC 0.8815  <- best
+    epoch 14 loss 0.3126 val macro AUROC 0.8818  <- best
+    epoch 15 loss 0.3119 val macro AUROC 0.8818  <- best
+    epoch 16 loss 0.3120 val macro AUROC 0.8810
+    epoch 17 loss 0.3108 val macro AUROC 0.8817
+    epoch 18 loss 0.3105 val macro AUROC 0.8813
+    epoch 19 loss 0.3104 val macro AUROC 0.8816
+    epoch 20 loss 0.3098 val macro AUROC 0.8816
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8728 (val 0.8818, epoch 15)
+    epoch  0 loss 0.4083 val macro AUROC 0.8580  <- best
+    epoch  1 loss 0.3424 val macro AUROC 0.8710  <- best
+    epoch  2 loss 0.3298 val macro AUROC 0.8769  <- best
+    epoch  3 loss 0.3229 val macro AUROC 0.8785  <- best
+    epoch  4 loss 0.3187 val macro AUROC 0.8812  <- best
+    epoch  5 loss 0.3149 val macro AUROC 0.8825  <- best
+    epoch  6 loss 0.3112 val macro AUROC 0.8840  <- best
+    epoch  7 loss 0.3089 val macro AUROC 0.8855  <- best
+    epoch  8 loss 0.3051 val macro AUROC 0.8832
+    epoch  9 loss 0.3024 val macro AUROC 0.8848
+    epoch 10 loss 0.2993 val macro AUROC 0.8847
+    epoch 11 loss 0.2956 val macro AUROC 0.8854
+    epoch 12 loss 0.2935 val macro AUROC 0.8809
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8734 (val 0.8855, epoch 7)
+  delta vs V0: +0.06 pp
+
+=== 8 lead(s): indices (0, 1, 6, 7, 8, 9, 10, 11) ===
+  train: (17084, 20, 3, 128) in 14.2s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.4s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.5s                                                                                                                                                                       
+  geometry kept: direction cosine 0.941, magnitude ratio 0.927, planarity 0.089, frame drift 52.6 deg
+    epoch  0 loss 0.4303 val macro AUROC 0.8522  <- best
+    epoch  1 loss 0.3513 val macro AUROC 0.8657  <- best
+    epoch  2 loss 0.3385 val macro AUROC 0.8702  <- best
+    epoch  3 loss 0.3327 val macro AUROC 0.8719  <- best
+    epoch  4 loss 0.3290 val macro AUROC 0.8745  <- best
+    epoch  5 loss 0.3263 val macro AUROC 0.8753  <- best
+    epoch  6 loss 0.3240 val macro AUROC 0.8760  <- best
+    epoch  7 loss 0.3225 val macro AUROC 0.8771  <- best
+    epoch  8 loss 0.3211 val macro AUROC 0.8764
+    epoch  9 loss 0.3203 val macro AUROC 0.8767
+    epoch 10 loss 0.3192 val macro AUROC 0.8768
+    epoch 11 loss 0.3187 val macro AUROC 0.8774  <- best
+    epoch 12 loss 0.3176 val macro AUROC 0.8768
+    epoch 13 loss 0.3167 val macro AUROC 0.8783  <- best
+    epoch 14 loss 0.3164 val macro AUROC 0.8780
+    epoch 15 loss 0.3156 val macro AUROC 0.8786  <- best
+    epoch 16 loss 0.3157 val macro AUROC 0.8780
+    epoch 17 loss 0.3146 val macro AUROC 0.8781
+    epoch 18 loss 0.3143 val macro AUROC 0.8781
+    epoch 19 loss 0.3142 val macro AUROC 0.8786  <- best
+    epoch 20 loss 0.3135 val macro AUROC 0.8782
+    epoch 21 loss 0.3134 val macro AUROC 0.8778
+    epoch 22 loss 0.3130 val macro AUROC 0.8781
+    epoch 23 loss 0.3127 val macro AUROC 0.8774
+    epoch 24 loss 0.3124 val macro AUROC 0.8777
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8669 (val 0.8786, epoch 19)
+    epoch  0 loss 0.4099 val macro AUROC 0.8563  <- best
+    epoch  1 loss 0.3447 val macro AUROC 0.8687  <- best
+    epoch  2 loss 0.3321 val macro AUROC 0.8738  <- best
+    epoch  3 loss 0.3253 val macro AUROC 0.8761  <- best
+    epoch  4 loss 0.3214 val macro AUROC 0.8786  <- best
+    epoch  5 loss 0.3172 val macro AUROC 0.8792  <- best
+    epoch  6 loss 0.3131 val macro AUROC 0.8798  <- best
+    epoch  7 loss 0.3110 val macro AUROC 0.8827  <- best
+    epoch  8 loss 0.3066 val macro AUROC 0.8811
+    epoch  9 loss 0.3037 val macro AUROC 0.8809
+    epoch 10 loss 0.3015 val macro AUROC 0.8819
+    epoch 11 loss 0.2978 val macro AUROC 0.8815
+    epoch 12 loss 0.2961 val macro AUROC 0.8805
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8698 (val 0.8827, epoch 7)
+  delta vs V0: +0.29 pp
+
+=== 6 lead(s): indices (0, 1, 2, 3, 4, 5) ===
+  train: (17084, 20, 3, 128) in 14.0s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.6s                                                                                                                                                                       
+  geometry kept: direction cosine 0.817, magnitude ratio 0.902, planarity 0.000, frame drift 69.0 deg
+    epoch  0 loss 0.4379 val macro AUROC 0.8368  <- best
+    epoch  1 loss 0.3674 val macro AUROC 0.8473  <- best
+    epoch  2 loss 0.3560 val macro AUROC 0.8505  <- best
+    epoch  3 loss 0.3506 val macro AUROC 0.8526  <- best
+    epoch  4 loss 0.3472 val macro AUROC 0.8548  <- best
+    epoch  5 loss 0.3447 val macro AUROC 0.8557  <- best
+    epoch  6 loss 0.3430 val macro AUROC 0.8561  <- best
+    epoch  7 loss 0.3417 val macro AUROC 0.8575  <- best
+    epoch  8 loss 0.3404 val macro AUROC 0.8571
+    epoch  9 loss 0.3399 val macro AUROC 0.8576  <- best
+    epoch 10 loss 0.3385 val macro AUROC 0.8573
+    epoch 11 loss 0.3381 val macro AUROC 0.8579  <- best
+    epoch 12 loss 0.3373 val macro AUROC 0.8573
+    epoch 13 loss 0.3365 val macro AUROC 0.8582  <- best
+    epoch 14 loss 0.3360 val macro AUROC 0.8586  <- best
+    epoch 15 loss 0.3355 val macro AUROC 0.8587  <- best
+    epoch 16 loss 0.3354 val macro AUROC 0.8581
+    epoch 17 loss 0.3346 val macro AUROC 0.8587  <- best
+    epoch 18 loss 0.3342 val macro AUROC 0.8584
+    epoch 19 loss 0.3343 val macro AUROC 0.8588  <- best
+    epoch 20 loss 0.3341 val macro AUROC 0.8586
+    epoch 21 loss 0.3336 val macro AUROC 0.8587
+    epoch 22 loss 0.3332 val macro AUROC 0.8588  <- best
+    epoch 23 loss 0.3330 val macro AUROC 0.8583
+    epoch 24 loss 0.3325 val macro AUROC 0.8585
+    epoch 25 loss 0.3322 val macro AUROC 0.8592  <- best
+    epoch 26 loss 0.3321 val macro AUROC 0.8590
+    epoch 27 loss 0.3317 val macro AUROC 0.8581
+    epoch 28 loss 0.3318 val macro AUROC 0.8590
+    epoch 29 loss 0.3312 val macro AUROC 0.8592
+    epoch 30 loss 0.3313 val macro AUROC 0.8578
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8556 (val 0.8592, epoch 25)
+    epoch  0 loss 0.4201 val macro AUROC 0.8399  <- best
+    epoch  1 loss 0.3616 val macro AUROC 0.8497  <- best
+    epoch  2 loss 0.3507 val macro AUROC 0.8542  <- best
+    epoch  3 loss 0.3450 val macro AUROC 0.8554  <- best
+    epoch  4 loss 0.3420 val macro AUROC 0.8595  <- best
+    epoch  5 loss 0.3381 val macro AUROC 0.8592
+    epoch  6 loss 0.3356 val macro AUROC 0.8603  <- best
+    epoch  7 loss 0.3346 val macro AUROC 0.8627  <- best
+    epoch  8 loss 0.3310 val macro AUROC 0.8613
+    epoch  9 loss 0.3302 val macro AUROC 0.8601
+    epoch 10 loss 0.3270 val macro AUROC 0.8607
+    epoch 11 loss 0.3253 val macro AUROC 0.8638  <- best
+    epoch 12 loss 0.3236 val macro AUROC 0.8609
+    epoch 13 loss 0.3213 val macro AUROC 0.8607
+    epoch 14 loss 0.3192 val macro AUROC 0.8613
+    epoch 15 loss 0.3174 val macro AUROC 0.8612
+    epoch 16 loss 0.3150 val macro AUROC 0.8595
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8564 (val 0.8638, epoch 11)
+  delta vs V0: +0.08 pp
+
+=== 3 lead(s): indices (0, 1, 6) ===
+  train: (17084, 20, 3, 128) in 14.3s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.7s                                                                                                                                                                       
+  geometry kept: direction cosine 0.870, magnitude ratio 0.999, planarity 0.083, frame drift 66.0 deg
+    epoch  0 loss 0.4296 val macro AUROC 0.8493  <- best
+    epoch  1 loss 0.3540 val macro AUROC 0.8617  <- best
+    epoch  2 loss 0.3418 val macro AUROC 0.8648  <- best
+    epoch  3 loss 0.3362 val macro AUROC 0.8665  <- best
+    epoch  4 loss 0.3328 val macro AUROC 0.8686  <- best
+    epoch  5 loss 0.3303 val macro AUROC 0.8698  <- best
+    epoch  6 loss 0.3281 val macro AUROC 0.8699  <- best
+    epoch  7 loss 0.3268 val macro AUROC 0.8714  <- best
+    epoch  8 loss 0.3253 val macro AUROC 0.8702
+    epoch  9 loss 0.3246 val macro AUROC 0.8708
+    epoch 10 loss 0.3235 val macro AUROC 0.8709
+    epoch 11 loss 0.3231 val macro AUROC 0.8715  <- best
+    epoch 12 loss 0.3220 val macro AUROC 0.8705
+    epoch 13 loss 0.3211 val macro AUROC 0.8713
+    epoch 14 loss 0.3208 val macro AUROC 0.8719  <- best
+    epoch 15 loss 0.3199 val macro AUROC 0.8725  <- best
+    epoch 16 loss 0.3201 val macro AUROC 0.8716
+    epoch 17 loss 0.3191 val macro AUROC 0.8721
+    epoch 18 loss 0.3187 val macro AUROC 0.8721
+    epoch 19 loss 0.3186 val macro AUROC 0.8724
+    epoch 20 loss 0.3181 val macro AUROC 0.8724
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8666 (val 0.8725, epoch 15)
+    epoch  0 loss 0.4115 val macro AUROC 0.8524  <- best
+    epoch  1 loss 0.3480 val macro AUROC 0.8641  <- best
+    epoch  2 loss 0.3367 val macro AUROC 0.8658  <- best
+    epoch  3 loss 0.3302 val macro AUROC 0.8679  <- best
+    epoch  4 loss 0.3262 val macro AUROC 0.8707  <- best
+    epoch  5 loss 0.3232 val macro AUROC 0.8718  <- best
+    epoch  6 loss 0.3198 val macro AUROC 0.8725  <- best
+    epoch  7 loss 0.3188 val macro AUROC 0.8738  <- best
+    epoch  8 loss 0.3148 val macro AUROC 0.8718
+    epoch  9 loss 0.3129 val macro AUROC 0.8730
+    epoch 10 loss 0.3094 val macro AUROC 0.8729
+    epoch 11 loss 0.3068 val macro AUROC 0.8754  <- best
+    epoch 12 loss 0.3052 val macro AUROC 0.8730
+    epoch 13 loss 0.3022 val macro AUROC 0.8722
+    epoch 14 loss 0.2994 val macro AUROC 0.8733
+    epoch 15 loss 0.2961 val macro AUROC 0.8737
+    epoch 16 loss 0.2930 val macro AUROC 0.8732
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8695 (val 0.8754, epoch 11)
+  delta vs V0: +0.29 pp
+
+=== 2 lead(s): indices (0, 1) ===
+  train: (17084, 20, 3, 128) in 14.1s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.6s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.7s                                                                                                                                                                       
+  geometry kept: direction cosine 0.796, magnitude ratio 0.807, planarity 0.000, frame drift 76.7 deg
+    epoch  0 loss 0.4404 val macro AUROC 0.8355  <- best
+    epoch  1 loss 0.3690 val macro AUROC 0.8463  <- best
+    epoch  2 loss 0.3579 val macro AUROC 0.8482  <- best
+    epoch  3 loss 0.3528 val macro AUROC 0.8502  <- best
+    epoch  4 loss 0.3497 val macro AUROC 0.8521  <- best
+    epoch  5 loss 0.3474 val macro AUROC 0.8531  <- best
+    epoch  6 loss 0.3457 val macro AUROC 0.8533  <- best
+    epoch  7 loss 0.3445 val macro AUROC 0.8547  <- best
+    epoch  8 loss 0.3433 val macro AUROC 0.8539
+    epoch  9 loss 0.3428 val macro AUROC 0.8542
+    epoch 10 loss 0.3416 val macro AUROC 0.8545
+    epoch 11 loss 0.3411 val macro AUROC 0.8550  <- best
+    epoch 12 loss 0.3404 val macro AUROC 0.8540
+    epoch 13 loss 0.3395 val macro AUROC 0.8555  <- best
+    epoch 14 loss 0.3391 val macro AUROC 0.8558  <- best
+    epoch 15 loss 0.3385 val macro AUROC 0.8562  <- best
+    epoch 16 loss 0.3385 val macro AUROC 0.8556
+    epoch 17 loss 0.3378 val macro AUROC 0.8559
+    epoch 18 loss 0.3374 val macro AUROC 0.8558
+    epoch 19 loss 0.3374 val macro AUROC 0.8561
+    epoch 20 loss 0.3373 val macro AUROC 0.8562  <- best
+    epoch 21 loss 0.3368 val macro AUROC 0.8556
+    epoch 22 loss 0.3362 val macro AUROC 0.8558
+    epoch 23 loss 0.3362 val macro AUROC 0.8555
+    epoch 24 loss 0.3359 val macro AUROC 0.8555
+    epoch 25 loss 0.3355 val macro AUROC 0.8561
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8526 (val 0.8562, epoch 20)
+    epoch  0 loss 0.4220 val macro AUROC 0.8369  <- best
+    epoch  1 loss 0.3643 val macro AUROC 0.8478  <- best
+    epoch  2 loss 0.3538 val macro AUROC 0.8511  <- best
+    epoch  3 loss 0.3479 val macro AUROC 0.8530  <- best
+    epoch  4 loss 0.3449 val macro AUROC 0.8560  <- best
+    epoch  5 loss 0.3420 val macro AUROC 0.8584  <- best
+    epoch  6 loss 0.3392 val macro AUROC 0.8573
+    epoch  7 loss 0.3389 val macro AUROC 0.8588  <- best
+    epoch  8 loss 0.3356 val macro AUROC 0.8586
+    epoch  9 loss 0.3344 val macro AUROC 0.8578
+    epoch 10 loss 0.3316 val macro AUROC 0.8588  <- best
+    epoch 11 loss 0.3296 val macro AUROC 0.8613  <- best
+    epoch 12 loss 0.3286 val macro AUROC 0.8596
+    epoch 13 loss 0.3268 val macro AUROC 0.8577
+    epoch 14 loss 0.3246 val macro AUROC 0.8599
+    epoch 15 loss 0.3223 val macro AUROC 0.8592
+    epoch 16 loss 0.3201 val macro AUROC 0.8580
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8529 (val 0.8613, epoch 11)
+  delta vs V0: +0.03 pp
+
+=== 1 lead(s): indices (1,) ===
+  train: (17084, 20, 3, 128) in 14.3s                                                                                                                                                                    
+  val: (2146, 20, 3, 128) in 2.7s                                                                                                                                                                        
+  test: (2158, 20, 3, 128) in 2.7s                                                                                                                                                                       
+  geometry kept: direction cosine 0.594, magnitude ratio 0.566, planarity 0.000, frame drift 62.1 deg
+    epoch  0 loss 0.4700 val macro AUROC 0.7998  <- best
+    epoch  1 loss 0.4054 val macro AUROC 0.8117  <- best
+    epoch  2 loss 0.3954 val macro AUROC 0.8152  <- best
+    epoch  3 loss 0.3908 val macro AUROC 0.8171  <- best
+    epoch  4 loss 0.3879 val macro AUROC 0.8199  <- best
+    epoch  5 loss 0.3855 val macro AUROC 0.8205  <- best
+    epoch  6 loss 0.3840 val macro AUROC 0.8206  <- best
+    epoch  7 loss 0.3831 val macro AUROC 0.8224  <- best
+    epoch  8 loss 0.3818 val macro AUROC 0.8217
+    epoch  9 loss 0.3813 val macro AUROC 0.8228  <- best
+    epoch 10 loss 0.3804 val macro AUROC 0.8233  <- best
+    epoch 11 loss 0.3795 val macro AUROC 0.8232
+    epoch 12 loss 0.3791 val macro AUROC 0.8225
+    epoch 13 loss 0.3783 val macro AUROC 0.8240  <- best
+    epoch 14 loss 0.3779 val macro AUROC 0.8241  <- best
+    epoch 15 loss 0.3772 val macro AUROC 0.8246  <- best
+    epoch 16 loss 0.3773 val macro AUROC 0.8235
+    epoch 17 loss 0.3765 val macro AUROC 0.8245
+    epoch 18 loss 0.3761 val macro AUROC 0.8248  <- best
+    epoch 19 loss 0.3764 val macro AUROC 0.8249  <- best
+    epoch 20 loss 0.3766 val macro AUROC 0.8243
+    epoch 21 loss 0.3757 val macro AUROC 0.8230
+    epoch 22 loss 0.3755 val macro AUROC 0.8238
+    epoch 23 loss 0.3751 val macro AUROC 0.8236
+    epoch 24 loss 0.3748 val macro AUROC 0.8235
+    no improvement for 5 epochs, stopping
+     v0: TEST macro AUROC 0.8176 (val 0.8249, epoch 19)
+    epoch  0 loss 0.4523 val macro AUROC 0.8068  <- best
+    epoch  1 loss 0.3986 val macro AUROC 0.8144  <- best
+    epoch  2 loss 0.3893 val macro AUROC 0.8204  <- best
+    epoch  3 loss 0.3851 val macro AUROC 0.8211  <- best
+    epoch  4 loss 0.3822 val macro AUROC 0.8228  <- best
+    epoch  5 loss 0.3789 val macro AUROC 0.8239  <- best
+    epoch  6 loss 0.3767 val macro AUROC 0.8260  <- best
+    epoch  7 loss 0.3762 val macro AUROC 0.8288  <- best
+    epoch  8 loss 0.3739 val macro AUROC 0.8269
+    epoch  9 loss 0.3727 val macro AUROC 0.8247
+    epoch 10 loss 0.3709 val macro AUROC 0.8258
+    epoch 11 loss 0.3694 val macro AUROC 0.8282
+    epoch 12 loss 0.3680 val macro AUROC 0.8256
+    no improvement for 5 epochs, stopping
+  frame: TEST macro AUROC 0.8172 (val 0.8288, epoch 7)
+  delta vs V0: -0.04 pp
+
+  leads    V0   branch   delta   dir cos   planarity   frame drift
+     12  87.28   87.34   +0.06     1.000       0.104          0.0
+      8  86.69   86.98   +0.29     0.941       0.089         52.6
+      6  85.56   85.64   +0.08     0.817       0.000         69.0
+      3  86.66   86.95   +0.29     0.870       0.083         66.0
+      2  85.26   85.29   +0.03     0.796       0.000         76.7
+      1  81.76   81.72   -0.04     0.594       0.000         62.1
+
+  decline per lead removed: V0 0.502 pp, branch 0.511 pp
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/sparse_d.csv; curve in sparse_d_curve_invariant_s44.json
