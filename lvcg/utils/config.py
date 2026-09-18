@@ -69,6 +69,12 @@ def add_cli_overrides(parser: argparse.ArgumentParser) -> argparse.ArgumentParse
     parser.add_argument("--run.k", type=str, default=None, help="RunId code for 'k' slot (e.g., k1).")
     parser.add_argument("--train.batch_size", type=int, default=None)
     parser.add_argument("--train.max_steps", type=int, default=None)
+    parser.add_argument(
+        "--train.lambda_rotation",
+        type=float,
+        default=None,
+        help="Weight of route E's rotational-geometry term; 0 keeps the released objective.",
+    )
     parser.add_argument("--data.meta_root", type=str, default=None)
     parser.add_argument(
         "--model.vectorized_stitcher",
@@ -104,6 +110,7 @@ def apply_overrides(cfg: Config, args: argparse.Namespace) -> Config:
     set_if_not_none(("run", "k"), getattr(args, "run.k"))
     set_if_not_none(("train", "batch_size"), getattr(args, "train.batch_size"))
     set_if_not_none(("train", "max_steps"), getattr(args, "train.max_steps"))
+    set_if_not_none(("train", "lambda_rotation"), getattr(args, "train.lambda_rotation", None))
     set_if_not_none(("data", "meta_root"), getattr(args, "data.meta_root"))
     set_if_not_none(("model", "vectorized_stitcher"), getattr(args, "model.vectorized_stitcher", None))
     set_if_not_none(("model", "fast_upsample"), getattr(args, "model.fast_upsample", None))

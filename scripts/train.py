@@ -43,6 +43,7 @@ import os
 import platform
 import random
 import subprocess
+import sys
 import time
 from typing import Dict, Iterator, List, Optional
 
@@ -53,6 +54,12 @@ import torch.nn as nn
 from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, Sampler
 from tqdm import tqdm
+
+# Run from anywhere: the other scripts do this too, and without it the package is only
+# importable when it happens to be installed in the active environment.
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
 
 from lvcg.data.pipeline import make_dataloaders
 from lvcg.models import build_model
