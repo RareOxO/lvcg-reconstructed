@@ -72,6 +72,39 @@ def quaternion_to_rotation_matrix(q):
     ).reshape(*q.shape[:-1], 3, 3)
 
 
+def rotation_matrix_to_quaternion(R, eps=1e-12):
+    """[..., 3, 3] -> unit quaternion [..., 4], by Shepperd's method.
+
+    All four of Shepperd's cases are computed and the numerically largest is selected,
+    which keeps the square roots away from zero; the unselected branches are clamped so
+    they cannot produce NaN even where they are invalid. The result is returned with a
+    non-negative real part, since q and -q are the same rotation and a fixed sign keeps
+    the value comparable between records.
+    """
+    m = R
+    m00, m01, m02 = m[..., 0, 0], m[..., 0, 1], m[..., 0, 2]
+    m10, m11, m12 = m[..., 1, 0], m[..., 1, 1], m[..., 1, 2]
+    m20, m21, m22 = m[..., 2, 0], m[..., 2, 1], m[..., 2, 2]
+    cases = torch.stack(
+        (1 + m00 + m11 + m22, 1 + m00 - m11 - m22, 1 - m00 + m11 - m22, 1 - m00 - m11 + m22), dim=-1
+    )
+    scales = 2 * torch.sqrt(cases.clamp_min(eps))
+    s0, s1, s2, s3 = scales.unbind(-1)
+    candidates = torch.stack(
+        (
+            torch.stack((0.25 * s0, (m21 - m12) / s0, (m02 - m20) / s0, (m10 - m01) / s0), dim=-1),
+            torch.stack(((m21 - m12) / s1, 0.25 * s1, (m01 + m10) / s1, (m02 + m20) / s1), dim=-1),
+            torch.stack(((m02 - m20) / s2, (m01 + m10) / s2, 0.25 * s2, (m12 + m21) / s2), dim=-1),
+            torch.stack(((m10 - m01) / s3, (m02 + m20) / s3, (m12 + m21) / s3, 0.25 * s3), dim=-1),
+        ),
+        dim=-2,
+    )
+    best = cases.argmax(dim=-1, keepdim=True)
+    q = candidates.gather(-2, best.unsqueeze(-1).expand(*best.shape, 4)).squeeze(-2)
+    q = normalize_quaternion(q)
+    return q * torch.where(q[..., :1] < 0, -torch.ones_like(q[..., :1]), torch.ones_like(q[..., :1]))
+
+
 def rotate_vector_by_quaternion(v, q):
     """v' = q [0, v] q*, written as v + 2w (u x v) + 2 u x (u x v) for unit q = [w, u]."""
     q = normalize_quaternion(q)

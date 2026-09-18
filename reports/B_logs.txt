@@ -1,0 +1,425 @@
+(/home/featurize/work/quaternion_env) ➜ lvcg-reconstructed for s in 42 43 44; do
+  python scripts/train_qrst.py --config configs/eval/qrst_b.yaml --variant v0 --seed $s
+  for l in axis plane trajectory; do
+    python scripts/train_qrst.py --config configs/eval/qrst_b.yaml --level $l --seed $s
+  done
+done
+Level axis | variant v0 | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+    epoch  0 loss 0.4132 val macro AUROC 0.8583  <- best
+    epoch  1 loss 0.3458 val macro AUROC 0.8704  <- best
+    epoch  2 loss 0.3342 val macro AUROC 0.8745  <- best
+    epoch  3 loss 0.3282 val macro AUROC 0.8769  <- best
+    epoch  4 loss 0.3244 val macro AUROC 0.8793  <- best
+    epoch  5 loss 0.3214 val macro AUROC 0.8797  <- best
+    epoch  6 loss 0.3201 val macro AUROC 0.8803  <- best
+    epoch  7 loss 0.3183 val macro AUROC 0.8810  <- best
+    epoch  8 loss 0.3170 val macro AUROC 0.8807
+    epoch  9 loss 0.3159 val macro AUROC 0.8807
+    epoch 10 loss 0.3147 val macro AUROC 0.8817  <- best
+    epoch 11 loss 0.3144 val macro AUROC 0.8813
+    epoch 12 loss 0.3131 val macro AUROC 0.8819  <- best
+    epoch 13 loss 0.3128 val macro AUROC 0.8810
+    epoch 14 loss 0.3120 val macro AUROC 0.8817
+    epoch 15 loss 0.3118 val macro AUROC 0.8819
+    epoch 16 loss 0.3112 val macro AUROC 0.8820  <- best
+    epoch 17 loss 0.3107 val macro AUROC 0.8816
+    epoch 18 loss 0.3101 val macro AUROC 0.8819
+    epoch 19 loss 0.3099 val macro AUROC 0.8819
+    epoch 20 loss 0.3094 val macro AUROC 0.8817
+    epoch 21 loss 0.3091 val macro AUROC 0.8822  <- best
+    epoch 22 loss 0.3087 val macro AUROC 0.8809
+    epoch 23 loss 0.3087 val macro AUROC 0.8816
+    epoch 24 loss 0.3083 val macro AUROC 0.8814
+    epoch 25 loss 0.3081 val macro AUROC 0.8812
+    epoch 26 loss 0.3079 val macro AUROC 0.8819
+    no improvement for 5 epochs, stopping
+
+  best epoch 21 | val macro AUROC 0.8822
+  TEST macro AUROC 0.8736 | micro 0.8975 | macro F1 0.6181
+  per label: HYP 0.8064, NORM 0.9147, MI 0.8652, CD 0.8793, STTC 0.9024
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.641 with the branch (+0.000)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_v0-axis_s42.json
+Level axis | variant relation | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+    epoch  0 loss 0.4047 val macro AUROC 0.8631  <- best
+    epoch  1 loss 0.3418 val macro AUROC 0.8728  <- best
+    epoch  2 loss 0.3314 val macro AUROC 0.8763  <- best
+    epoch  3 loss 0.3251 val macro AUROC 0.8782  <- best
+    epoch  4 loss 0.3216 val macro AUROC 0.8811  <- best
+    epoch  5 loss 0.3177 val macro AUROC 0.8811
+    epoch  6 loss 0.3160 val macro AUROC 0.8824  <- best
+    epoch  7 loss 0.3140 val macro AUROC 0.8817
+    epoch  8 loss 0.3124 val macro AUROC 0.8821
+    epoch  9 loss 0.3113 val macro AUROC 0.8814
+    epoch 10 loss 0.3101 val macro AUROC 0.8827  <- best
+    epoch 11 loss 0.3098 val macro AUROC 0.8820
+    epoch 12 loss 0.3086 val macro AUROC 0.8835  <- best
+    epoch 13 loss 0.3081 val macro AUROC 0.8825
+    epoch 14 loss 0.3066 val macro AUROC 0.8832
+    epoch 15 loss 0.3065 val macro AUROC 0.8830
+    epoch 16 loss 0.3062 val macro AUROC 0.8831
+    epoch 17 loss 0.3053 val macro AUROC 0.8831
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8835
+  TEST macro AUROC 0.8743 | micro 0.8973 | macro F1 0.6175
+  per label: HYP 0.8065, NORM 0.9161, MI 0.8655, CD 0.8771, STTC 0.9065
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.973 with the branch (+0.332)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-axis_s42.json
+Level plane | variant relation | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,893 (inter-loop branch 10,048, head 3,845)
+    epoch  0 loss 0.4011 val macro AUROC 0.8630  <- best
+    epoch  1 loss 0.3395 val macro AUROC 0.8732  <- best
+    epoch  2 loss 0.3296 val macro AUROC 0.8771  <- best
+    epoch  3 loss 0.3234 val macro AUROC 0.8782  <- best
+    epoch  4 loss 0.3201 val macro AUROC 0.8811  <- best
+    epoch  5 loss 0.3164 val macro AUROC 0.8812  <- best
+    epoch  6 loss 0.3148 val macro AUROC 0.8825  <- best
+    epoch  7 loss 0.3128 val macro AUROC 0.8820
+    epoch  8 loss 0.3109 val macro AUROC 0.8824
+    epoch  9 loss 0.3096 val macro AUROC 0.8824
+    epoch 10 loss 0.3086 val macro AUROC 0.8833  <- best
+    epoch 11 loss 0.3077 val macro AUROC 0.8827
+    epoch 12 loss 0.3065 val macro AUROC 0.8843  <- best
+    epoch 13 loss 0.3061 val macro AUROC 0.8835
+    epoch 14 loss 0.3043 val macro AUROC 0.8839
+    epoch 15 loss 0.3042 val macro AUROC 0.8837
+    epoch 16 loss 0.3040 val macro AUROC 0.8840
+    epoch 17 loss 0.3027 val macro AUROC 0.8839
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8843
+  TEST macro AUROC 0.8739 | micro 0.8975 | macro F1 0.6207
+  per label: HYP 0.8046, NORM 0.9163, MI 0.8632, CD 0.8762, STTC 0.9090
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.961 with the branch (+0.320)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-plane_s42.json
+Level trajectory | variant relation | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,841 (inter-loop branch 185,996, head 3,845)
+    epoch  0 loss 0.3859 val macro AUROC 0.8683  <- best
+    epoch  1 loss 0.3322 val macro AUROC 0.8759  <- best
+    epoch  2 loss 0.3217 val macro AUROC 0.8814  <- best
+    epoch  3 loss 0.3144 val macro AUROC 0.8796
+    epoch  4 loss 0.3101 val macro AUROC 0.8826  <- best
+    epoch  5 loss 0.3039 val macro AUROC 0.8812
+    epoch  6 loss 0.3004 val macro AUROC 0.8822
+    epoch  7 loss 0.2956 val macro AUROC 0.8824
+    epoch  8 loss 0.2915 val macro AUROC 0.8803
+    epoch  9 loss 0.2872 val macro AUROC 0.8797
+    no improvement for 5 epochs, stopping
+
+  best epoch 4 | val macro AUROC 0.8826
+  TEST macro AUROC 0.8726 | micro 0.8960 | macro F1 0.6097
+  per label: HYP 0.8044, NORM 0.9162, MI 0.8580, CD 0.8774, STTC 0.9072
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.859 with the branch (+0.219)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-trajectory_s42.json
+Level axis | variant v0 | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+    epoch  0 loss 0.4235 val macro AUROC 0.8562  <- best
+    epoch  1 loss 0.3479 val macro AUROC 0.8690  <- best
+    epoch  2 loss 0.3357 val macro AUROC 0.8738  <- best
+    epoch  3 loss 0.3292 val macro AUROC 0.8765  <- best
+    epoch  4 loss 0.3252 val macro AUROC 0.8782  <- best
+    epoch  5 loss 0.3228 val macro AUROC 0.8797  <- best
+    epoch  6 loss 0.3208 val macro AUROC 0.8801  <- best
+    epoch  7 loss 0.3189 val macro AUROC 0.8806  <- best
+    epoch  8 loss 0.3179 val macro AUROC 0.8809  <- best
+    epoch  9 loss 0.3168 val macro AUROC 0.8811  <- best
+    epoch 10 loss 0.3153 val macro AUROC 0.8816  <- best
+    epoch 11 loss 0.3145 val macro AUROC 0.8812
+    epoch 12 loss 0.3139 val macro AUROC 0.8819  <- best
+    epoch 13 loss 0.3131 val macro AUROC 0.8814
+    epoch 14 loss 0.3125 val macro AUROC 0.8821  <- best
+    epoch 15 loss 0.3119 val macro AUROC 0.8814
+    epoch 16 loss 0.3116 val macro AUROC 0.8820
+    epoch 17 loss 0.3116 val macro AUROC 0.8820
+    epoch 18 loss 0.3109 val macro AUROC 0.8820
+    epoch 19 loss 0.3106 val macro AUROC 0.8821
+    no improvement for 5 epochs, stopping
+
+  best epoch 14 | val macro AUROC 0.8821
+  TEST macro AUROC 0.8731 | micro 0.8963 | macro F1 0.6134
+  per label: HYP 0.8057, NORM 0.9147, MI 0.8641, CD 0.8789, STTC 0.9022
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.641 with the branch (+0.000)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_v0-axis_s43.json
+Level axis | variant relation | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+    epoch  0 loss 0.4127 val macro AUROC 0.8600  <- best
+    epoch  1 loss 0.3438 val macro AUROC 0.8712  <- best
+    epoch  2 loss 0.3331 val macro AUROC 0.8758  <- best
+    epoch  3 loss 0.3266 val macro AUROC 0.8775  <- best
+    epoch  4 loss 0.3224 val macro AUROC 0.8802  <- best
+    epoch  5 loss 0.3198 val macro AUROC 0.8808  <- best
+    epoch  6 loss 0.3168 val macro AUROC 0.8818  <- best
+    epoch  7 loss 0.3147 val macro AUROC 0.8821  <- best
+    epoch  8 loss 0.3142 val macro AUROC 0.8829  <- best
+    epoch  9 loss 0.3127 val macro AUROC 0.8822
+    epoch 10 loss 0.3107 val macro AUROC 0.8833  <- best
+    epoch 11 loss 0.3099 val macro AUROC 0.8829
+    epoch 12 loss 0.3092 val macro AUROC 0.8840  <- best
+    epoch 13 loss 0.3081 val macro AUROC 0.8823
+    epoch 14 loss 0.3074 val macro AUROC 0.8840
+    epoch 15 loss 0.3066 val macro AUROC 0.8825
+    epoch 16 loss 0.3067 val macro AUROC 0.8828
+    epoch 17 loss 0.3065 val macro AUROC 0.8832
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8840
+  TEST macro AUROC 0.8742 | micro 0.8970 | macro F1 0.6141
+  per label: HYP 0.8064, NORM 0.9151, MI 0.8665, CD 0.8765, STTC 0.9062
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.969 with the branch (+0.329)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-axis_s43.json
+Level plane | variant relation | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,893 (inter-loop branch 10,048, head 3,845)
+    epoch  0 loss 0.4097 val macro AUROC 0.8639  <- best
+    epoch  1 loss 0.3410 val macro AUROC 0.8741  <- best
+    epoch  2 loss 0.3307 val macro AUROC 0.8776  <- best
+    epoch  3 loss 0.3241 val macro AUROC 0.8794  <- best
+    epoch  4 loss 0.3200 val macro AUROC 0.8816  <- best
+    epoch  5 loss 0.3172 val macro AUROC 0.8817  <- best
+    epoch  6 loss 0.3142 val macro AUROC 0.8823  <- best
+    epoch  7 loss 0.3123 val macro AUROC 0.8825  <- best
+    epoch  8 loss 0.3113 val macro AUROC 0.8839  <- best
+    epoch  9 loss 0.3097 val macro AUROC 0.8831
+    epoch 10 loss 0.3084 val macro AUROC 0.8835
+    epoch 11 loss 0.3075 val macro AUROC 0.8837
+    epoch 12 loss 0.3065 val macro AUROC 0.8846  <- best
+    epoch 13 loss 0.3053 val macro AUROC 0.8831
+    epoch 14 loss 0.3042 val macro AUROC 0.8844
+    epoch 15 loss 0.3032 val macro AUROC 0.8828
+    epoch 16 loss 0.3033 val macro AUROC 0.8833
+    epoch 17 loss 0.3030 val macro AUROC 0.8837
+    no improvement for 5 epochs, stopping
+
+  best epoch 12 | val macro AUROC 0.8846
+  TEST macro AUROC 0.8742 | micro 0.8977 | macro F1 0.6136
+  per label: HYP 0.8071, NORM 0.9158, MI 0.8647, CD 0.8747, STTC 0.9088
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.963 with the branch (+0.322)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-plane_s43.json
+Level trajectory | variant relation | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,841 (inter-loop branch 185,996, head 3,845)
+    epoch  0 loss 0.3852 val macro AUROC 0.8708  <- best
+    epoch  1 loss 0.3325 val macro AUROC 0.8777  <- best
+    epoch  2 loss 0.3215 val macro AUROC 0.8811  <- best
+    epoch  3 loss 0.3141 val macro AUROC 0.8817  <- best
+    epoch  4 loss 0.3084 val macro AUROC 0.8835  <- best
+    epoch  5 loss 0.3042 val macro AUROC 0.8839  <- best
+    epoch  6 loss 0.2987 val macro AUROC 0.8822
+    epoch  7 loss 0.2936 val macro AUROC 0.8816
+    epoch  8 loss 0.2900 val macro AUROC 0.8822
+    epoch  9 loss 0.2840 val macro AUROC 0.8831
+    epoch 10 loss 0.2778 val macro AUROC 0.8793
+    no improvement for 5 epochs, stopping
+
+  best epoch 5 | val macro AUROC 0.8839
+  TEST macro AUROC 0.8719 | micro 0.8941 | macro F1 0.6022
+  per label: HYP 0.7982, NORM 0.9170, MI 0.8617, CD 0.8774, STTC 0.9052
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.833 with the branch (+0.193)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-trajectory_s43.json
+Level axis | variant v0 | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+    epoch  0 loss 0.4116 val macro AUROC 0.8599  <- best
+    epoch  1 loss 0.3449 val macro AUROC 0.8700  <- best
+    epoch  2 loss 0.3338 val macro AUROC 0.8748  <- best
+    epoch  3 loss 0.3282 val macro AUROC 0.8764  <- best
+    epoch  4 loss 0.3248 val macro AUROC 0.8786  <- best
+    epoch  5 loss 0.3221 val macro AUROC 0.8791  <- best
+    epoch  6 loss 0.3202 val macro AUROC 0.8801  <- best
+    epoch  7 loss 0.3184 val macro AUROC 0.8795
+    epoch  8 loss 0.3171 val macro AUROC 0.8807  <- best
+    epoch  9 loss 0.3163 val macro AUROC 0.8812  <- best
+    epoch 10 loss 0.3152 val macro AUROC 0.8817  <- best
+    epoch 11 loss 0.3140 val macro AUROC 0.8817
+    epoch 12 loss 0.3135 val macro AUROC 0.8810
+    epoch 13 loss 0.3130 val macro AUROC 0.8809
+    epoch 14 loss 0.3122 val macro AUROC 0.8813
+    epoch 15 loss 0.3121 val macro AUROC 0.8818  <- best
+    epoch 16 loss 0.3112 val macro AUROC 0.8815
+    epoch 17 loss 0.3110 val macro AUROC 0.8811
+    epoch 18 loss 0.3103 val macro AUROC 0.8820  <- best
+    epoch 19 loss 0.3100 val macro AUROC 0.8812
+    epoch 20 loss 0.3096 val macro AUROC 0.8822  <- best
+    epoch 21 loss 0.3093 val macro AUROC 0.8813
+    epoch 22 loss 0.3088 val macro AUROC 0.8814
+    epoch 23 loss 0.3088 val macro AUROC 0.8815
+    epoch 24 loss 0.3084 val macro AUROC 0.8807
+    epoch 25 loss 0.3080 val macro AUROC 0.8815
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8822
+  TEST macro AUROC 0.8737 | micro 0.8972 | macro F1 0.6008
+  per label: HYP 0.8066, NORM 0.9149, MI 0.8654, CD 0.8790, STTC 0.9023
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.641 with the branch (+0.000)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_v0-axis_s44.json
+Level axis | variant relation | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+    epoch  0 loss 0.4082 val macro AUROC 0.8616  <- best
+    epoch  1 loss 0.3417 val macro AUROC 0.8717  <- best
+    epoch  2 loss 0.3311 val macro AUROC 0.8764  <- best
+    epoch  3 loss 0.3255 val macro AUROC 0.8770  <- best
+    epoch  4 loss 0.3222 val macro AUROC 0.8801  <- best
+    epoch  5 loss 0.3187 val macro AUROC 0.8801  <- best
+    epoch  6 loss 0.3164 val macro AUROC 0.8810  <- best
+    epoch  7 loss 0.3146 val macro AUROC 0.8808
+    epoch  8 loss 0.3129 val macro AUROC 0.8827  <- best
+    epoch  9 loss 0.3121 val macro AUROC 0.8832  <- best
+    epoch 10 loss 0.3103 val macro AUROC 0.8836  <- best
+    epoch 11 loss 0.3097 val macro AUROC 0.8833
+    epoch 12 loss 0.3088 val macro AUROC 0.8832
+    epoch 13 loss 0.3083 val macro AUROC 0.8822
+    epoch 14 loss 0.3071 val macro AUROC 0.8829
+    epoch 15 loss 0.3066 val macro AUROC 0.8839  <- best
+    epoch 16 loss 0.3063 val macro AUROC 0.8836
+    epoch 17 loss 0.3057 val macro AUROC 0.8829
+    epoch 18 loss 0.3046 val macro AUROC 0.8837
+    epoch 19 loss 0.3046 val macro AUROC 0.8830
+    epoch 20 loss 0.3038 val macro AUROC 0.8845  <- best
+    epoch 21 loss 0.3035 val macro AUROC 0.8833
+    epoch 22 loss 0.3031 val macro AUROC 0.8827
+    epoch 23 loss 0.3026 val macro AUROC 0.8826
+    epoch 24 loss 0.3025 val macro AUROC 0.8827
+    epoch 25 loss 0.3021 val macro AUROC 0.8830
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8845
+  TEST macro AUROC 0.8750 | micro 0.8982 | macro F1 0.6070
+  per label: HYP 0.8064, NORM 0.9156, MI 0.8679, CD 0.8774, STTC 0.9077
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.970 with the branch (+0.330)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-axis_s44.json
+Level plane | variant relation | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,893 (inter-loop branch 10,048, head 3,845)
+    epoch  0 loss 0.4130 val macro AUROC 0.8609  <- best
+    epoch  1 loss 0.3411 val macro AUROC 0.8716  <- best
+    epoch  2 loss 0.3300 val macro AUROC 0.8769  <- best
+    epoch  3 loss 0.3243 val macro AUROC 0.8774  <- best
+    epoch  4 loss 0.3206 val macro AUROC 0.8802  <- best
+    epoch  5 loss 0.3171 val macro AUROC 0.8803  <- best
+    epoch  6 loss 0.3148 val macro AUROC 0.8811  <- best
+    epoch  7 loss 0.3130 val macro AUROC 0.8810
+    epoch  8 loss 0.3112 val macro AUROC 0.8827  <- best
+    epoch  9 loss 0.3101 val macro AUROC 0.8832  <- best
+    epoch 10 loss 0.3083 val macro AUROC 0.8836  <- best
+    epoch 11 loss 0.3072 val macro AUROC 0.8831
+    epoch 12 loss 0.3064 val macro AUROC 0.8835
+    epoch 13 loss 0.3059 val macro AUROC 0.8825
+    epoch 14 loss 0.3044 val macro AUROC 0.8831
+    epoch 15 loss 0.3035 val macro AUROC 0.8843  <- best
+    epoch 16 loss 0.3035 val macro AUROC 0.8841
+    epoch 17 loss 0.3030 val macro AUROC 0.8834
+    epoch 18 loss 0.3014 val macro AUROC 0.8840
+    epoch 19 loss 0.3015 val macro AUROC 0.8833
+    epoch 20 loss 0.3004 val macro AUROC 0.8852  <- best
+    epoch 21 loss 0.2998 val macro AUROC 0.8842
+    epoch 22 loss 0.2998 val macro AUROC 0.8833
+    epoch 23 loss 0.2996 val macro AUROC 0.8828
+    epoch 24 loss 0.2991 val macro AUROC 0.8831
+    epoch 25 loss 0.2984 val macro AUROC 0.8830
+    no improvement for 5 epochs, stopping
+
+  best epoch 20 | val macro AUROC 0.8852
+  TEST macro AUROC 0.8742 | micro 0.8981 | macro F1 0.6069
+  per label: HYP 0.8056, NORM 0.9163, MI 0.8636, CD 0.8758, STTC 0.9098
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.960 with the branch (+0.319)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-plane_s44.json
+Level trajectory | variant relation | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,841 (inter-loop branch 185,996, head 3,845)
+    epoch  0 loss 0.3840 val macro AUROC 0.8699  <- best
+    epoch  1 loss 0.3323 val macro AUROC 0.8791  <- best
+    epoch  2 loss 0.3199 val macro AUROC 0.8790
+    epoch  3 loss 0.3143 val macro AUROC 0.8817  <- best
+    epoch  4 loss 0.3081 val macro AUROC 0.8802
+    epoch  5 loss 0.3036 val macro AUROC 0.8813
+    epoch  6 loss 0.2987 val macro AUROC 0.8815
+    epoch  7 loss 0.2945 val macro AUROC 0.8815
+    epoch  8 loss 0.2885 val macro AUROC 0.8814
+    no improvement for 5 epochs, stopping
+
+  best epoch 3 | val macro AUROC 0.8817
+  TEST macro AUROC 0.8705 | micro 0.8933 | macro F1 0.6016
+  per label: HYP 0.7998, NORM 0.9171, MI 0.8538, CD 0.8812, STTC 0.9004
+  spatial QRS-T angle: mean 90.6 deg, sd 24.5
+  linear decoding of that angle: R2 0.641 from e_base, 0.877 with the branch (+0.236)
+
+Appended to /home/featurize/work/Quaternion/lvcg-reconstructed/probing/results/qrst_b.csv; curve in qrst_b_curve_relation-trajectory_s44.json

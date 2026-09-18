@@ -1,0 +1,312 @@
+Level axis | variant v0 | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level axis | variant relation | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level plane | variant relation | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,893 (inter-loop branch 10,048, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level trajectory | variant relation | struct mean | seed 42 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,841 (inter-loop branch 185,996, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level axis | variant v0 | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level axis | variant relation | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level plane | variant relation | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,893 (inter-loop branch 10,048, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level trajectory | variant relation | struct mean | seed 43 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,841 (inter-loop branch 185,996, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level axis | variant v0 | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level axis | variant relation | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,189 (inter-loop branch 9,344, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level plane | variant relation | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 13,893 (inter-loop branch 10,048, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'
+Level trajectory | variant relation | struct mean | seed 44 | ratio 100%
+Windows (R-peak relative fractions of the beat, exploratory): {'qrs': [0.0, 0.12], 't': [0.15, 0.55]}
+Train 17084 | Val 2146 | Test 2158 | classes 5 ['HYP', 'NORM', 'MI', 'CD', 'STTC']
+  train: cached beats (17084, 20, 3, 128)
+  val: cached beats (2146, 20, 3, 128)
+  test: cached beats (2158, 20, 3, 128)
+Trainable 189,841 (inter-loop branch 185,996, head 3,845)
+Traceback (most recent call last):
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 230, in <module>
+    main()
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_qrst.py", line 177, in main
+    best, curve = train_loop.train(model, data, device, probe_cfg, args.seed)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 126, in train
+    loss = criterion(_forward(model, data["train"], index, device), labels[index].to(device))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/Quaternion/lvcg-reconstructed/scripts/train_loop.py", line 74, in _forward
+    return model(*_inputs(tensors, index, device, perturb, generator), recompute=perturb is not None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/featurize/work/quaternion_env/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QRSTProbe.forward() got an unexpected keyword argument 'recompute'

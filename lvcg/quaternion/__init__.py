@@ -8,6 +8,7 @@ from .attention import LabelAttentionProbe
 from .canon import CanonProbe, PoseNet, random_rotations, rotate_beats
 from .interloop import InterLoopEncoder, QRSTProbe, spatial_qrst_angle
 from .loop import LoopProbe, RotationalLoopEncoder, multi_scale_rotations, perturb_rotation_order
+from .frame import FrameProbe, FrameSplitEncoder, intrinsic_frame, to_frame
 from .geometry import GlobalRotation, QAProbe, rotated_directions
 from .features import (
     FEATURE_CHANNELS,
@@ -23,6 +24,10 @@ from .qdt import QDTProbe, TokenFusion
 __all__ = [
     "LabelAttentionProbe",
     "CanonProbe",
+    "FrameProbe",
+    "FrameSplitEncoder",
+    "intrinsic_frame",
+    "to_frame",
     "GlobalRotation",
     "InterLoopEncoder",
     "QRSTProbe",

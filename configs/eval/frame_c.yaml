@@ -1,0 +1,29 @@
+# Route C, observation-frame handling (research plan section 5, Tier 1: frozen backbone).
+#
+# The frame is computed from the record -- the dominant cardiac axis and the normal of the
+# loop it sweeps -- not learned. The representation is then split by how it transforms:
+# the trajectory in that frame is invariant to a global rotation, the frame itself is
+# equivariant. Absolute orientation is kept (routed into its own embedding), not deleted.
+
+pretrained:
+  checkpoint: checkpoints/m5fasts1k1/final.pt
+  freeze_backbone: true
+
+data:
+  raw_root: /home/featurize/probing_raw
+  splits_root: probing/data_splits
+  norm_method: zscore
+
+frame:
+  embedding_dim: 128           # per part; both parts -> 256 read by the head
+  hidden: 64
+  kernel: 7
+  dropout: 0.1
+
+probe:
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+  max_epochs: 50
+  patience: 5
+  num_workers: 4
