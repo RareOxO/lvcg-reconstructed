@@ -280,13 +280,7 @@ def main() -> None:
         row[f"auroc_{name}"], row[f"f1_{name}"] = auroc, f1
 
     results_path = args.results if os.path.isabs(args.results) else os.path.join(REPO_ROOT, args.results)
-    os.makedirs(os.path.dirname(results_path), exist_ok=True)
-    exists = os.path.exists(results_path)
-    with open(results_path, "a", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(row))
-        if not exists:
-            writer.writeheader()
-        writer.writerow(row)
+    train_qdf.append_row(results_path, row)
     curve_path = results_path.replace(".csv", f"_curve_{args.model}{args.tag}_s{args.seed}.json")
     with open(curve_path, "w", encoding="utf-8") as handle:
         json.dump({"row": row, "curve": curve}, handle, indent=1)

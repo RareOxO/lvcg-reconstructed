@@ -177,6 +177,34 @@ def train(model, data, device, probe_cfg, seed) -> Tuple[Dict, List[Dict]]:
     return best, curve
 
 
+def append_row(path: str, row: dict) -> None:
+    """Append one result, refusing to write into a CSV whose columns are different.
+
+    Stages share a results directory, and a file written by an earlier version of a
+    script has different columns; appending to it silently shifts every field. This
+    stops instead and says what to do.
+    """
+    import csv as _csv
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    if os.path.exists(path):
+        with open(path, newline="", encoding="utf-8") as handle:
+            header = next(_csv.reader(handle), [])
+        if header and header != list(row):
+            raise SystemExit(
+                f"{path} has different columns ({header[:4]}... vs {list(row)[:4]}...).\n"
+                "It was written by another variant of this experiment. Move it aside, "
+                "e.g.\n  mkdir -p probing/results/superseded && "
+                f"mv {path} probing/results/superseded/"
+            )
+    exists = os.path.exists(path)
+    with open(path, "a", newline="", encoding="utf-8") as handle:
+        writer = _csv.DictWriter(handle, fieldnames=list(row))
+        if not exists:
+            writer.writeheader()
+        writer.writerow(row)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=os.path.join(REPO_ROOT, "configs", "eval", "qdf_v1.yaml"))
@@ -271,15 +299,7 @@ def main() -> None:
         row[f"f1_{name}"] = f1
 
     results_path = args.results if os.path.isabs(args.results) else os.path.join(REPO_ROOT, args.results)
-    os.makedirs(os.path.dirname(results_path), exist_ok=True)
-    import csv
-
-    exists = os.path.exists(results_path)
-    with open(results_path, "a", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(row))
-        if not exists:
-            writer.writeheader()
-        writer.writerow(row)
+    append_row(results_path, row)
     curve_path = results_path.replace(".csv", f"_curve_{args.model}{args.tag}_s{args.seed}.json")
     with open(curve_path, "w", encoding="utf-8") as handle:
         json.dump({"row": row, "curve": curve}, handle, indent=1)
