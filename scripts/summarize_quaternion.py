@@ -43,10 +43,13 @@ def _number(value, default=0.0) -> float:
 def _variant(row) -> str:
     """The run's identity: model, features or components, fusion and tag, minus the seed."""
     parts = [row["model"]]
-    # V3 names its runs by variant (m / o / q / mq / oq / mo / moq / cdf); V1 and V2 by
-    # the feature set. An older V3 CSV used a "components" column.
+    # V3 names its runs by variant (m / o / q / mq / oq / mo / moq / cdf); V4 by variant
+    # and the phases it pools over; V1 and V2 by the feature set. An older V3 CSV used a
+    # "components" column.
     if row.get("variant"):
         parts = [row["variant"]]
+        if row.get("phases"):
+            parts.append(row["phases"].replace("+", "/"))
     elif row.get("components"):
         parts = [row["components"].replace("+", " + ")]
     features = row.get("features", "")
@@ -75,7 +78,7 @@ def summarize(path: str, metric: str) -> None:
     for row in rows:
         groups[_variant(row)].append(row)
     v0 = {int(_number(r["seed"])): _number(r[metric]) for r in rows if r.get("model") == "v0"}
-    is_v0 = lambda name: name.startswith("v0") or name == "vcg"  # noqa: E731
+    is_v0 = lambda name: name.split()[0] in ("v0", "vcg")  # noqa: E731
     reference = mean(v0.values()) if v0 else None
 
     print(f"{os.path.basename(path)} — {len(rows)} runs, metric {metric}")
